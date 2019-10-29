@@ -1,0 +1,53 @@
+
+<div class='app'>
+
+  <div class='app-top'>
+    <button (click)='toggleVisible()'>toggle visible</button>
+    <button (click)='toggleWeekends()'>toggle weekends</button>
+    <button (click)='gotoPast()'>go to a date in the past</button>
+    (also, click a date/time to add an event)
+  </div>
+
+  <div class='app-calendar' *ngIf="calendarVisible">
+    <full-calendar
+      #calendar
+      defaultView="dayGridMonth"
+      [header]="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }"
+      [plugins]="calendarPlugins"
+      [weekends]="calendarWeekends"
+      [events]="calendarEvents"
+      (dateClick)="createEvent($event)"
+    ></full-calendar>
+  </div>
+
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal" [style.display]="showmodel ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Event created on</h4>
+          <button type="button" class="close" data-dismiss="modal" (click) = "hide()">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Event Start From : {{ date }}
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click) = "hide()">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <button mat-button mat-fab class="add_event_btn" (click)="createEvent($event)" title="Add Event"><i class="fa fa-plus add_sign" aria-hidden="true"></i></button>
+</div>

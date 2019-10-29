@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Create Event</h2>
+<form [formGroup]="eventForm" (ngSubmit)="saveEvent(eventForm)">
+<mat-dialog-content >
+    <mat-form-field class="example-full-width col-sm-12 ">
+        <input matInput id="title" placeholder="Enter Title" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors}" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="f.title.errors" class="invalid-feedback ">
+            <div *ngIf="f.title.errors.required">First Name is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.title }} 
+    </div>
+    <mat-form-field class="example-full-width col-sm-12 ">
+    	<textarea matInput placeholder="Textarea" formControlName="description"></textarea>
+  	</mat-form-field>
+    <mat-form-field class="example-full-width  col-sm-6"(click)="picker.open()" >
+  		<input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="start_date" placeholder="Choose Start Date" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors}" [errorStateMatcher]="matcher">
+  		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker #picker></mat-datepicker>
+		<mat-error *ngIf="f.start_date.errors" class="invalid-feedback ">
+            <div *ngIf="f.start_date.errors.required">Start Date is required</div>
+        </mat-error>
+	</mat-form-field>
+    <mat-form-field matInput class="example-full-width col-sm-6 ">	
+   		<input matInput type="time" atp-time-picker placeholder="Choose Start Time" formControlName="start_time"  />
+   	</mat-form-field>
+   	<mat-form-field class="example-full-width  col-sm-6">
+  		<input matInput [min]="minDate" [max]="maxDate" (click)="end_picker.open()" formControlName="end_date" [matDatepicker]="end_picker" placeholder="Choose End Date" [ngClass]="{ 'is-invalid': submitted && f.end_time.errors}" [errorStateMatcher]="matcher">
+  		<mat-datepicker-toggle matSuffix [for]="end_picker"></mat-datepicker-toggle>
+		<mat-datepicker #end_picker></mat-datepicker>
+		 <mat-error *ngIf="f.end_date.errors" class="invalid-feedback ">
+            <div *ngIf="f.end_date.errors.required">End Date is required</div>
+        </mat-error>
+	</mat-form-field>
+    <mat-form-field matInput class="example-full-width col-sm-6 ">	
+   		<input matInput type="time" atp-time-picker placeholder="Choose End Time" formControlName="end_time" />
+   	</mat-form-field>
+   	<mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="title" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">
+            <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.contact_no }} 
+    </div>
+    <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="color" placeholder="Choose Color"  [value]="eventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
+    </mat-form-field>
+   	<div class="image-preview mb-3 col-sm-12" *ngIf="previewUrl">
+        <img [src]="previewUrl" height="300" />                 
+    </div>
+   	<div class="example-full-width col-sm-12 form-group">
+        <input type="file" name="event_image" formControlName="event_image" (change)="fileProgress($event)" />
+    </div>
+    <div class="mb-3" *ngIf="uploadedFilePath">
+        {{uploadedFilePath}}
+    </div>
+     <mat-error *ngIf="image_error" class="col-sm-12 invalid-feedback ">
+       <div>Image must be in jpeg,jpg or png format</div>
+    </mat-error>
+</mat-dialog-content>
+<mat-dialog-actions class="float-right">
+    <button mat-stroked-button class="mat-stroked-button" style="margin-right:10px;" (click)="close()">Close</button>
+    <button mat-stroked-button class="mat-stroked-button mat-primary" type="submit" value="submit" >Save</button>
+</mat-dialog-actions>
+</form>

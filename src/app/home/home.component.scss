@@ -1,0 +1,15 @@
+.add_event_btn{
+    
+    position:fixed;
+    bottom:1px;
+    right:40px;
+    display:block;
+    z-index:99999;
+    background-color:red
+}
+.add_event_btn:hover{
+    text-decoration:none;
+}
+.add_sign {
+    font-size:27px;
+}
