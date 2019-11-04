@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-info">
+            <div class="box-body box-profile">
+                @if($user->profile_pic)
+                   <img class="profile-user-img img-responsive img-circle" src="{{$user->profile_pic}}"
+                        alt="User profile picture">
+                @else
+                   <img class="profile-user-img img-responsive img-circle"
+                        src="{{asset('assets/images/user/user.jpeg')}}" alt="User profile picture">
+                @endif
+                <h3 class="profile-username text-center">{{$user->name}}</h3>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs border-bottom-0">
+                <li class="active w-100"><a href="#activity" data-toggle="tab"><strong>Personal Information</strong></a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered"  style="margin-bottom: 2px;">
+                                <tbody>
+                                <tr>
+                                    <td><strong>Name</strong></td>
+                                    <td>{{$user->name}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td><a href="tel:{{$user->email}}" class="user-mail-mobile-text">{{$user->email}}</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender</strong></td>
+                                    <td>{{$user->gender}}</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date Of Birth</strong></td>
+                                    <td>{{date('Y-m-d',strtotime($user->dob))}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Joining Date</strong></td>
+                                    <td>{{date('Y-m-d',strtotime($user->created_at))}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.post -->
+                </div>
+                <!-- /.tab-pane -->
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+            <!-- /.col -->
+</div>
+        <!-- /.row -->

@@ -1,0 +1,112 @@
+/*css for Login page*/
+.sheers-custom-login .card-header {
+    text-align: center;
+    font-size: 16px;
+    background-color: #015951;
+    border: 3px solid #E8A600;
+    border-bottom: 0;
+    border-radius: 18px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.sheers-custom-login .card-body {
+    border: 3px solid #E8A600;
+    border-top: 0;
+    border-radius: 18px !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    background-color: #f8f8f8;
+}
+.sheers-custom-login .card{
+    background-color: transparent;
+    background-clip: unset;
+    border: 0;
+    border-radius: 18px;
+}
+input[type="email"], input[type="password"]{
+    border: 2px solid #cccccc;
+}
+input[type="email"]:hover, input[type=password]:hover, input[type="email"]:focus, input[type=password]:focus{
+    border-color: #015951;
+    box-shadow: none;
+    outline: none;
+}
+.sheers-custom-login .login-form .login-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+.custom-btn {
+    border: 2px solid #015951;
+    background-color: #01595a;
+    border-radius: 4px;
+    padding: 8px 30px;
+    color: #ffffff;
+}
+.custom-btn:hover, .custom-btn:focus{
+    border-color:#E8A600;
+    background-color: #E8A600; 
+}
+.sheers-custom-login{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.heading{
+    color: #E8A600;
+}
+/*end css for Login page*/
+/*css for dashboard page*/
+.main-header .logo-lg.logo-line {
+    margin: 0 auto;
+}
+.skin-green-light .main-header .navbar{
+    background: #01595a;
+}
+.skin-green-light .main-header .logo {
+    background: #01595a;
+    /* border-bottom: 2px solid #01595a; */
+}
+.skin-green-light .main-header .navbar .sidebar-toggle:hover{
+    background-color: #E8A600;
+}
+.skin-green-light .main-header .logo:hover{
+    background-color: #01595a;
+}
+.skin-green-light .dropdown-menu.custom-dropdown > li > a:hover{
+    background-color: #E8A600;
+    color: #FFFFFF;
+}
+.skin-green-light .main-sidebar .sidebar ul.sidebar-menu.tree li.active a:hover {
+    border-left: 5px solid #01595a;
+    border-bottom: 2px solid #FFFFFF;
+}
+.skin-green-light .main-sidebar .sidebar ul.sidebar-menu.tree li.active a{
+    border-left: 5px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+.skin-green-light.sidebar-mini.sidebar-collapse .sidebar ul.sidebar-menu.tree li.active a{
+    border: none;
+}
+.main-header .navbar-custom-menu .navbar-nav li a {
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+.dropdown-menu.custom-dropdown li a{
+    padding: 8px 12px !important;
+}
+.main-header .navbar-custom-menu .navbar-nav li a:hover {
+    background-color: #E8A600;
+}
+.card .small-box.bg-yellow {
+    background-color: #007a7b !important;
+}
+.skin-green-light header.main-header .navbar-custom-menu ul.nav.navbar-nav li.dropdown.open .dropdown-toggle:hover{
+    background-color: #E8A600;
+}
+ul.dropdown-menu.custom-dropdown li a{
+    cursor: pointer;
+}
