@@ -4,16 +4,19 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatSelectModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, 
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AmazingTimePickerModule } from 'amazing-time-picker';
-import { ColorDialogueComponent } from './shared/color-dialogue/color-dialogue.component'; 
+import { ColorDialogueComponent } from './shared/color-dialogue/color-dialogue.component';
+import { ViewEventComponent } from './event/view-event/view-event.component';
+import { EditEventComponent } from './event/edit-event/edit-event.component'; 
 
 
 @NgModule({
@@ -21,7 +24,9 @@ import { ColorDialogueComponent } from './shared/color-dialogue/color-dialogue.c
     AppComponent,
     EventComponent,
     HomeComponent,
-    ColorDialogueComponent
+    ColorDialogueComponent,
+    ViewEventComponent,
+    EditEventComponent
   ],
   imports: [
     CommonModule,
@@ -38,11 +43,13 @@ import { ColorDialogueComponent } from './shared/color-dialogue/color-dialogue.c
     AmazingTimePickerModule,
     MatNativeDateModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    MatCardModule
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [EventComponent, ColorDialogueComponent ]
+  entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent ]
 })
 export class AppModule { }

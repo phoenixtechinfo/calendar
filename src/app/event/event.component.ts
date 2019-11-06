@@ -8,10 +8,9 @@ import {FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgF
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import { ColorDialogueComponent } from '../shared/color-dialogue/color-dialogue.component';
-
-import * as moment_ from 'moment';
-
-const moment = moment_;
+import { EventService } from '../services/event.service';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -45,7 +44,7 @@ export class EventComponent implements OnInit {
   uploadedFilePath: string = null;
   image_error:boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
   	// console.log(new Date(data.type));
     this.start_date = data.type;
   }
@@ -114,15 +113,51 @@ export class EventComponent implements OnInit {
     }
   }
 
-  //Function to save the user details
+  //Function to save the event details
   saveEvent(form) {
-    console.log(form);
-    this.submitted = true;
+      console.log(form);
+      let end_datetime:any;
+      let start_datetime:any;
+      if(this.eventForm.controls.start_time.value != '') {
+         start_datetime = moment(this.eventForm.controls.start_date.value).add({h:this.eventForm.controls.start_time.value.split(':')[0], m:this.eventForm.controls.start_time.value.split(':')[1]});
+      } else {
+        start_datetime = moment(this.eventForm.controls.start_date.value);
+      }
+      if(this.eventForm.controls.end_time.value != '') {
+        end_datetime = moment(this.eventForm.controls.end_date.value).add({h:this.eventForm.controls.end_time.value.split(':')[0], m:this.eventForm.controls.end_time.value.split(':')[1]});
+      } else {
+        end_datetime = moment(this.eventForm.controls.end_date.value);
+      }
+      console.log('start_time', start_datetime.toDate());
+      console.log('end_time', end_datetime.toDate());
+      let payload = new FormData();
+      this.submitted = true;
       if (this.eventForm.invalid || this.image_error == true) {
         console.log("error");
           return;
       }
-      console.log('form success');
+
+      payload.append('title', this.eventForm.controls.title.value);
+      payload.append('description', this.eventForm.controls.description.value);
+      payload.append('start_datetime', start_datetime);
+      payload.append('end_datetime', end_datetime);
+      payload.append('color', this.eventForm.controls.color.value);
+      payload.append('contact_no', this.eventForm.controls.contact_no.value);
+      payload.append('interested_flag', '0');
+      payload.append('image', this.fileData);
+      // console.log('form success');
+       this.event_service.createEvent(payload)
+        .subscribe(res => {
+            this.result = res;
+            console.log('rest', this.result);
+            if(this.result.code == 200) {
+              this.dialogRef.close(this.result.code);
+            } else {
+              this.errros = this.result.message;
+            }
+          }, (err) => {
+            console.log('error', err);
+          }); 
 
    }
 

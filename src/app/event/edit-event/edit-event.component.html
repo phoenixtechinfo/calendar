@@ -1,5 +1,5 @@
-<h2 mat-dialog-title>Create Event</h2>
-<form [formGroup]="eventForm" (ngSubmit)="saveEvent(eventForm)">
+<h2 mat-dialog-title>Edit Event</h2>
+<form [formGroup]="editEventForm" (ngSubmit)="editEvent(editEventForm)">
 <mat-dialog-content >
     <mat-form-field class="example-full-width col-sm-12 ">
         <input matInput id="title" placeholder="Enter Title" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors}" [errorStateMatcher]="matcher">
@@ -45,7 +45,7 @@
         {{ errros.contact_no }} 
     </div>
     <mat-form-field class="example-full-width col-sm-6 ">
-        <input matInput id="color" placeholder="Choose Color"  [value]="eventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
+        <input matInput id="color" placeholder="Choose Color"  [value]="editEventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
     </mat-form-field>
    	<div class="image-preview mb-3 col-sm-12" *ngIf="previewUrl">
         <img [src]="previewUrl" height="300" />                 
@@ -61,7 +61,7 @@
     </mat-error>
 </mat-dialog-content>
 <mat-dialog-actions class="float-right">
-    <button mat-stroked-button class="mat-stroked-button" style="margin-right:10px;" (click)="close()">Close</button>
+    <button mat-stroked-button (click)="closePopup($event)" class="mat-stroked-button" style="margin-right:10px;" >Close</button>
     <button mat-stroked-button class="mat-stroked-button mat-primary" type="submit" value="submit" >Save</button>
 </mat-dialog-actions>
 </form>

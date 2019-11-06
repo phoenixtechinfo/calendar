@@ -21,6 +21,7 @@
       [weekends]="calendarWeekends"
       [events]="calendarEvents"
       (dateClick)="createEvent($event)"
+      (eventClick)="getEventDetails($event)"
     ></full-calendar>
   </div>
 
