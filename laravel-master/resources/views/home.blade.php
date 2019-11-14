@@ -1,5 +1,7 @@
 @extends('layouts.common')
-
+@push('styles') 
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+@endpush
 @section('content')
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -10,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
         </div><!-- /.col -->
@@ -24,66 +26,50 @@
     <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-            <h3>150</h3>
+            <h3>{{ $total_count['total_users'] }}</h3>
 
-            <p>New Orders</p>
+            <p>Availablee Users</p>
             </div>
             <div class="icon">
             <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
+            <h3>{{ $total_count['total_events'] }}</h3>
 
-            <p>Bounce Rate</p>
+            <p>Available Events</p>
             </div>
             <div class="icon">
             <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('events.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-warning">
             <div class="inner">
-            <h3>44</h3>
+            <h3>{{ $total_count['total_banners'] }}</h3>
 
-            <p>User Registrations</p>
+            <p>Available Banners</p>
             </div>
             <div class="icon">
             <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('banners.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-            <div class="inner">
-            <h3>65</h3>
-
-            <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-        </div>
-        <!-- ./col -->
     </div>
     <!-- /.row -->
     <!-- Main row -->
@@ -110,14 +96,7 @@
             </div><!-- /.card-header -->
             <div class="card-body">
             <div class="tab-content p-0">
-                <!-- Morris chart - Sales -->
-                <div class="chart tab-pane active" id="revenue-chart"
-                    style="position: relative; height: 300px;">
-                    <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                </div>
-                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                </div>  
+            <div id='main_calendar'></div>
             </div>
             </div><!-- /.card-body -->
         </div>
@@ -608,4 +587,26 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+@push('scripts')
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
+<script>
+    $(document).ready(function() {
+        // page is now ready, initialize the calendar...
+        $('#main_calendar').fullCalendar({
+            // put your options and callbacks here
+            events : [
+                @foreach($events as $event)
+                {
+                    title : '{{ $event->title }}',
+                    start : new Date('{{ $event->start_datetime }}'),
+                    end : new Date('{{ $event->end_datetime }}'),
+                    url : '{{ route('events.edit', $event->id) }}',
+                    textColor : "white"
+                },
+                @endforeach
+            ]
+        })
+    });
+</script>
+@endpush
 @endsection

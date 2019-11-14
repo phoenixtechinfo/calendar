@@ -18,18 +18,25 @@
         <link rel="stylesheet" href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" 
         <!-- iCheck -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+        <!-- daterange picker -->
+        <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
         <!-- JQVMap -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css') }}">
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/fontawesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+        <!-- Bootstrap4 Duallistbox -->
+        <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
         <!-- overlayScrollbars -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-        <!-- Daterange picker -->
-        <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('assets/dist/css/custom.css') }}">
+        @stack('styles')
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -46,11 +53,17 @@
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
             </li>
+            <li class="nav-item d-none d-sm-inline-block pull-right">
+                <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> <span>Sign Out</span></a>
+            </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
             </ul>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
@@ -70,7 +83,7 @@
                 <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                <a href="javascript:void(0);" class="d-block">{{Auth::user()->name}}</a>
+                <a href="javascript:void(0);" class="d-block">{{ucfirst(Auth::user()->firstname)}} {{Auth::user()->lastname}}</a>
                 </div>
             </div>
 
@@ -89,15 +102,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('users-index') }}" class="nav-link">
+                    <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>User Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/examples/invoice.html" class="nav-link">
+                    <a href="{{ route('events.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Event Management</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('banners.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Banner Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -139,6 +158,11 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
+    <!-- Select2 -->
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="{{ asset('assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <!-- InputMask -->
     <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset('assets/plugins/sparklines/sparkline.js') }}"></script>
@@ -150,6 +174,7 @@
     <!-- daterangepicker -->
     <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Summernote -->
@@ -160,7 +185,9 @@
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}" defer></script>
     <!-- AdminLTE for demo purposes -->
+    @stack('scripts')
     <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 
     </body>

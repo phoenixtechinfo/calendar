@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\models\events;
+use App\models\Banners;
 use Storage;
 use Validator;
 use Carbon\Carbon;
@@ -15,10 +13,9 @@ use Helper;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-class UserController extends Controller
+class BannerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,24 +24,27 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $columns=Schema::getColumnListing('user');
+        $columns=Schema::getColumnListing('banners');
         $orderBy = ($request->input('sortBy') && in_array($request->input('sortBy'), $columns))?$request->input('sortBy'):'id';
         $orderOrder = ($request->input('sortOrder') && ($request->input('sortOrder') == 'asc' || $request->input('sortOrder') == 'desc'))?$request->input('sortOrder'):'asc';
         $limit = env('PAGINATION_PER_PAGE_RECORDS') ? env('PAGINATION_PER_PAGE_RECORDS') : 5;
         $search = ($request->input('search') && $request->input('search') != '')?$request->input('search'):'';
-        $users = User::where(function($query) use ($search){
+        $banners = Banners::where(function($query) use ($search){
             if($search) {
-                $searchColumn = ['firstname', 'lastname', 'email', 'mobilenumber'];
+                $searchColumn = ['title', 'description', 'month', 'year'];
                 foreach ($searchColumn as $singleSearchColumn) {
                     $query->orWhere($singleSearchColumn, "LIKE", '%' . $search . '%');
                 }
             }
         });
         if(Auth::user()->role == 2) {
-            $users = $users->where('role', '!=', 1);
+            $banners = $banners->whereHas('user', function($query)  {
+                $query->where('role', '!=', 1);
+            });
         }
-        $users = $users->orderBy($orderBy, $orderOrder)->paginate($limit);
-        return view('users/index', compact('users')); 
+        $banners = $banners->orderBy($orderBy, $orderOrder)->paginate($limit);
+        // dd ($events);
+        return view('banners/index', compact('banners'));
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users/add_user');
+        return view('banners/add_banner');
     }
 
     /**
@@ -66,46 +66,40 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'mobilenumber' => 'required|numeric',
-            'role' => 'required',
-            'category' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'password' => 'required|nullable|confirmed|min: 8|max: 16|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
+            'title' => 'required',
+            'description' => 'required',
+            'month' => 'required',
+            'year' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             // dd($validator->messages());
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $users = new User();
-        $users->firstname = $request->firstname;
-        $users->lastname = $request->lastname;
-        $users->mobilenumber = $request->mobilenumber;
-        $users->category = $request->category;
-        $users->role = $request->role;
-        $users->email = $request->email;
-        $users->password = Hash::make($request->password);
-        $users->created_by = Auth::user()->id;
-        $users->modified_by = Auth::user()->id;
+        $banner = new Banners();
+        $banner->title = $request->title;
+        $banner->description = $request->description;
+        $banner->month = $request->month;
+        $banner->year = $request->year;
+        $banner->created_by = Auth::user()->id;
+        $banner->modified_by = Auth::user()->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
            // Get image file
            $image = $request->file('image');
            // Make a image name based on user name and current timestamp
-           $name = Str::slug($request->get('firstname'), '-') . '_' . time();
-           $folder = '/uploads/user_images/';
+           $name = Str::slug($request->get('title'), '-') . '_' . time();
+           $folder = '/uploads/banner_images/';
            // Make a file path where image will be stored [ folder path + file name + file extension]
            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
            // Upload image
            $this->uploadOne($image, $folder, 'public', $name);
            // Set user profile image path in database to filePath
-           $users->profile_image = $filePath;
+           $banner->image = $filePath;
         }
-        $users->save();
-        $request->session()->flash('alert-success', 'User created successfully');
-        return redirect()->to('users');
+        $banner->save();
+        $request->session()->flash('alert-success', 'Banner created successfully');
+        return redirect()->to('banners');
     }
 
     /**
@@ -116,8 +110,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('users/show_user', compact('user'));
+        $banner = Banners::with('user')->find($id);
+        return view('banners/show_banner', compact('banner'));
     }
 
     /**
@@ -128,8 +122,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('users/edit_user', compact('user'));
+        $banner = Banners::find($id);
+        return view('banners/edit_banner', compact('banner'));
     }
 
     /**
@@ -141,52 +135,44 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $banner = Banners::find($id);
         $rules = [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'mobilenumber' => 'required|numeric',
-            'role' => 'required',
-            'category' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'password' => 'sometimes|nullable|confirmed|min: 8|max: 16|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
+            'title' => 'required',
+            'description' => 'required',
+            'month' => 'required',
+            'year' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             // dd($validator->messages());
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->mobilenumber = $request->mobilenumber;
-        $user->category = $request->category;
-        $user->role = $request->role;
-        $user->email = $request->email;
-        if(!empty($request->password)) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->modified_by = Auth::user()->id;
+        $banner->title = $request->title;
+        $banner->description = $request->description;
+        $banner->month = $request->month;
+        $banner->year = $request->year;
+        $banner->modified_by = Auth::user()->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
-            if($user->profile_image != '' && $user->profile_image != null){
-                $file_name = explode('/', $user->profile_image)[3];
-                Storage::delete('public/uploads/user_images/' . $file_name);
+            if (!empty($banner->image)) {
+                $file_name = explode('/', $banner->image)[3];
+                Storage::delete('public/uploads/banner_images/' . $file_name);
             }
             // Get image file
             $image = $request->file('image');
             // Make a image name based on user name and current timestamp
-            $name = Str::slug($request->get('firstname'), '-') . '_' . time();
-            $folder = '/uploads/user_images/';
+            $name = Str::slug($request->get('title'), '-') . '_' . time();
+            $folder = '/uploads/banner_images/';
             // Make a file path where image will be stored [ folder path + file name + file extension]
             $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
             // Upload image
             $this->uploadOne($image, $folder, 'public', $name);
             // Set user profile image path in database to filePath
-            $user->profile_image = $filePath;
+            $banner->image = $filePath;
         }
-        $user->save();
-        $request->session()->flash('alert-success', 'User updated successfully');
-        return redirect()->to('users');
+        $banner->save();
+        $request->session()->flash('alert-success', 'Banner updated successfully');
+        return redirect()->to('banners');
     }
 
     /**
@@ -197,11 +183,11 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $banner = Banners::find($id);
+        $banner->delete();
 
-        $request->session()->flash('alert-success', 'User deleted successfully');
-        return redirect()->to('users');
+        $request->session()->flash('alert-success', 'Banner deleted successfully');
+        return redirect()->to('banners');
     }
 
     // function to upload the file at specific location
