@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\models\events;
+use App\models\Categories;
 use Storage;
 use Validator;
 use Carbon\Carbon;
@@ -54,7 +55,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users/add_user');
+        $categories = Categories::all();
+        return view('users/add_user', compact('categories'));
     }
 
     /**
@@ -84,7 +86,6 @@ class UserController extends Controller
         $users->firstname = $request->firstname;
         $users->lastname = $request->lastname;
         $users->mobilenumber = $request->mobilenumber;
-        $users->category = $request->category;
         $users->role = $request->role;
         $users->email = $request->email;
         $users->password = Hash::make($request->password);
@@ -104,6 +105,8 @@ class UserController extends Controller
            $users->profile_image = $filePath;
         }
         $users->save();
+        $category = Categories::find($request->category);
+        $users->categories()->attach($category);
         $request->session()->flash('alert-success', 'User created successfully');
         return redirect()->to('users');
     }
@@ -117,7 +120,11 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users/show_user', compact('user'));
+        $categories_names = array();
+        foreach($user->categories as $categories) {
+            $categories_names[] = $categories->name;
+        }
+        return view('users/show_user', compact('user', 'categories_names'));
     }
 
     /**
@@ -129,7 +136,12 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users/edit_user', compact('user'));
+        $categories = Categories::all();
+        $selected_categories = array();
+        foreach($user->categories as $category) {
+            $selected_categories[] = $category->id;
+        }
+        return view('users/edit_user', compact('user', 'categories', 'selected_categories'));
     }
 
     /**
@@ -160,7 +172,6 @@ class UserController extends Controller
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->mobilenumber = $request->mobilenumber;
-        $user->category = $request->category;
         $user->role = $request->role;
         $user->email = $request->email;
         if(!empty($request->password)) {
@@ -185,6 +196,8 @@ class UserController extends Controller
             $user->profile_image = $filePath;
         }
         $user->save();
+        $category = Categories::find($request->category);
+        $user->categories()->sync($category);
         $request->session()->flash('alert-success', 'User updated successfully');
         return redirect()->to('users');
     }
@@ -199,7 +212,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-
+        $user->categories()->detach();
         $request->session()->flash('alert-success', 'User deleted successfully');
         return redirect()->to('users');
     }

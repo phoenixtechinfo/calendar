@@ -1,57 +1,4 @@
 @extends('layouts.common')
-@push('styles')
-<style>
-    .imagePreview {
-    width: 100%;
-    height: 180px;
-    background-position: center center;
-  background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
-  background-color:#fff;
-    background-size: cover;
-  background-repeat:no-repeat;
-    display: inline-block;
-  box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
-}
-.img-btn
-{
-  display:block;
-  border-radius:0px;
-  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
-  margin-top:-5px;
-  background-color: #007bff;
-}
-.imgUp
-{
-  margin-bottom:15px;
-}
-.del
-{
-  position:absolute;
-  top:0px;
-  right:15px;
-  width:30px;
-  height:30px;
-  text-align:center;
-  line-height:30px;
-  background-color:rgba(255,255,255,0.6);
-  cursor:pointer;
-}
-.imgAdd
-{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background-color:#4bd7ef;
-  color:#fff;
-  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
-  text-align:center;
-  line-height:30px;
-  margin-top:0px;
-  cursor:pointer;
-  font-size:15px;
-}
-</style>
-@endpush
 @section('content')
 <!-- Content Header (Page header) -->
 
@@ -115,7 +62,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Date and time range:</label>
                                 <div class="input-group">
@@ -132,7 +79,23 @@
                             <!-- /.input group -->
                             <label id="reservationtime-error" class="error" for="reservationtime"></label>
                             </div>
-                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Categories</label>
+                                <select class="select2" name="category[]" multiple="multiple" data-placeholder="Select Categories" style="width: 100%;">
+                                    @foreach($categories as $key => $category)
+                                        <option value = "{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('category')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            <!-- /.input group -->
+                                <label id="category[]-error" class="error" for="category[]"></label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -150,21 +113,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Color</label>
-                                <select id="color" class="form-control  @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" style="width: 100%;">
-                                    <option value="default" selected="selected">Default</option>
-                                    <option value="tometo">Tometo</option>
-                                    <option value="tangerine">Tangerine</option>
-                                    <option value="banana">Banana</option>
-                                    <option value="basil">Basil</option>
-                                    <option value="sage">Sage</option>
-                                    <option value="peacock">Peacock</option>
-                                    <option value="blueberry">Blueberry</option>
-                                    <option value="lavendar">Lavender</option>
-                                    <option value="grape">Grape</option>
-                                    <option value="flamino">Flamingo</option>
-                                    <option value="graphite">Graphite</option>
+                                <select id="color_id" class="form-control  @error('color_id') is-invalid @enderror" name="color_id" value="{{ old('color_id') }}" style="width: 100%;">
+                                    @foreach($colors as $key => $color)
+                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                    @endforeach
                                 </select>
-                                @error('color')
+                                @error('color_id')
                                     <span class="invalid-feedback has-error" role="alert">
                                     <strong class="help-block">{{ $message }}</strong>
                                     </span>
@@ -248,7 +202,7 @@
                 description: {
                     required : true
                 },
-                color: {
+                color_id: {
                     required: true,
                 },
                 contact_number: {
@@ -256,6 +210,9 @@
                 },
                 datetime: {
                     required: true,
+                },
+                'category[]': {
+                    required: true
                 },
             },
             messages: {
@@ -265,7 +222,7 @@
                 description: {
                     required: "Please enter the description",
                 },
-                color: {
+                color_id: {
                     required: "Please choose the color"
                 },
                 contact_number: {
@@ -273,7 +230,10 @@
                 },
                 datetime: {
                     required: "Please select the event duration",
-                }
+                },
+                'category[]': {
+                    required: "Please select the categories",
+                },
             }
         });
 

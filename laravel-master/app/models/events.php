@@ -12,4 +12,12 @@ class events extends Model
     {
         return $this->belongsTo('App\User', 'created_by');
     }
+    public function color()
+    {
+        return $this->hasOne('App\models\Colors', 'id', 'color_id');
+    }
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class);
+    }
 }

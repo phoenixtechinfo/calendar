@@ -42,5 +42,10 @@ class User extends Authenticatable
 
     public function events() {
         return $this -> hasMany(App\models\events::class);
-      }
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(models\Categories::class, 'categories_users');
+    }
 }

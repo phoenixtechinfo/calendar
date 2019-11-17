@@ -3,13 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class AddSoftDeletesToEventsTable extends Migration
+class CreateRelationshipCategoriesUserModel extends Migration
 {
-
-    use SoftDeletes;
     /**
      * Run the migrations.
      *
@@ -17,8 +13,10 @@ class AddSoftDeletesToEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('categories_users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('categories_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
         });
     }
 
@@ -29,8 +27,6 @@ class AddSoftDeletesToEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        Schema::dropIfExists('categories_users');
     }
 }

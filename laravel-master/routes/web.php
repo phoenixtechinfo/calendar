@@ -16,10 +16,16 @@
 // });
 
 Auth::routes();
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth:1,2']], function() {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('events', 'EventController');
-    Route::resource('users', 'UserController');
     Route::resource('banners', 'BannerController');
+    Route::resource('settings', 'SettingController');
+    Route::resource('colors', 'ColorController');
+    Route::resource('category', 'CategoryController');
     Route::get('events/add-event', 'EventController@addEvent')->name('add-events');
+});
+
+Route::group(['middleware' => ['auth:1']], function() {
+    Route::resource('users', 'UserController');
 });

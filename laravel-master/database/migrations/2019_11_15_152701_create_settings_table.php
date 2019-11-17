@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AddSoftDeletesToUsersTable extends Migration
+class CreateSettingsTable extends Migration
 {
     use SoftDeletes;
     /**
@@ -15,7 +15,13 @@ class AddSoftDeletesToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('key');
+            $table->longText('value');
+            $table->integer('created_by');
+            $table->integer('modified_by');
+            $table->timestamps();
             $table->softDeletes();
         });
     }
@@ -27,8 +33,6 @@ class AddSoftDeletesToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        Schema::dropIfExists('settings');
     }
 }

@@ -60,8 +60,12 @@
                     <td>{{$event->end_datetime}}</td>
                   </tr>
                   <tr>
+                    <th>Categories</th>
+                    <td>{{  implode(', ', $categories_names) }}</td>
+                  </tr>
+                  <tr>
                     <th>Color</th>
-                    <td>{{$event->color}}</td>
+                    <td>{{ $event->color->name }} <i class="fa fa-square" style="color:{{ $event->color->hexcode}}" aria-hidden="true"></i></td>
                   </tr>
                   <tr>
                     <th>Contact number</th>

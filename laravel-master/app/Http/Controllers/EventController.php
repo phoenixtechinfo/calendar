@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\events;
+use App\models\Colors;
+use App\models\Categories;
 use Storage;
 use Validator;
 use Carbon\Carbon;
@@ -27,20 +29,30 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        // DB::enableQueryLog(); 
+        DB::enableQueryLog(); 
         $columns=Schema::getColumnListing('events');
         $orderBy = ($request->input('sortBy') && in_array($request->input('sortBy'), $columns))?$request->input('sortBy'):'id';
         $orderOrder = ($request->input('sortOrder') && ($request->input('sortOrder') == 'asc' || $request->input('sortOrder') == 'desc'))?$request->input('sortOrder'):'asc';
         $limit = env('PAGINATION_PER_PAGE_RECORDS') ? env('PAGINATION_PER_PAGE_RECORDS') : 5;
         $search = ($request->input('search') && $request->input('search') != '')?$request->input('search'):'';
-        $events = events::where(function($query) use ($search){
+        $events = events::with(['user', 'color']);
+        $events = $events->where(function($query) use ($search){
             if($search) {
-                $searchColumn = ['title', 'description', 'color', 'contact_no'];
+                $searchColumn = ['title', 'description', 'contact_no'];
                 foreach ($searchColumn as $singleSearchColumn) {
                     $query->orWhere($singleSearchColumn, "LIKE", '%' . $search . '%');
                 }
             }
         });
+        if($search) {
+            $events = $events->whereHas('user', function($q) use ($search) { 
+                $q->orWhere('firstname', "LIKE", '%' . $search . '%'); 
+            });
+            $events = $events->whereHas('color', function($q) use ($search) { 
+                    $q->orWhere('name', "LIKE", '%' . $search . '%'); 
+            });
+        }
+        
         if(Auth::user()->role == 2) {
             $events = $events->whereHas('user', function($query)  {
                 $query->where('role', '!=', 1);
@@ -58,7 +70,13 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('events/add_event');
+        if(Auth::user()->role == 2) {
+            $colors = Colors::whereIn('created_for', ['admin', 'user'])->get();
+        } else {
+            $colors = Colors::all();
+        }
+        $categories = Categories::all();
+        return view('events/add_event', compact('colors', 'categories'));
     }
 
     /**
@@ -73,9 +91,10 @@ class EventController extends Controller
             'title' => 'required',
             'description' => 'required',
             'contact_number' => 'required|numeric',
-            'color' => 'required',
+            'color_id' => 'required',
             'datetime' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'category' => 'required'
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -90,7 +109,7 @@ class EventController extends Controller
         $events->start_datetime = $events->start_datetime->format('Y-m-d H:i:s');
         $events->end_datetime = new Carbon($request->get('end_date'));
         $events->end_datetime = $events->end_datetime->format('Y-m-d H:i:s');
-        $events->color = $request->color;
+        $events->color_id = $request->color_id;
         $events->interested_flag = isset($request->interested) ? 1 : 0;
         $events->created_by = Auth::user()->id;
         $events->modified_by = Auth::user()->id;
@@ -108,6 +127,8 @@ class EventController extends Controller
            $events->image = $filePath;
         }
         $events->save();
+        $category = Categories::find($request->category);
+        $events->categories()->attach($category);
         $request->session()->flash('alert-success', 'Event created successfully');
         return redirect()->to('events');
     }
@@ -120,8 +141,12 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $event = events::with('user')->find($id);
-        return view('events/show_event', compact('event'));
+        $event = events::with(['user', 'color'])->find($id);
+        $categories_names = array();
+        foreach($event->categories as $categories) {
+            $categories_names[] = $categories->name;
+        }
+        return view('events/show_event', compact('event', 'categories_names'));
     }
 
     /**
@@ -132,8 +157,18 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        $events = events::find($id);
-        return view('events/edit_event', compact('events'));
+        if(Auth::user()->role == 2) {
+            $colors = Colors::whereIn('created_for', ['admin', 'user'])->get();
+        } else {
+            $colors = Colors::all();
+        }
+        $categories = Categories::all();
+        $events = events::with(['user', 'color'])->find($id);
+        $selected_categories = array();
+        foreach($events->categories as $category) {
+            $selected_categories[] = $category->id;
+        }
+        return view('events/edit_event', compact('events', 'colors', 'categories', 'selected_categories'));
         
     }
 
@@ -151,7 +186,7 @@ class EventController extends Controller
             'title' => 'required',
             'description' => 'required',
             'contact_number' => 'required|numeric',
-            'color' => 'required',
+            'color_id' => 'required',
             'datetime' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ];
@@ -161,6 +196,7 @@ class EventController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $events = events::find($id);
+        $selected_categories = array();
         // dd($events->image);
         $events->title = $request->title;
         $events->description = $request->description;
@@ -173,7 +209,7 @@ class EventController extends Controller
             $events->end_datetime = new Carbon($request->get('end_date'));
             $events->end_datetime = $events->end_datetime->format('Y-m-d H:i:s');
         }
-        $events->color = $request->color;
+        $events->color_id = $request->color_id;
         $events->interested_flag = isset($request->interested) ? 1 : 0;
         $events->modified_by = Auth::user()->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
@@ -194,6 +230,8 @@ class EventController extends Controller
            $events->image = $filePath;
         }
         $events->save();
+        $category = Categories::find($request->category);
+        $events->categories()->sync($category);
         $request->session()->flash('alert-success', 'Event edited successfully');
         return redirect()->to('events');
     }
@@ -208,7 +246,7 @@ class EventController extends Controller
     {
         $event = events::find($id);
         $event->delete();
-
+        $event->categories()->detach();
         $request->session()->flash('alert-success', 'Event deleted successfully');
         return redirect()->to('events');
     }

@@ -26,49 +26,65 @@
     <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-4 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-            <div class="inner">
-            <h3>{{ $total_count['total_users'] }}</h3>
+        @if(Auth::user()->role == 1)
+            <div class="{{ Auth::user()->role == 1 ? 'col-lg-3' : 'col-lg-4' }} col-6">
+            <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                    <h3>{{ $total_count['total_users'] }}</h3>
 
-            <p>Availablee Users</p>
+                    <p>Available Users</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="icon">
-            <i class="ion ion-bag"></i>
+        @endif
+        <!-- ./col -->
+        <div class="{{ Auth::user()->role == 1 ? 'col-lg-3' : 'col-lg-4' }} col-6">
+        <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3>{{ $total_count['total_events'] }}</h3>
+
+                <p>Available Events</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{{ route('events.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-4 col-6">
+        <div class="{{ Auth::user()->role == 1 ? 'col-lg-3' : 'col-lg-4' }} col-6">
         <!-- small box -->
-        <div class="small-box bg-success">
-            <div class="inner">
-            <h3>{{ $total_count['total_events'] }}</h3>
+            <div class="small-box bg-warning">
+                <div class="inner">
+                <h3>{{ $total_count['total_banners'] }}</h3>
 
-            <p>Available Events</p>
+                <p>Available Banners</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-person-add"></i>
+                </div>
+                <a href="{{ route('banners.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="{{ route('events.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-6">
+        <div class="{{ Auth::user()->role == 1 ? 'col-lg-3' : 'col-lg-4' }} col-6">
         <!-- small box -->
-        <div class="small-box bg-warning">
-            <div class="inner">
-            <h3>{{ $total_count['total_banners'] }}</h3>
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3>{{ $total_count['total_category'] }}</h3>
 
-            <p>Available Banners</p>
+                <p>Available Category</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{{ route('category.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-            <i class="ion ion-person-add"></i>
-            </div>
-            <a href="{{ route('banners.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
         </div>
     </div>
     <!-- /.row -->
@@ -601,7 +617,8 @@
                     start : new Date('{{ $event->start_datetime }}'),
                     end : new Date('{{ $event->end_datetime }}'),
                     url : '{{ route('events.edit', $event->id) }}',
-                    textColor : "white"
+                    textColor : 'white',
+                    color : "{{ $event->color->hexcode }}"
                 },
                 @endforeach
             ]

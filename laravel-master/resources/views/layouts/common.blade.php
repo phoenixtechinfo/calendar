@@ -48,10 +48,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <a href="{{ route('home') }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block pull-right">
                 <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> <span>Sign Out</span></a>
@@ -83,7 +80,7 @@
                 <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                <a href="javascript:void(0);" class="d-block">{{ucfirst(Auth::user()->firstname)}} {{Auth::user()->lastname}}</a>
+                <a href="javascript:void(0);" class="d-block">{{ucfirst(Auth::user()->firstname)}} {{ ucfirst(Auth::user()->lastname) }}</a>
                 </div>
             </div>
 
@@ -101,16 +98,24 @@
                     </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>User Management</p>
-                    </a>
-                </li>
+                @if(Auth::user()->role == 1)
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>User Management</p>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('events.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Event Management</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('category.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Category Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -120,7 +125,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/examples/invoice.html" class="nav-link">
+                    <a href="{{ route('colors.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Color Management</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('settings.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Setting</p>
                     </a>
@@ -173,6 +184,7 @@
     <script src="{{ asset('assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <!-- daterangepicker -->
     <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/html5kellycolorpicker.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->

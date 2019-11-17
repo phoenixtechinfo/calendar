@@ -1,57 +1,4 @@
 @extends('layouts.common')
-@push('styles')
-<style>
-    .imagePreview {
-    width: 100%;
-    height: 180px;
-    background-position: center center;
-  background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
-  background-color:#fff;
-    background-size: cover;
-  background-repeat:no-repeat;
-    display: inline-block;
-  box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
-}
-.img-btn
-{
-  display:block;
-  border-radius:0px;
-  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
-  margin-top:-5px;
-  background-color: #007bff;
-}
-.imgUp
-{
-  margin-bottom:15px;
-}
-.del
-{
-  position:absolute;
-  top:0px;
-  right:15px;
-  width:30px;
-  height:30px;
-  text-align:center;
-  line-height:30px;
-  background-color:rgba(255,255,255,0.6);
-  cursor:pointer;
-}
-.imgAdd
-{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background-color:#4bd7ef;
-  color:#fff;
-  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
-  text-align:center;
-  line-height:30px;
-  margin-top:0px;
-  cursor:pointer;
-  font-size:15px;
-}
-</style>
-@endpush
 @section('content')
 <!-- Content Header (Page header) -->
 
@@ -158,13 +105,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Category</label>
-                                <input id="category" class="form-control  @error('category') is-invalid @enderror" name="category" type="text"  placeholder="Category"  value="{{ $user->category }}"">
+                                <label>Categories</label>
+                                <select class="select2" name="category[]" multiple="multiple" value="[1]" data-placeholder="Select Categories" style="width: 100%;">
+                                    @foreach($categories as $key => $category)
+                                        <option value = "{{ $category->id }}" {{ in_array($category->id, $selected_categories) ? "selected='selected'":"" }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('category')
                                     <span class="invalid-feedback has-error" role="alert">
                                     <strong class="help-block">{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            <!-- /.input group -->
+                                <label id="category[]-error" class="error" for="category[]"></label>
                             </div>
                         </div>
                     </div>
@@ -232,7 +187,7 @@
     @endphp
     $('.uploadFile').closest(".imgUp").find('.imagePreview').css("background-image", "url({{$result}}");
     var value = $("#password").val();
-
+    $('.select2').select2()
     $.validator.addMethod("checklower", function(value) {
     return /[a-z]/.test(value);
     });
@@ -305,7 +260,7 @@
                     required : true,
                     maxlength : 10
                 },
-                category: {
+                'category[]': {
                     required : true
                 },
             },
@@ -333,7 +288,7 @@
                     required: "Please enter your mobile number",
                     minlength: "Please enter 10 digit mobile number",
                 },
-                category: {
+                'category[]': {
                     required: "Please enter category ",
                 },
             }
