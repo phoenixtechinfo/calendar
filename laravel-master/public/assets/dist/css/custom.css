@@ -1,0 +1,97 @@
+.form-signin .form-control.is-invalid{margin-bottom: 0px;border: 1px solid #E74C3C; float: left}
+.form-signin .has-error .help-block{font-size: 11px; font-weight: normal; color: #E74C3C; float: left}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{background: rgba(52,73,94,.94);border-color: rgba(52,73,94,.94);}
+.pagination-section .pagination{float: right;}
+.pagination-section .pagination-info{float: left; margin: 20px 0; padding-top: 8px !important;}
+.remember-password-block{float: left;margin-left: 20px;margin-bottom: 10px;}
+.remember-password-block label{margin-top: 0px}
+.edit-profile-form .form-group .form-control.error {background: #FAEDEC; border: 1px solid #E85445}
+.edit-profile-form .form-group .error {color:#E74C3C; font-size: 13px; font-weight: 400}
+.error-number {font-size: 167px;line-height: 1;margin: 20px 0;color: #fff;letter-spacing: 25px;}
+.text-white{color:#fff}    
+.error-wrapper {margin-top: 15%;}
+.error-wrapper h2 {font-size: 64px;color: #fff;text-transform: uppercase;font-weight: bold;}
+.error-wrapper h3 {font-size: 32px;color: #73879C;text-transform: uppercase;font-weight: bold;line-height: 30px;margin-top: 0;}
+.error-wrapper .back-btn:hover {background: #fff;color: #73879C;border-color: #fff;}
+.error-wrapper .back-btn {color: #fff;font-size: 15px;border: 1px solid #fff;padding: 15px 30px;border-radius: 5px;-webkit-border-radius: 5px;text-decoration: none;display: inline-block;margin-bottom: 20px;margin-top: 50px;}
+.panel_toolbox.width-unset{width: unset; min-width: unset;}
+.table-responsive .table .headings th a{ color: #ffffff;}
+.input-group .form-control:not(:first-child):not(:last-child).round-border{border-radius: 25px 0 0 25px;}
+.top_search .input-group-btn .btn-default{background: rgba(52,73,94,.94); color: #ffffff;}
+.edit-profile-form .form-group .invalid-feedback .help-block {color:#E74C3C; font-size: 13px; font-weight: 400}
+.list-sort-icon{float: right;margin-top: 3px;}
+.text-align-center{text-align: center}
+.table-responsive .action-icon{padding: 0px; padding-top: 5px; width: 170px;}
+.table-responsive .action-icon a{font-size: 18px; padding: 0px 8px;}
+.table-responsive .action-icon .delete-button{font-size: 18px; padding: 0px 8px; line-height: 1; color: #5A738E;}
+.padding-0px{padding: 0px;}
+.create-user-button{background: rgba(52,73,94,.94); color: #ffffff;}
+.create-user-button:hover{background: #ffffff; color: rgba(52,73,94,.94);}
+.flash-message { margin-top:28px;}
+.login {background: linear-gradient(to right, rgba(255, 255, 255, 0.85), rgba(156, 169, 183, 0.85)), url('../images/login-backgroud-image.jpg') no-repeat;background-size: cover;}
+.img-circle.profile_img {width: 56px;height: 56px;object-fit: cover;}
+ul.fileList.thumbs li img {
+	width: 103px !important;
+	height: 103px !important;
+}
+.login_content h1:after, .login_content h1:before{top: 35px;}
+.login_content .signup-button{background-color: #73879C;border-color: #73879C;}
+.login_content .signup-button:hover, .login_content .signup-button:focus{background-color: #F7F7F7;border-color: #F7F7F7;color: #73879C}
+.error-wrapper.email-verified{margin-top: 5%;}
+.error-wrapper.email-verified h2{text-transform: unset;}
+.padding-25px {padding-right:15px;}
+.create-event-button { margin-top:15px;}
+.custom-err {
+    color: #E74C3C;
+    font-size: 13px;
+    font-weight: 400
+}
+.imagePreview {
+    width: 100%;
+    height: 180px;
+    background-position: center center;
+    background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+    background-color:#fff;
+    background-size: cover;
+    background-repeat:no-repeat;
+    display: inline-block;
+    box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+}
+.img-btn
+{
+  display:block;
+  border-radius:0px;
+  box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
+  margin-top:-5px;
+  background-color: #007bff;
+}
+.imgUp
+{
+  margin-bottom:15px;
+}
+.del
+{
+  position:absolute;
+  top:0px;
+  right:15px;
+  width:30px;
+  height:30px;
+  text-align:center;
+  line-height:30px;
+  background-color:rgba(255,255,255,0.6);
+  cursor:pointer;
+}
+.imgAdd
+{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background-color:#4bd7ef;
+  color:#fff;
+  box-shadow:0px 0px 2px 1px rgba(0,0,0,0.2);
+  text-align:center;
+  line-height:30px;
+  margin-top:0px;
+  cursor:pointer;
+  font-size:15px;
+}

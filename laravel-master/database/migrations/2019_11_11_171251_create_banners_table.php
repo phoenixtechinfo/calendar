@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CreateEventTable extends Migration
+class CreateBannersTable extends Migration
 {
     use SoftDeletes;
     /**
@@ -15,20 +15,16 @@ class CreateEventTable extends Migration
      */
     public function up()
     {
-         Schema::create('events', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
             $table->longText('description');
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
-            $table->string('image')->nullable()->default(NULL);
-            $table->string('contact_no')->nullable()->default(NULL);
-            $table->bigInteger('color_id')->unsigned();
-            $table->boolean('interested_flag')->default(0);
+            $table->string('month');
+            $table->string('year');
+            $table->string('image');
             $table->integer('created_by');
             $table->integer('modified_by');
             $table->timestamps();
-            $table->foreign('color_id')->references('id')->on('colors');
             $table->softDeletes();
         });
     }
@@ -40,6 +36,6 @@ class CreateEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('banners');
     }
 }

@@ -13,11 +13,18 @@
             </div>
           </div>
         </div>
+        
         @error('email')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
+        @error('error')
+            <span class="custom-err" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        
 
         <div class="input-group mb-3">
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Password" autocomplete="current-password">
@@ -32,7 +39,6 @@
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
-
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">

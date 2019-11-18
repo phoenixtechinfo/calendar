@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Users</h1>
+              <h1>Settings</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Users</li>
+                    <li class="breadcrumb-item active">Settings</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Users list </h3>
+            <h3 class="card-title">Settings list </h3>
             
             <div class="card-tools">
             <form action="" method="get">
@@ -48,48 +48,44 @@
                 </div>
               </div>
               </form>
-              <a href="{{ route('users.create') }}" class="btn btn-primary create-event-button">Create New User</a>
+              <a href="{{ route('settings.create') }}" class="btn btn-primary create-event-button">Add New Setting</a>
             </div>
-
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            @if($users->currentPage() <= $users->lastPage() && $users->total())
+            @if($settings->currentPage() <= $settings->lastPage() && $settings->total())
             <table class="table table-hover">
               <thead>
                 <tr>
                   <th>
-                      <a href="{{Helper::generateURLWithFilter(route('users.index'),1,'id',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">ID </a>{!! Helper::sortingDesign('id',request('sortBy'),request('sortOrder')) !!}
+                      <a href="{{Helper::generateURLWithFilter(route('settings.index'),1,'id',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">ID </a>{!! Helper::sortingDesign('id',request('sortBy'),request('sortOrder')) !!}
                   </th>
                   <th>
-                      <a href="{{Helper::generateURLWithFilter(route('users.index'),1,'name',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">Name </a>{!! Helper::sortingDesign('name',request('sortBy'),request('sortOrder')) !!}</th>
-                    <th>
-                      <a href="{{Helper::generateURLWithFilter(route('users.index'),1,'email',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">Email </a>{!! Helper::sortingDesign('email',request('sortBy'),request('sortOrder')) !!}</th>
+                      <a href="{{Helper::generateURLWithFilter(route('settings.index'),1,'key',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">Key </a>{!! Helper::sortingDesign('key',request('sortBy'),request('sortOrder')) !!}</th>
                   <th>
-                      <a href="{{Helper::generateURLWithFilter(route('users.index'),1,'role',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">Role </a>{!! Helper::sortingDesign('role',request('sortBy'),request('sortOrder')) !!}
+                      <a href="{{Helper::generateURLWithFilter(route('settings.index'),1,'value',(request('sortOrder','asc')=='asc'?'desc':'asc'),request('search'))}}">Value </a>{!! Helper::sortingDesign('value',request('sortBy'),request('sortOrder')) !!}
                   </th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($users as $key => $user)
+                @foreach ($settings as $key => $setting)
                     <tr>
-                        <td>{{ Helper::listIndex($users->currentPage(), $users->perPage(), $key) }}</td>
-                        <td>{{ $user->firstname }} {{ $user->lastname }}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->role == 1 ? 'Super Admin' : ($user->role == 2 ? 'Admin' : 'User')}}</td>
+                        <td>{{ Helper::listIndex($settings->currentPage(), $settings->perPage(), $key) }}</td>
+                        <td>{{$setting->key}}</td>
+                        <td width="70%">{{$setting->value}}</td>
                         <td>
                             <div class="row">
-                              <a href="{{ route('users.edit',$user->id) }}" title="Edit" class="col-md-3 padding-0px"><i class="fa fa-edit"></i></a>
-                              <form action="{{ route('users.destroy',$user->id) }}" method="POST" class="col-md-3 padding-0px">
+                              <a href="{{ route('settings.edit',$setting->id) }}" title="Edit" class="col-md-3 padding-0px"><i class="fa fa-edit"></i></a>
+                              <form action="{{ route('settings.destroy', $setting->id) }}" method="POST" class="col-md-3 padding-0px">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-link padding-0px delete-button" title="Delete User" onClick="return confirm('Are you sure you want to remove {{ ucfirst($user->firstname) }} user ?')"><i class="fa fa-times"></i></button>
+                                <button type="submit" class="btn btn-link padding-0px delete-button" title="Delete Setting" onClick="return confirm('Are you sure you want to remove {{ ucfirst($setting->key) }} settings ?')"><i class="fa fa-times"></i></button>
                               </form>
-                              <form action="{{ route('users.show',$user->id) }}" method="GET" class="col-md-3 padding-0px">
+                              <form action="{{ route('settings.show',$setting->id) }}" method="GET" class="col-md-3 padding-0px">
                                 @method('GET')
                                 @csrf
-                                <button type="submit" class="btn btn-link padding-0px delete-button" title="Show User"><i class="fa fa-eye"></i></button>
+                                <button type="submit" class="btn btn-link padding-0px delete-button" title="Show Setting"><i class="fa fa-eye"></i></button>
                               </form>
                             </div>
                         </td>
@@ -104,8 +100,8 @@
           <!-- /.card-body -->
         </div>
         <div class="pagination-section">
-            <div class="dataTables_info pagination-info">{{ Helper::paginationSummary($users->currentPage(), $users->perPage(), $users->total()) }}</div>
-            {{ $users->appends(['sortBy' => request('sortBy'), 'sortOrder' => request('sortOrder'), 'search' => request('search')])->links() }}
+            <div class="dataTables_info pagination-info">{{ Helper::paginationSummary($settings->currentPage(), $settings->perPage(), $settings->total()) }}</div>
+            {{ $settings->appends(['sortBy' => request('sortBy'), 'sortOrder' => request('sortOrder'), 'search' => request('search')])->links() }}
         </div>
         <!-- /.card -->
       </div>

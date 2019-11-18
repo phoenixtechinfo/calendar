@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Auth;
+use Closure;
 
 class Authenticate extends Middleware
 {
@@ -17,5 +19,25 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             return route('login');
         }
+    }
+    public function handle($request, Closure $next, ... $roles)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+
+        $user = Auth::user();
+        if(!$roles) {
+            return $next($request);
+        }
+        foreach($roles as $role) {
+            // Check if user has the role This check will depend on how your roles are set up
+            if($user->role == $role) {
+                return $next($request);
+            }
+                
+        }
+
+        return redirect(route('home'));
     }
 }
