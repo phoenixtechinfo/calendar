@@ -1,0 +1,61 @@
+
+<mat-toolbar>
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label="Example icon-button with a heart icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span style="margin-left: 20px">Calander App</span>
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">more_vert</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class='app' id="schedule-view" (scroll)="scrollHandler($event)" style="height: calc(100vh - 64px); overflow: auto" ng-if="scheduleViewData.length">
+    <div class="schdule-view-container example-viewport">
+        <div *ngFor="let item of scheduleViewData | keyvalue; trackBy:keyvalue; " class="example-item padding-bottom-5px">
+            <!--{{item | json}}-->
+            <div class="padding-0px-20px padding-bottom-5px display-block color-gray font-size-12px font-light-bold width-100-50px float-right text-upper-case" >{{item.value.weekTitle}}</div>
+            <div *ngFor="let day of item.value.daysData; trackBy:keVvalue;"  id="{{day.keyValue}}" [ngClass]="{'padding-bottom-5px day-view display-inline-block width-100': day.events.length || day.displayBanner, 'current-date': day.currentDate}">
+                <div class="width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" *ngIf="day.displayBanner" [ngStyle]="{'background-image': 'url('+ day.bannerImage +')'}">
+                    {{day.bannerTitle}}
+                </div>
+                <div class="display-block width-50px float-left text-align-center day-month padding-left-10px" *ngIf="day.events.length">
+                    <span class="display-block color-gray font-size-12px font-light-bold text-upper-case month-div">{{day.dayName}}</span>
+                    <span class="display-block color-light-black font-size-20px day-div">{{day.dayNumber}}</span>
+                </div>
+                <div class="width-100-50px float-right padding-0px-10px" *ngIf="day.events.length">
+                    <div class="task-line" *ngFor="let event of day.events" [ngStyle]="{'background-color': event.color}" (click)="getEventDetails(event)">
+                        <span class="display-block font-size-12px font-light-bold">{{event.title}} {{(event.dayNumberTitle)?('(Day '+event.dayNumberTitle+')'):''}}</span>
+                        <span class="display-block font-size-11px font-light" *ngIf="event.dayTimeTitle">{{event.dayTimeTitle}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal" [style.display]="showmodel ? 'block' : 'none'">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Event created on</h4>
+                    <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Event Start From : {{ date }}
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button mat-button mat-fab class="add_event_btn" (click)="createEvent($event)" title="Add Event"><i
+            class="fa fa-plus add_sign" aria-hidden="true"></i></button>
+</div>

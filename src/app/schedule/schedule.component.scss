@@ -1,0 +1,87 @@
+.add_event_btn{
+    
+    position:fixed;
+    bottom:1px;
+    right:40px;
+    display:block;
+    z-index:99999;
+    background-color:red
+}
+.add_event_btn:hover{
+    text-decoration:none;
+}
+.add_sign {
+    font-size:27px;
+}
+
+.example-viewport {
+    height: 100%;
+    width: 100%;
+}
+
+.example-item {
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-container {
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-sidenav {
+    padding: 20px;
+}
+
+.display-inline-block{display: inline-block;}
+.display-block{display: block;}
+.float-left{float: left;}
+.float-right{float: right;}
+.text-align-center{text-align: center}
+.width-100{width: 100%}
+.width-50px{width: 50px;}
+.font-size-11px{font-size: 11px}
+.font-size-12px{font-size: 12px}
+.font-size-20px{font-size: 18px}
+.color-gray{color: #6e6d6d;}
+.color-light-black{color: #2a2a2afa;}
+.font-light-bold{font-weight: 500}
+.width-100-50px{width: calc(100% - 50px);}
+.width-100-70px{width: calc(100% - 70px);}
+.padding-5px-10px{padding: 5px 10px;}
+.padding-0px-10px{padding: 0px 10px;}
+.padding-0px-20px{padding: 0px 20px;}
+.task-line{padding: 5px 10px; border-radius: 3px; background: #0d6aad; color: #ffffff; margin-bottom: 5px; margin-left: 10px; margin-right: 10px;}
+.font-light{font-weight: 400}
+.padding-bottom-5px{padding-bottom: 5px;}
+.padding-bottom-50px{padding-bottom: 50px;}
+.text-upper-case{text-transform: uppercase}
+.banner-container{height: 300px;background-color: #cccccc;background-repeat: no-repeat; background-size: cover; font-size: 24px; padding: 30px 60px;}
+.margin-bottom-10px{margin-bottom: 10px}
+.current-date .day-month .month-div{
+    color:#0d6aad;
+}
+.current-date .day-month .day-div{
+    color:#fff;
+    background: #0d6aad;
+    margin: 0 auto;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    padding-top: 2px;
+}
+.padding-left-10px{padding-left: 10px}

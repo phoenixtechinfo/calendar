@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 const routes: Routes = [
 {
@@ -9,6 +10,11 @@ const routes: Routes = [
     component: HomeComponent,
     data: { title: 'Home page' }
   },
+    {
+        path: 'schedule',
+        component: ScheduleComponent,
+        data: { title: 'Schedule' }
+    },
  ];
 
 @NgModule({

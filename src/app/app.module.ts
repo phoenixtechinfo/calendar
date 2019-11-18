@@ -8,15 +8,18 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatSelectModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, 
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 import { AmazingTimePickerModule } from 'amazing-time-picker';
 import { ColorDialogueComponent } from './shared/color-dialogue/color-dialogue.component';
 import { ViewEventComponent } from './event/view-event/view-event.component';
-import { EditEventComponent } from './event/edit-event/edit-event.component'; 
+import { EditEventComponent } from './event/edit-event/edit-event.component';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -24,6 +27,7 @@ import { EditEventComponent } from './event/edit-event/edit-event.component';
     AppComponent,
     EventComponent,
     HomeComponent,
+    ScheduleComponent,
     ColorDialogueComponent,
     ViewEventComponent,
     EditEventComponent
@@ -45,7 +49,10 @@ import { EditEventComponent } from './event/edit-event/edit-event.component';
     FormsModule,
     MatButtonModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+      MatIconModule,
+      MatSidenavModule,
+    ScrollDispatchModule
 
   ],
   providers: [DatePipe],
