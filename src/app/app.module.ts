@@ -20,6 +20,8 @@ import { ViewEventComponent } from './event/view-event/view-event.component';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatCardModule,
       MatIconModule,
       MatSidenavModule,
+      MatListModule,
     ScrollDispatchModule
 
   ],

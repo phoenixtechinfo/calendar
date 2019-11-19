@@ -8,14 +8,42 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {EventComponent} from '../event/event.component';
 import {EventService} from '../services/event.service';
 import {ViewEventComponent} from '../event/view-event/view-event.component';
+import {FormControl} from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'MM/YYYY',
+    },
+    display: {
+        dateInput: 'MMM YYYY',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 
 @Component({
     selector: 'schedule-view',
     templateUrl: './schedule.component.html',
     styleUrls: ['./schedule.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+        // application's root module. We provide it at the component level here, due to limitations of
+        // our example generation script.
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+        },
+
+        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    ],
 })
 
 export class ScheduleComponent implements OnInit {
@@ -24,6 +52,7 @@ export class ScheduleComponent implements OnInit {
 
     constructor(private dialog: MatDialog, private event_service: EventService) {
         this.selectedDate = moment();
+        this.selectedDate1 = new FormControl(new Date());
         this.currentDate = moment();
     }
 
@@ -83,8 +112,8 @@ export class ScheduleComponent implements OnInit {
             dayData.keyValue = moment(date).format('YYYY-MM-DD');
             dayData.currentDate = moment().isSame(date, 'd') ? true : false;
             dayData.events = [];
-            this.calendarEvents.forEach((item, index) => {
-                let item = { ...item };
+            this.calendarEvents.forEach((value, index) => {
+                let item = { ...value };
                 var isStartDateInRange = moment(item.start).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
                 var isEndDateInRange = moment(item.end).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
                 var isDateInRange = moment(date).isBetween(moment(item.start).startOf('day'), moment(item.end).endOf('day'));

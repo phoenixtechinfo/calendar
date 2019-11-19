@@ -17,6 +17,7 @@
     "@angular/core": "~7.2.0",
     "@angular/forms": "~7.2.0",
     "@angular/material": "^7.3.7",
+    "@angular/material-moment-adapter": "^8.2.3",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
@@ -35,11 +36,12 @@
     "ng-material-datetimepicker": "^1.19.2",
     "ngx-material-timepicker": "^4.0.2",
     "rxjs": "~6.3.3",
+    "symbol-observable": "^1.2.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-angular": "^0.13.9",
     "@angular/cli": "~7.3.6",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
