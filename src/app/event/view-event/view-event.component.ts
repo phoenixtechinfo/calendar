@@ -16,6 +16,8 @@ export class ViewEventComponent implements OnInit {
 
   event_id:number;
   events_data:Object;
+  categories_data:Object;
+  selected_categories:Array = [];
   constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService) { 
   		this.event_id = data.id;
   }
@@ -33,6 +35,10 @@ export class ViewEventComponent implements OnInit {
   		.subscribe(res => {
   			console.log('res', res);
   			this.events_data = res['data'];
+        this.categories_data = res['categories'];
+        this.categories_data.forEach(item => {
+          this.selected_categories.push(' '+item.name);
+        });
   		}, err => {
   			console.log('error', err);
   		});
@@ -46,7 +52,8 @@ export class ViewEventComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-        data: this.events_data
+        data: this.events_data,
+        categories: this.categories_data
     };
 
     // this.dialog.open(UserdialogueComponent, dialogConfig);

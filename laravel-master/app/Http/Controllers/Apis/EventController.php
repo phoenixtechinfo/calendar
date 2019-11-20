@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\events;
+use App\models\Categories;
 use Storage;
 use Validator;
 use Carbon\Carbon;
@@ -26,7 +27,7 @@ class EventController extends Controller
     	$event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
     	$event->contact_no = $request->get('contact_no');
-    	$event->color = $request->get('color');
+    	$event->color_id = 1;
     	$event->created_by = 1;
     	$event->modified_by = 1;
     	if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
@@ -43,6 +44,8 @@ class EventController extends Controller
             $event->image = $filePath;
         }
     	$event->save();
+        $category = Categories::find(array_map('intval', explode(',', $request->category)));
+        $event->categories()->attach($category);
         $response['code'] = 200;
         $response['message'] = 'Successfully added';
         return response()->json($response);
@@ -61,6 +64,7 @@ class EventController extends Controller
     public function getEventDetails(Request $request) {
         $id = $request->get('id');
         $event = events::find($id);
+        $categories = $event->categories;
         if($event->image != '' && $event->image != null) {
             if(!file_exists(public_path() .'/storage/'.$event->image)) {
                 $event->image = '/uploads/event_images/no-image.png';
@@ -71,6 +75,7 @@ class EventController extends Controller
         $response['code'] = 200;
         $response['message'] = 'Successfully fetched event\'s data';
         $response['data'] = $event;
+        $response['categories'] = $categories;
         return response()->json($response);
     }
 
@@ -84,7 +89,7 @@ class EventController extends Controller
         $event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
         $event->contact_no = $request->get('contact_no');
-        $event->color = $request->get('color');
+        $event->color_id = 1;
         $event->created_by = 1;
         $event->modified_by = 1;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
@@ -105,6 +110,8 @@ class EventController extends Controller
             $event->image = $filePath;
         }
         $event->save();
+        $category = Categories::find(array_map('intval', explode(',', $request->category)));
+        $event->categories()->sync($category);
         $response['code'] = 200;
         $response['message'] = 'Successfully edited';
         return response()->json($response);

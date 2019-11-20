@@ -51,10 +51,11 @@ import {MatListModule} from '@angular/material/list';
     FormsModule,
     MatButtonModule,
     HttpClientModule,
+    MatSelectModule
     MatCardModule,
-      MatIconModule,
-      MatSidenavModule,
-      MatListModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
     ScrollDispatchModule
 
   ],

@@ -44,11 +44,14 @@ export class EditEventComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
   image_error:boolean = false;
-
+  categories_data:any;
+  selected_categories:any;
+  selected_categories_data:Array = [];
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EditEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
   	console.log(data.data);
+    this.getCategories();
     this.event_data = data.data;
-    
+    this.selected_categories = data.categories;
   }
 
   ngOnInit() {
@@ -62,6 +65,7 @@ export class EditEventComponent implements OnInit {
       event_image: [''],
       contact_no:[''],
       color:[''],
+      category: ['', Validators.compose([Validators.required])],
     });
     this.editEventForm.controls.title.setValue(this.event_data.title);
   	this.editEventForm.controls.description.setValue(this.event_data.description);
@@ -71,6 +75,7 @@ export class EditEventComponent implements OnInit {
   	this.editEventForm.controls.end_time.setValue(moment(this.event_data.end_datetime).format("HH:mm"));
   	this.editEventForm.controls.contact_no.setValue(this.event_data.contact_no);
   	this.editEventForm.controls.color.setValue(this.event_data.color);
+    
     this.previewUrl = 'http://127.0.0.1:8000/storage/'+ this.event_data.image;
   }
 
@@ -160,6 +165,7 @@ export class EditEventComponent implements OnInit {
       payload.append('end_datetime', end_datetime);
       payload.append('color', this.editEventForm.controls.color.value);
       payload.append('contact_no', this.editEventForm.controls.contact_no.value);
+      payload.append('category', this.editEventForm.controls.category.value.toString());
       payload.append('interested_flag', '0');
       payload.append('image', this.fileData);
       // console.log('form success');
@@ -183,5 +189,21 @@ export class EditEventComponent implements OnInit {
     event.preventDefault()
 	 this.dialogRef.close();
   }    
+
+  //function to get all the categories
+  getCategories() {
+    this.event_service.getAllCategories()
+      .subscribe(res => {
+        console.log('res', res);
+        this.categories_data = res['data'];
+        this.selected_categories.forEach(item => {
+          this.selected_categories_data.push(item.id);
+        });
+        console.log(this.selected_categories_data);
+        this.editEventForm.controls.category.setValue(this.selected_categories_data);
+      }, err => {
+        console.log('error', err);
+      });
+  }
 
 }

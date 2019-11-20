@@ -54,6 +54,26 @@ export class EventService {
     );
   }
 
+  //Api for getting all the colors
+  getAllColors() {
+  return this.http.get(`${apiUrl}get-all-colors`, httpOptions).pipe(
+      tap(_ => {
+        console.log('Fetched all the colors successfully');
+      }),
+      catchError(this.handleError('getAllColors'))
+    );
+  }
+
+  //Api for getting all the categories
+  getAllCategories() {
+  return this.http.get(`${apiUrl}get-all-categories`, httpOptions).pipe(
+      tap(_ => {
+        console.log('Fetched all the categories successfully');
+      }),
+      catchError(this.handleError('getAllCategories'))
+    );
+  }
+
   //Function to handle the error
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

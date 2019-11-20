@@ -43,9 +43,11 @@ export class EventComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
   image_error:boolean = false;
-
+  categories_data:any;
+  
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
   	// console.log(new Date(data.type));
+    this.getCategories();
     this.start_date = data.type;
   }
 
@@ -67,6 +69,7 @@ export class EventComponent implements OnInit {
       event_image: [''],
       contact_no:[''],
       color:[''],
+      category: ['', Validators.compose([Validators.required])],
 
     });
     this.eventForm.controls.start_date.setValue(this.start_date.date);
@@ -144,8 +147,10 @@ export class EventComponent implements OnInit {
       payload.append('color', this.eventForm.controls.color.value);
       payload.append('contact_no', this.eventForm.controls.contact_no.value);
       payload.append('interested_flag', '0');
+      payload.append('category', this.eventForm.controls.category.value.toString());
       payload.append('image', this.fileData);
-      // console.log('form success');
+      console.log(payload);
+      console.log('form success');
        this.event_service.createEvent(payload)
         .subscribe(res => {
             this.result = res;
@@ -189,5 +194,16 @@ export class EventComponent implements OnInit {
   close() {
       this.dialogRef.close(401);
   }    
+
+  //function to get all the categories
+  getCategories() {
+    this.event_service.getAllCategories()
+      .subscribe(res => {
+        console.log('res', res);
+        this.categories_data = res['data'];
+      }, err => {
+        console.log('error', err);
+      });
+  }
 
 }

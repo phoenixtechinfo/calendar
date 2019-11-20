@@ -5,11 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 
 const routes: Routes = [
-{
-    path: '',
-    component: HomeComponent,
-    data: { title: 'Home page' }
-  },
+    {
+      path: '',
+      component: HomeComponent,
+      data: { title: 'Home page' }
+    },
     {
         path: 'schedule',
         component: ScheduleComponent,

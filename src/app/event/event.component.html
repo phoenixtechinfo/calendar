@@ -47,6 +47,14 @@
     <mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="color" placeholder="Choose Color"  [value]="eventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
     </mat-form-field>
+    <mat-form-field class="example-full-width col-sm-12 ">
+        <mat-select formControlName="category" id="category" placeholder="Select Categories" multiple [ngClass]="{ 'is-invalid': submitted && f.category.errors}" >
+          `<mat-option *ngFor="let categories of categories_data" [value]="categories.id">{{categories.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.category.errors" class="invalid-feedback ">
+            <div *ngIf="f.category.errors.required">Category is required</div>
+        </mat-error>
+    </mat-form-field>
    	<div class="image-preview mb-3 col-sm-12" *ngIf="previewUrl">
         <img [src]="previewUrl" height="300" />                 
     </div>
