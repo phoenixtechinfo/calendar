@@ -37,7 +37,7 @@
         <div *ngFor="let item of scheduleViewData | keyvalue; trackBy:keyvalue; " class="example-item padding-bottom-5px">
             <!--{{item | json}}-->
             <div class="padding-0px-20px padding-bottom-5px display-block color-gray font-size-12px font-light-bold width-100-50px float-right text-upper-case" >{{item.value.weekTitle}}</div>
-            <div *ngFor="let day of item.value.daysData; trackBy:keVvalue;"  id="{{day.keyValue}}" [ngClass]="{'padding-bottom-5px day-view display-inline-block width-100': day.events.length || day.displayBanner, 'current-date': day.currentDate}">
+            <div *ngFor="let day of item.value.daysData; trackBy:keVvalue;" class="date-identify"  id="{{day.keyValue}}" [ngClass]="{'padding-bottom-5px day-view display-inline-block width-100': day.events.length || day.displayBanner, 'current-date': day.currentDate}">
                 <div class="width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" *ngIf="day.displayBanner" [ngStyle]="{'background-image': 'url('+ day.bannerImage +')'}">
                     {{day.bannerTitle}}
                 </div>

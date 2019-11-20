@@ -69,6 +69,7 @@ export class ScheduleComponent implements OnInit {
     calendarWeekends = true;
     calendarEvents: EventInput[] = [];
     selectedDate: any;
+    selectedDate1: any;
     currentDate: any;
     scheduleViewData: any = [];
     items: any = [];
@@ -196,6 +197,15 @@ export class ScheduleComponent implements OnInit {
             }, 0);
             //target.scrollTop += (target.scrollHeight-lastScrollHeight);
         }
+
+        var scheduleViewOffsetTop = target.offsetTop;
+        document.querySelectorAll("#schedule-view .date-identify").forEach(function (item) {
+            var totalOffsetTop =  item.offsetTop - target.scrollTop - scheduleViewOffsetTop;
+            if(totalOffsetTop<=0 && (totalOffsetTop + item.clientHeight) >= 0) {
+                //this.selectedDate1 = new FormControl(moment(item.id));
+            }
+
+        });
 
     }
 
