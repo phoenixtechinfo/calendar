@@ -51,7 +51,7 @@ import {MatListModule} from '@angular/material/list';
     FormsModule,
     MatButtonModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
     MatCardModule,
     MatIconModule,
     MatSidenavModule,

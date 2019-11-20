@@ -16,8 +16,8 @@ export class ViewEventComponent implements OnInit {
 
   event_id:number;
   events_data:Object;
-  categories_data:Object;
-  selected_categories:Array = [];
+  categories_data:any;
+  selected_categories:Array<Object> = [];
   constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService) { 
   		this.event_id = data.id;
   }

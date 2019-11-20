@@ -46,7 +46,7 @@ export class EditEventComponent implements OnInit {
   image_error:boolean = false;
   categories_data:any;
   selected_categories:any;
-  selected_categories_data:Array = [];
+  selected_categories_data:Array<Object> = [];
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EditEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
   	console.log(data.data);
     this.getCategories();
