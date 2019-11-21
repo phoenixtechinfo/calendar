@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {FullCalendarComponent} from '@fullcalendar/angular';
 import {EventInput} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -46,7 +46,7 @@ export class ScheduleComponent implements OnInit {
 
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
-    constructor(private dialog: MatDialog, private event_service: EventService) {
+    constructor(private dialog: MatDialog, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
         this.selectedDateFormControl = new FormControl(new moment());
         this.currentDate = moment();
     }
@@ -111,50 +111,12 @@ export class ScheduleComponent implements OnInit {
         while (weeklength--) {
             let dayData: any = {};
             dayData.id = moment(date).year() + '-' + moment(date).week();
+            dayData.date = moment(date);
             dayData.dayName = moment(date).format('ddd');
             dayData.dayNumber = moment(date).format('DD');
             dayData.keyValue = moment(date).format('YYYY-MM-DD');
             dayData.currentDate = moment().isSame(date, 'd') ? true : false;
-            dayData.events = [];
-            this.calendarEvents.forEach((value, index) => {
-                let item = { ...value };
-                var isStartDateInRange = moment(item.start).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
-                var isEndDateInRange = moment(item.end).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
-                var isDateInRange = moment(date).isBetween(moment(item.start).startOf('day'), moment(item.end).endOf('day'));
-                var dayDiff = moment(item.end).endOf('day').diff(moment(item.start).startOf('day'), 'days');
-                var currentDayNumber = moment(date).endOf('day').diff(moment(item.start).startOf('day'), 'days');
-                if (isDateInRange || moment(item.start).isSame(date, 'd') || moment(item.end).isSame(date, 'd')) {
-                    if (moment(item.start).isSame(date) && moment(item.end).isSame(date)) {
-                        item.dayNumberTitle = '';
-                        item.dayTimeTitle = '';
-                    }
-                    else if (isStartDateInRange && isEndDateInRange) {
-                        item.dayNumberTitle = '';
-                        item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
-                    }
-                    else {
-                        item.dayNumberTitle = (currentDayNumber + 1) + '/' + (dayDiff + 1);
-                        if (moment(item.start).isSame(date) && isEndDateInRange) {
-                            item.dayNumberTitle = '';
-                            item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
-                        }
-                        else if (isStartDateInRange && moment(item.end).isSame(date)) {
-                            item.dayNumberTitle = '';
-                            item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
-                        }
-                        else if (moment(item.start).isSame(date)) {
-                            item.dayTimeTitle = '';
-                        } else if(isStartDateInRange) {
-                            item.dayTimeTitle = moment(item.start).format('hh:mm A');
-                        } else if(isEndDateInRange) {
-                            item.dayTimeTitle = 'Until ' + moment(item.end).format('hh:mm A');
-                        } else {
-                            item.dayTimeTitle = '';
-                        }
-                    }
-                    dayData.events.push(item);
-                }
-            });
+            dayData.events = this.getEventsByDate(date);
 
             if (parseInt(moment(date).format('DD')) == 1) {
                 dayData.displayBanner = 1;
@@ -165,6 +127,58 @@ export class ScheduleComponent implements OnInit {
             date.add(1, 'day');
         }
         return result;
+    }
+
+    refreshEventData(){
+        for (var key in this.scheduleViewData) {
+            this.scheduleViewData[key].daysData.forEach((dayVal,dayKey) => {
+                dayVal.events = this.getEventsByDate(dayVal.date);
+            })
+        }
+        this.changeDetection.detectChanges();
+    }
+    getEventsByDate(date){
+        var events = [];
+        this.calendarEvents.forEach((value, index) => {
+            let item = { ...value };
+            var isStartDateInRange = moment(item.start).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
+            var isEndDateInRange = moment(item.end).isBetween(moment(date).startOf('day'), moment(date).endOf('day'));
+            var isDateInRange = moment(date).isBetween(moment(item.start).startOf('day'), moment(item.end).endOf('day'));
+            var dayDiff = moment(item.end).endOf('day').diff(moment(item.start).startOf('day'), 'days');
+            var currentDayNumber = moment(date).endOf('day').diff(moment(item.start).startOf('day'), 'days');
+            if (isDateInRange || moment(item.start).isSame(date, 'd') || moment(item.end).isSame(date, 'd')) {
+                if (moment(item.start).isSame(date) && moment(item.end).isSame(date)) {
+                    item.dayNumberTitle = '';
+                    item.dayTimeTitle = '';
+                }
+                else if (isStartDateInRange && isEndDateInRange) {
+                    item.dayNumberTitle = '';
+                    item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
+                }
+                else {
+                    item.dayNumberTitle = (currentDayNumber + 1) + '/' + (dayDiff + 1);
+                    if (moment(item.start).isSame(date) && isEndDateInRange) {
+                        item.dayNumberTitle = '';
+                        item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
+                    }
+                    else if (isStartDateInRange && moment(item.end).isSame(date)) {
+                        item.dayNumberTitle = '';
+                        item.dayTimeTitle = moment(item.start).format('hh:mm A') + ' - ' + moment(item.end).format('hh:mm A');
+                    }
+                    else if (moment(item.start).isSame(date)) {
+                        item.dayTimeTitle = '';
+                    } else if(isStartDateInRange) {
+                        item.dayTimeTitle = moment(item.start).format('hh:mm A');
+                    } else if(isEndDateInRange) {
+                        item.dayTimeTitle = 'Until ' + moment(item.end).format('hh:mm A');
+                    } else {
+                        item.dayTimeTitle = '';
+                    }
+                }
+                events.push(item);
+            }
+        });
+        return events;
     }
 
 
@@ -248,7 +262,12 @@ export class ScheduleComponent implements OnInit {
                     console.log('calendar', this.calendarEvents);
                 });
                 console.log(this.selectedDateFormControl.value)
-                this.getScheduleViewData(this.selectedDateFormControl.value);
+                if(this.pageLoadInit) {
+                    this.getScheduleViewData(this.selectedDateFormControl.value);
+                } else {
+                    this.refreshEventData();
+                }
+                this.pageLoadInit = 0;
             }, err => {
                 console.log('err', err);
             })
