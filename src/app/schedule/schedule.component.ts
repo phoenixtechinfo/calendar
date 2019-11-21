@@ -33,15 +33,11 @@ export const MY_FORMATS = {
     styleUrls: ['./schedule.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
-        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-        // application's root module. We provide it at the component level here, due to limitations of
-        // our example generation script.
         {
             provide: DateAdapter,
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
-
         {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
 })
@@ -51,14 +47,13 @@ export class ScheduleComponent implements OnInit {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     constructor(private dialog: MatDialog, private event_service: EventService) {
-        this.selectedDate = moment();
-        this.selectedDate1 = new FormControl(new Date());
+        this.selectedDateFormControl = new FormControl(new moment());
         this.currentDate = moment();
     }
 
     ngOnInit() {
         this.getAllEvents();
-        this.getScheduleViewData(this.selectedDate);
+        this.getScheduleViewData(this.selectedDateFormControl.value);
     }
 
     pageLoadInit = 1;
@@ -68,8 +63,7 @@ export class ScheduleComponent implements OnInit {
     calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
     calendarWeekends = true;
     calendarEvents: EventInput[] = [];
-    selectedDate: any;
-    selectedDate1: any;
+    selectedDateFormControl: any;
     currentDate: any;
     scheduleViewData: any = [];
     items: any = [];
@@ -77,6 +71,15 @@ export class ScheduleComponent implements OnInit {
     scrollThreshold = 100;
     minLoadedDate: any;
     maxLoadedDate: any;
+
+    dateChange(){
+        this.getScheduleViewData(this.selectedDateFormControl.value);
+    }
+
+    currentDateSelect(){
+        this.selectedDateFormControl = new FormControl(new moment());
+        this.getScheduleViewData(this.selectedDateFormControl.value);
+    }
 
     getScheduleViewData(date) {
         this.minLoadedDate = moment(date);
@@ -199,13 +202,24 @@ export class ScheduleComponent implements OnInit {
         }
 
         var scheduleViewOffsetTop = target.offsetTop;
+        var topElement = null;
+        var beforeTopElement = null;
         document.querySelectorAll("#schedule-view .date-identify").forEach(function (item) {
             var totalOffsetTop =  item.offsetTop - target.scrollTop - scheduleViewOffsetTop;
             if(totalOffsetTop<=0 && (totalOffsetTop + item.clientHeight) >= 0) {
-                //this.selectedDate1 = new FormControl(moment(item.id));
+                topElement = item.id;
+            } else {
+                if(totalOffsetTop<=0){
+                    beforeTopElement = item.id;
+                }
             }
 
         });
+        if(topElement){
+            this.selectedDateFormControl = new FormControl(moment(topElement));
+        } else {
+            this.selectedDateFormControl = new FormControl(moment(beforeTopElement));
+        }
 
     }
 
@@ -233,7 +247,8 @@ export class ScheduleComponent implements OnInit {
                     this.calendarEvents.push(data);
                     console.log('calendar', this.calendarEvents);
                 });
-                this.getScheduleViewData(this.selectedDate);
+                console.log(this.selectedDateFormControl.value)
+                this.getScheduleViewData(this.selectedDateFormControl.value);
             }, err => {
                 console.log('err', err);
             })

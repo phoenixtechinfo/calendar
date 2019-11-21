@@ -21,14 +21,14 @@
         </button>
         <span style="margin-left: 20px">Calander App</span>
         <mat-form-field class="header-date-picker">
-            <input matInput [formControl]="selectedDate1" [matDatepicker]="picker" (click)="picker.open()">
+            <input matInput class="uppercase" [formControl]="selectedDateFormControl" [matDatepicker]="picker" (click)="picker.open()" (dateChange)="dateChange()">
             <button mat-icon-button matSuffix (click)="picker.open()">
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <span class="example-spacer"></span>
-        <mat-icon class="example-icon margin-right-20px" aria-hidden="false" aria-label="Example delete icon">today</mat-icon>
+        <mat-icon class="example-icon margin-right-20px cursor-pointer" aria-hidden="false" aria-label="Example delete icon" (click)="currentDateSelect()">today</mat-icon>
         <mat-icon class="example-icon margin-right-10px" aria-hidden="false" aria-label="Example delete icon">more_vert</mat-icon>
     </mat-toolbar-row>
 </mat-toolbar>
