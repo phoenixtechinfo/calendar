@@ -21,6 +21,7 @@ import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import { NgInitDirective } from './directives/ng-init.directive';
 
 
 
@@ -32,7 +33,8 @@ import {MatListModule} from '@angular/material/list';
     ScheduleComponent,
     ColorDialogueComponent,
     ViewEventComponent,
-    EditEventComponent
+    EditEventComponent,
+    NgInitDirective
   ],
   imports: [
     CommonModule,

@@ -2,7 +2,7 @@
     <mat-label style="font-weight: 800;font-size:20px;">Choose Color</mat-label><br>
     <mat-radio-group class="example-radio-group" (change)="selectColor($event)" [(ngModel)]="color"><br>
 
-        <mat-radio-button *ngFor="let color of colors_data" value="{{color.name}}" style="color:{{color.name}}" class="{{color.name | lowercase}}">{{color.name}}</mat-radio-button><br>
+        <mat-radio-button #refEl *ngFor="let color of colors_data" value="{{color.name}}" (ngInit)="redioInitialize(refEl, color)" class="custom-radio">{{color.name}}</mat-radio-button><br>
        <!--  <mat-radio-button value="tangerine" class="tangerine" >Tangerine</mat-radio-button><br>
         <mat-radio-button value="banana" class="banana">Banana</mat-radio-button><br>
         <mat-radio-button value="basil" class="basil">Basil</mat-radio-button><br>

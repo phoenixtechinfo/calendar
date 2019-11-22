@@ -1,3 +1,20 @@
+.custom-radio {
+	width: 100%;
+
+	::ng-deep .mat-radio-label {
+		.mat-radio-container {
+			.mat-radio-outer-circle {
+				//border-color: #0000FF !important;
+				border-width: 6px;
+			}
+			.mat-radio-inner-circle {
+				border-width: 6px !important;
+				//background-color: #0000FF !important;
+			}
+		}
+	}
+}
+
 .tometo {
 	::ng-deep .mat-radio-label {
 		.mat-radio-container {
@@ -12,6 +29,7 @@
 		}
 	}
 }
+
 .default {
 	::ng-deep .mat-radio-label {
 		.mat-radio-container {

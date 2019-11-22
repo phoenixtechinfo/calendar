@@ -36,6 +36,11 @@ export class ColorDialogueComponent implements OnInit {
 	this.dialogRef.close(event.value);
   }
 
+    redioInitialize(event,color){
+      event._elementRef.nativeElement.getElementsByClassName('mat-radio-outer-circle')[0].style['border-color'] = color.hexcode;
+      event._elementRef.nativeElement.getElementsByClassName('mat-radio-inner-circle')[0].style['background-color'] = color.hexcode;
+    }
+
 
 
 }
