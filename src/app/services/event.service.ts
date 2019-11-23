@@ -27,13 +27,13 @@ export class EventService {
   }
 
   //Api for getting all the events
-  getAllEvents(): Observable<any> {
-	return this.http.get(`${apiUrl}get-all-events`, httpOptions).pipe(
-      tap(_ => {
-        console.log('Fetched all the events successfully');
-      }),
-      catchError(this.handleError('getAllEvents'))
-    );
+    getAllEvents(): Observable<any> {
+    	return this.http.get(`${apiUrl}get-all-events`, httpOptions).pipe(
+          tap(_ => {
+            console.log('Fetched all the events successfully');
+          }),
+          catchError(this.handleError('getAllEvents'))
+        );
   }
 
   //Function to get event details

@@ -185,7 +185,8 @@ export class EventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          this.eventForm.controls.color.setValue(data);
+          console.log('colors from event', data);
+          this.eventForm.controls.color.setValue(data.name);
         }
     );    
   }

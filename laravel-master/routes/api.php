@@ -21,11 +21,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('get-all-categories', 'Apis\UsersController@getCategories')->middleware('cors');
     // });
 
-Route::post('login', 'Apis\UsersController@login');
-Route::post('register', 'Apis\UsersController@registerUser');
+Route::post('login', 'Apis\UsersController@login')->middleware('cors');
+Route::post('register', 'Apis\UsersController@registerUser')->middleware('cors');
 
 
 Route::match(['post', 'options'], 'create-event', 'Apis\EventController@createEvent')->middleware('cors');
-Route::get('get-all-events', 'Apis\EventController@getEvents')->middleware('cors');
+Route::get('get-all-events', 'Apis\EventController@getEvents');
 Route::get('get-event-details', 'Apis\EventController@getEventDetails')->middleware('cors');
 Route::match(['post', 'options'], 'edit-event', 'Apis\EventController@editEvent')->middleware('cors');
+
+Route::group(['middleware' => ['auth:api']], function() {
+    Route::get('get-user-details', 'Apis\UsersController@getUser');
+});

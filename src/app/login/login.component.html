@@ -1,0 +1,40 @@
+<mat-card class="example-card">
+   <mat-card-header>
+     <mat-card-title>Login</mat-card-title>
+   </mat-card-header>
+   <form class="row contact_form" [formGroup]="loginUserForm" (ngSubmit)="loginUser(loginUserForm)">
+   <mat-card-content>
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput id="email" placeholder="Enter email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="f.email.errors" class="invalid-feedback ">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email is not valid</div>
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+                        {{ errros.email }} 
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="password" class="form-control" id="password" name="password" value="" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+                    </mat-form-field>
+                    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+                        {{ errros.password }} 
+                    </div>
+                </td>
+            </tr>
+        </table>
+     
+     <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+   </mat-card-content>
+   <mat-card-actions>
+     <button mat-raised-button type="submit" color="primary">Login</button>
+   </mat-card-actions>
+   </form>
+ </mat-card>

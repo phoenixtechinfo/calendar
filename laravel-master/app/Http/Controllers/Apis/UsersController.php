@@ -33,7 +33,7 @@ class UsersController extends Controller
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
             $user = Auth::user(); 
             $response['code'] = 200;
-            $response['token'] =  $user->createToken('MyApp')-> accessToken; 
+            $response['token'] =  $user->createToken('MyApp')->accessToken; 
             $response['data'] = $user;
             return response()->json(['success' => $response]); 
         } 
@@ -108,6 +108,13 @@ class UsersController extends Controller
         $response['code'] = 200;
         $response['data'] =  $categories; 
         return response()->json($response);
+    }
+
+    public function getUser() {
+        $user = Auth::guard('api')->user();
+        $response['code'] = 200;
+        $response['data'] = $user;
+        return response()->json($response, 200); 
     }
 
     public function uploadOne(UploadedFile $uploadedFile, $folder = null, $disk = 'public', $filename = null)

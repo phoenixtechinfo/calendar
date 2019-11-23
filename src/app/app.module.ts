@@ -22,6 +22,11 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { NgInitDirective } from './directives/ng-init.directive';
+import { Globals } from './shared/globals';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { RegisterComponent } from './register/register.component';
+import { UserResolver } from './shared/user-resolver';
 
 
 
@@ -34,7 +39,9 @@ import { NgInitDirective } from './directives/ng-init.directive';
     ColorDialogueComponent,
     ViewEventComponent,
     EditEventComponent,
-    NgInitDirective
+    NgInitDirective,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
@@ -58,10 +65,11 @@ import { NgInitDirective } from './directives/ng-init.directive';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    MatProgressSpinnerModule
 
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, Globals, AuthGuard, UserResolver],
   bootstrap: [AppComponent],
   entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent ]
 })
