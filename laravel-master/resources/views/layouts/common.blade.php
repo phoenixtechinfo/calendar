@@ -89,49 +89,49 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
-                <li class="nav-item has-treeview menu-open">
-                    <a href="{{ route('home') }}" class="nav-link active">
+                <li class="nav-item has-treeview">
+                    <a href="{{ route('home') }}" class="nav-link {{(request()->is('/')) ? 'active' : ''}}" >
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         Dashboard
-                        <i class="right fas fa-angle-left"></i>
+                        {{--<i class="right fas fa-angle-left"></i>--}}
                     </p>
                     </a>
                 </li>
                 @if(Auth::user()->role == 1)
                     <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link">
+                        <a href="{{ route('users.index') }}" class="nav-link {{(request()->is('users*')) ? 'active' : ''}}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>User Management</p>
                         </a>
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a href="{{ route('events.index') }}" class="nav-link">
+                    <a href="{{ route('events.index') }}" class="nav-link {{(request()->is('events*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Event Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('category.index') }}" class="nav-link">
+                    <a href="{{ route('category.index') }}" class="nav-link {{(request()->is('category*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Category Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('banners.index') }}" class="nav-link">
+                    <a href="{{ route('banners.index') }}" class="nav-link {{(request()->is('banners*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Banner Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('colors.index') }}" class="nav-link">
+                    <a href="{{ route('colors.index') }}" class="nav-link {{(request()->is('colors*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Color Management</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('settings.index') }}" class="nav-link">
+                    <a href="{{ route('settings.index') }}" class="nav-link {{(request()->is('settings*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Setting</p>
                     </a>
