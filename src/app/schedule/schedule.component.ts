@@ -47,7 +47,7 @@ export class ScheduleComponent implements OnInit {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     constructor(private dialog: MatDialog, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
-        this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date; (data.reload?this.getScheduleViewData(this.selectedDate):'');});
+        this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date; (data.reload?(this.pageLoadInit = 1):'');  (data.reload?this.getAllEvents():'');});
         this.currentDate = moment();
     }
 
@@ -57,7 +57,7 @@ export class ScheduleComponent implements OnInit {
 
     ngOnInit() {
         this.getAllEvents();
-        this.getScheduleViewData(this.selectedDate);
+        //this.getScheduleViewData(this.selectedDate);
     }
 
     subscription:any;
@@ -213,7 +213,8 @@ export class ScheduleComponent implements OnInit {
         var scheduleViewOffsetTop = target.offsetTop;
         var topElement = null;
         var beforeTopElement = null;
-        document.querySelectorAll("#schedule-view .date-identify").forEach(function (item) {
+        document.querySelectorAll("#schedule-view .date-identify").forEach(function (item1) {
+            let item  = <HTMLElement>item1;
             var totalOffsetTop =  item.offsetTop - target.scrollTop - scheduleViewOffsetTop - 7;
             if(totalOffsetTop<=0 && (totalOffsetTop + item.clientHeight) >= 0) {
                 topElement = item.id;
