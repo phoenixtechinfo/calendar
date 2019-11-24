@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -11,6 +11,8 @@ import { UserService } from '../services/user.service';
 import { ViewEventComponent } from '../event/view-event/view-event.component';
 import { Globals } from '../shared/globals';
 import { Router } from '@angular/router';
+import {FormControl} from '@angular/forms';
+import * as moment from 'moment';
 
 
 @Component({
@@ -22,7 +24,9 @@ export class HomeComponent implements OnInit {
 	isUserLoggedIn:boolean;
 	@ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
 
-	constructor(private dialog: MatDialog, private event_service:EventService, private globals: Globals, private router: Router, private user_service: UserService) {
+	constructor(private dialog: MatDialog, private event_service:EventService, private globals: Globals, private router: Router, private user_service: UserService, private changeDetection: ChangeDetectorRef) {
+    	this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date;this.selectedDateFormat = moment(this.selectedDate).format("YYYY-MM-DD");this.gotoDate(this.selectedDate);});
+      	this.subscriptionViewType = this.event_service.viewType.subscribe(type => {this.viewType = type; this.viewTypeFormat = this.getViewType(this.viewType); this.changeView(this.viewTypeFormat);});
 		console.log(this.router);
 		this.user_service.isUserLoggedIn.subscribe( value => {
         	this.isUserLoggedIn = value;
@@ -33,16 +37,31 @@ export class HomeComponent implements OnInit {
 		}
 	}
 
+  ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.subscriptionViewType.unsubscribe();
+    }
+
+
 	ngOnInit() {
 		this.getAllEvents();
+    this.viewTypeFormat = this.getViewType(this.viewType);
 	}
 
-	calendarVisible = true;
-	showmodel:boolean;
-	date:string = '';
-	calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-	calendarWeekends = true;
-	calendarEvents: EventInput[] = [];
+
+
+  subscription:any;
+  subscriptionViewType:any;
+  viewType:any;
+  viewTypeFormat:any;
+  selectedDate:any;
+  selectedDateFormat:any;
+  calendarVisible = true;
+  showmodel:boolean;
+  date:string = '';
+  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarWeekends = true;
+  calendarEvents: EventInput[] = [];
 	// calendarEvents: EventInput[] = [
 	//   { id: '1', title: 'Event Now', start: new Date() },
 	//   { id: '2', title: 'Test Event', start: new Date(2019, 9, 13), color: 'black', editable: true,textColor:'red' },
@@ -54,6 +73,19 @@ export class HomeComponent implements OnInit {
 	//   { id: '8', title: 'Test Event', start: new Date(2019, 9, 18), color: 'pink', editable: true,textColor:'white' },
 	//   { id: '9', title: 'Test Event', start: new Date(2019, 9, 19), color: 'black', editable: true,textColor:'white' },
 	// ];
+
+  getViewType(type) {
+      if(type == 0){
+          return 'dayGridMonth';
+      } else if (type == 1){
+          return 'dayGridWeek';
+      } else {
+          return 'timeGridDay';
+      }
+
+      return 'timeGridDay';
+
+  }
 
 	toggleVisible() {
 		this.calendarVisible = !this.calendarVisible;
@@ -79,16 +111,38 @@ export class HomeComponent implements OnInit {
 					 data.textColor = 'white';
 					 this.calendarEvents.push(data);
 					 console.log('calendar', this.calendarEvents);
-				})
+				});
+				this.changeDetection.detectChanges();
 			}, err => {
 				console.log('err', err);
 			})
 	}
 
+  gotoDate(date) {
+      if(this.calendarComponent && date) {
+          let calendarApi = this.calendarComponent.getApi();
+          if(calendarApi) {
+              calendarApi.gotoDate(this.selectedDateFormat); // call a method on the Calendar object
+          }
+      }
+  }
+
+  changeView(type) {
+        if(this.calendarComponent && type) {
+            let calendarApi = this.calendarComponent.getApi();
+            if(calendarApi) {
+                calendarApi.changeView(type); // call a method on the Calendar object
+            }
+        }
+    }
+
 	gotoPast() {
 		let calendarApi = this.calendarComponent.getApi();
 		calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
 	}
+
+
+
 
 	createEvent(arg) {
 
@@ -182,5 +236,4 @@ export class HomeComponent implements OnInit {
 				break;
 		}
 	}
-
 }

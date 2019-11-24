@@ -109,3 +109,5 @@
 /deep/ .header-date-picker.mat-form-field-appearance-legacy .mat-form-field-underline{display: none !important; height: 0px;}
 .header-date-picker .uppercase{text-transform: uppercase}
 .cursor-pointer{cursor: pointer;}
+#schedule-view:focus{outline: none;}
+/deep/ schedule-view:focus{outline: none;}

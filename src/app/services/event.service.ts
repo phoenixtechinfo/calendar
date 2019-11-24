@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import * as moment from 'moment';
 
 const apiUrl = "http://127.0.0.1:8000/api/";
 const imageUrl = "http://127.0.0.1:8000/storage";
@@ -16,7 +17,18 @@ var httpOptions = {
 })
 export class EventService {
 
+    private dateSource = new BehaviorSubject({date: moment(), reload: 0});
+    private viewTypeSource = new BehaviorSubject(0);
+    currentDate = this.dateSource.asObservable();
+    viewType = this.viewTypeSource.asObservable();
   constructor(private http:HttpClient) { }
+
+    changeViewType(type:any) {
+        this.viewTypeSource.next(type);
+    }
+    changeCurrentDate(date:any, dataReload:any) {
+        this.dateSource.next({date: date, reload: dataReload});
+    }
 
   //Api for create event
   createEvent (data): Observable<any> {

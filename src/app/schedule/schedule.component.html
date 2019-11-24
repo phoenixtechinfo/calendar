@@ -1,38 +1,5 @@
-<mat-drawer-container class="side-nav" autosize [hasBackdrop]="1==1" ngClass="{'side-nav': drawer}">
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-        <mat-list>
-            <h3 class="side-nav-title">Calander App</h3>
-            <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle()" class="active"> <mat-icon matListIcon>schedule</mat-icon> <h4 matLine>Schedule</h4> </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle()"> <mat-icon matListIcon>view_day</mat-icon> <h4 matLine>Day</h4> </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle()"> <mat-icon matListIcon>view_week</mat-icon> <h4 matLine>Week</h4> </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle()"> <mat-icon matListIcon>view_module</mat-icon> <h4 matLine>Month</h4> </mat-list-item>
-            <mat-divider></mat-divider>
-        </mat-list>
-    </mat-drawer>
 
-<mat-toolbar>
-    <mat-toolbar-row>
-        <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="drawer.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span style="margin-left: 20px">Calander App</span>
-        <mat-form-field class="header-date-picker">
-            <input matInput class="uppercase" [formControl]="selectedDateFormControl" [matDatepicker]="picker" (click)="picker.open()" (dateChange)="dateChange()">
-            <button mat-icon-button matSuffix (click)="picker.open()">
-                <mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <span class="example-spacer"></span>
-        <mat-icon class="example-icon margin-right-20px cursor-pointer" aria-hidden="false" aria-label="Example delete icon" (click)="currentDateSelect()">today</mat-icon>
-        <mat-icon class="example-icon margin-right-10px" aria-hidden="false" aria-label="Example delete icon">more_vert</mat-icon>
-    </mat-toolbar-row>
-</mat-toolbar>
-<div class='app' id="schedule-view" (scroll)="scrollHandler($event)" style="height: calc(100vh - 64px); overflow: auto" ng-if="scheduleViewData.length">
+<div class='app' id="schedule-view" (scroll)="scrollHandler($event)" style="height: calc(100vh - 64px); overflow: auto" ng-if="scheduleViewData.length" tabindex='1'>
     <div class="schdule-view-container example-viewport">
         <div *ngFor="let item of scheduleViewData | keyvalue; trackBy:keyvalue; " class="example-item padding-bottom-5px">
             <!--{{item | json}}-->
@@ -82,5 +49,3 @@
     <button mat-button mat-fab class="add_event_btn" (click)="createEvent($event)" title="Add Event"><i
             class="fa fa-plus add_sign" aria-hidden="true"></i></button>
 </div>
-
-</mat-drawer-container>
