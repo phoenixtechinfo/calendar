@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,6 +8,8 @@ import {MatDialog, MatDialogConfig} from "@angular/material";
 import { EventComponent } from '../event/event.component';
 import { EventService } from '../services/event.service';
 import { ViewEventComponent } from '../event/view-event/view-event.component';
+import {FormControl} from '@angular/forms';
+import * as moment from 'moment';
 
 
 @Component({
@@ -19,12 +21,27 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
 
-  constructor(private dialog: MatDialog, private event_service:EventService) { }
+  constructor(private dialog: MatDialog, private event_service:EventService, private changeDetection: ChangeDetectorRef) {
+      this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date;this.selectedDateFormat = moment(this.selectedDate).format("YYYY-MM-DD");this.gotoDate(this.selectedDate);});
+      this.subscriptionViewType = this.event_service.viewType.subscribe(type => {this.viewType = type; this.viewTypeFormat = this.getViewType(this.viewType); this.changeView(this.viewTypeFormat);});
+  }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.subscriptionViewType.unsubscribe();
+    }
 
   ngOnInit() {
     this.getAllEvents();
+      this.viewTypeFormat = this.getViewType(this.viewType);
   }
 
+    subscription:any;
+    subscriptionViewType:any;
+    viewType:any;
+    viewTypeFormat:any;
+    selectedDate:any;
+    selectedDateFormat:any;
   calendarVisible = true;
   showmodel:boolean;
   date:string = '';
@@ -51,11 +68,23 @@ export class HomeComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
+  getViewType(type) {
+      if(type == 0){
+          return 'dayGridMonth';
+      } else if (type == 1){
+          return 'dayGridWeek';
+      } else {
+          return 'timeGridDay';
+      }
+
+      return 'timeGridDay';
+
+  }
+
   //Function to get all the events
   getAllEvents() {
     this.event_service.getAllEvents()
       .subscribe(res => {
-        console.log('res', res['data']);
         this.calendarEvents = [];
         res['data'].forEach(obj => {
           let data:any = {};
@@ -66,17 +95,30 @@ export class HomeComponent implements OnInit {
            data.color =this.selectColor(obj.color);
            data.textColor = 'white';
            this.calendarEvents.push(data);
-           console.log('calendar', this.calendarEvents);
-        })
+        });
+          this.changeDetection.detectChanges();
       }, err => {
         console.log('err', err);
       })
   }
 
-  gotoPast() {
-    let calendarApi = this.calendarComponent.getApi();
-    calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
+  gotoDate(date) {
+      if(this.calendarComponent && date) {
+          let calendarApi = this.calendarComponent.getApi();
+          if(calendarApi) {
+              calendarApi.gotoDate(this.selectedDateFormat); // call a method on the Calendar object
+          }
+      }
   }
+
+    changeView(type) {
+        if(this.calendarComponent && type) {
+            let calendarApi = this.calendarComponent.getApi();
+            if(calendarApi) {
+                calendarApi.changeView(type); // call a method on the Calendar object
+            }
+        }
+    }
 
   createEvent(arg) {
 

@@ -47,15 +47,20 @@ export class ScheduleComponent implements OnInit {
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     constructor(private dialog: MatDialog, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
-        this.selectedDateFormControl = new FormControl(new moment());
+        this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date; (data.reload?this.getScheduleViewData(this.selectedDate):'');});
         this.currentDate = moment();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     ngOnInit() {
         this.getAllEvents();
-        this.getScheduleViewData(this.selectedDateFormControl.value);
+        this.getScheduleViewData(this.selectedDate);
     }
 
+    subscription:any;
     pageLoadInit = 1;
     calendarVisible = true;
     showmodel: boolean;
@@ -63,7 +68,7 @@ export class ScheduleComponent implements OnInit {
     calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
     calendarWeekends = true;
     calendarEvents: EventInput[] = [];
-    selectedDateFormControl: any;
+    selectedDate: any;
     currentDate: any;
     scheduleViewData: any = [];
     items: any = [];
@@ -72,15 +77,6 @@ export class ScheduleComponent implements OnInit {
     minLoadedDate: any;
     maxLoadedDate: any;
 
-    dateChange(){
-        this.getScheduleViewData(this.selectedDateFormControl.value);
-    }
-
-    currentDateSelect(){
-        this.selectedDateFormControl = new FormControl(new moment());
-        this.getScheduleViewData(this.selectedDateFormControl.value);
-    }
-
     getScheduleViewData(date) {
         this.minLoadedDate = moment(date);
         this.maxLoadedDate = moment(date);
@@ -88,12 +84,13 @@ export class ScheduleComponent implements OnInit {
         this.scheduleViewData[moment(date).year() + '-' + moment(this.minLoadedDate).format('ww')] = this.getWeekData(date);
         this.loadPreviousWeeksDetails();
         this.loadNextWeeksDetails();
+        this.changeDetection.detectChanges();
         setTimeout(function () {
             var elementExists = document.getElementById(moment(date).format('YYYY-MM-DD'));
             if (elementExists) {
                 document.getElementById('schedule-view').scrollTop = document.getElementById(moment(date).format('YYYY-MM-DD')).offsetTop - 70;
             }
-        }, 1000);
+        },1000);
     }
 
     getWeekData(date) {
@@ -204,22 +201,20 @@ export class ScheduleComponent implements OnInit {
         var previousScrollHeightMinusTop = event.target.scrollHeight - event.target.scrollTop
         if (height - scrolled < this.scrollThreshold) {
             this.loadNextWeeksDetails();
-            //target.scrollTop += (target.scrollHeight-lastScrollHeight);
         }
 
         if (target.scrollTop < this.scrollThreshold) {
             this.loadPreviousWeeksDetails();
-            setTimeout(function () {
-                event.target.scrollTop = event.target.scrollHeight - previousScrollHeightMinusTop;
-            }, 0);
-            //target.scrollTop += (target.scrollHeight-lastScrollHeight);
+            this.changeDetection.detectChanges();
+            event.target.scrollTop = event.target.scrollHeight - previousScrollHeightMinusTop;
+            event.target.click();
         }
 
         var scheduleViewOffsetTop = target.offsetTop;
         var topElement = null;
         var beforeTopElement = null;
         document.querySelectorAll("#schedule-view .date-identify").forEach(function (item) {
-            var totalOffsetTop =  item.offsetTop - target.scrollTop - scheduleViewOffsetTop;
+            var totalOffsetTop =  item.offsetTop - target.scrollTop - scheduleViewOffsetTop - 7;
             if(totalOffsetTop<=0 && (totalOffsetTop + item.clientHeight) >= 0) {
                 topElement = item.id;
             } else {
@@ -230,9 +225,9 @@ export class ScheduleComponent implements OnInit {
 
         });
         if(topElement){
-            this.selectedDateFormControl = new FormControl(moment(topElement));
+            this.event_service.changeCurrentDate(moment(topElement), 0);
         } else {
-            this.selectedDateFormControl = new FormControl(moment(beforeTopElement));
+            this.event_service.changeCurrentDate(moment(beforeTopElement), 0);
         }
 
     }
@@ -259,11 +254,9 @@ export class ScheduleComponent implements OnInit {
                     data.color = this.selectColor(obj.color);
                     data.textColor = 'white';
                     this.calendarEvents.push(data);
-                    console.log('calendar', this.calendarEvents);
                 });
-                console.log(this.selectedDateFormControl.value)
                 if(this.pageLoadInit) {
-                    this.getScheduleViewData(this.selectedDateFormControl.value);
+                    this.getScheduleViewData(this.selectedDate);
                 } else {
                     this.refreshEventData();
                 }
@@ -271,11 +264,6 @@ export class ScheduleComponent implements OnInit {
             }, err => {
                 console.log('err', err);
             })
-    }
-
-    gotoPast() {
-        let calendarApi = this.calendarComponent.getApi();
-        calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
     }
 
     createEvent(arg) {
