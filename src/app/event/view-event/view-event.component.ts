@@ -20,8 +20,10 @@ export class ViewEventComponent implements OnInit {
   categories_data:any;
   selected_categories:Array<Object> = [];
   edit_flag:boolean=false;
+  img_url:string;
   constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService, private globals: Globals) { 
   		this.event_id = data.id;
+      this.img_url = this.globals.imgUrl;
   }
 
   ngOnInit() {
