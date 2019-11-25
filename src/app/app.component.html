@@ -14,7 +14,7 @@
         </mat-list>
     </mat-drawer>
 
-    <mat-toolbar>
+    <mat-toolbar *ngIf="globals.isUserLoggedInLoggedIn">
         <mat-toolbar-row>
             <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="drawer.toggle()">
                 <mat-icon>menu</mat-icon>

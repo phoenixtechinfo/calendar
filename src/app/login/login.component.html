@@ -1,10 +1,10 @@
-<mat-card class="example-card">
+<mat-card class="example-card margin-0-auto vertical-center">
    <mat-card-header>
-     <mat-card-title>Login</mat-card-title>
    </mat-card-header>
    <form class="row contact_form" [formGroup]="loginUserForm" (ngSubmit)="loginUser(loginUserForm)">
-   <mat-card-content>
-        <table class="example-full-width" cellspacing="0">
+   <mat-card-content class="example-full-width padding-15px">
+       <h4>Login</h4>
+        <table class="example-full-width margin-top-10px" cellspacing="0">
             <tr>
                 <td>
                     <mat-form-field class="example-full-width">
@@ -22,7 +22,7 @@
             <tr>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput type="password" class="form-control" id="password" name="password" value="" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+                        <input matInput type="password" id="password" name="password" value="" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
                     </mat-form-field>
                     <div class="col-sm-12 custom-error" *ngIf="errros"> 
                         {{ errros.password }} 
@@ -30,11 +30,11 @@
                 </td>
             </tr>
         </table>
+       <button mat-raised-button type="submit" color="primary" class="margin-top-20px">Login</button>
      
      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
    </mat-card-content>
-   <mat-card-actions>
-     <button mat-raised-button type="submit" color="primary">Login</button>
+   <mat-card-actions class="example-full-width">
    </mat-card-actions>
    </form>
  </mat-card>
