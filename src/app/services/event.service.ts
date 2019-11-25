@@ -4,13 +4,12 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
+import { Globals } from '../shared/globals';
 
-const apiUrl = "http://127.0.0.1:8000/api/";
-const imageUrl = "http://127.0.0.1:8000/storage";
 
-var httpOptions = {
-  headers: new HttpHeaders({'Access-Control-Allow-Origin':'*'})
-};
+let headers = new HttpHeaders();
+headers = headers.set('Access-Control-Allow-Origin', '*');
+headers = headers.set('Authorization', 'Bearer '+localStorage.getItem('uid'));
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,10 @@ export class EventService {
     private viewTypeSource = new BehaviorSubject(0);
     currentDate = this.dateSource.asObservable();
     viewType = this.viewTypeSource.asObservable();
-  constructor(private http:HttpClient) { }
+    api_url:string;
+    constructor(private http:HttpClient, private globals: Globals) {
+      this.api_url = this.globals.api_url;
+    }
 
     changeViewType(type:any) {
         this.viewTypeSource.next(type);
@@ -32,7 +34,7 @@ export class EventService {
 
   //Api for create event
   createEvent (data): Observable<any> {
-    return this.http.post<any>(`${apiUrl}create-event`, data, httpOptions).pipe(
+    return this.http.post<any>(this.api_url + 'create-event', data, { headers: headers }).pipe(
       tap(_ => console.log('Event created successfully')),
       catchError(this.handleError<any>('createEvent'))
     );
@@ -40,7 +42,7 @@ export class EventService {
 
   //Api for getting all the events
     getAllEvents(): Observable<any> {
-    	return this.http.get(`${apiUrl}get-all-events`, httpOptions).pipe(
+    	return this.http.get(this.api_url + 'get-all-events', { headers: headers }).pipe(
           tap(_ => {
             console.log('Fetched all the events successfully');
           }),
@@ -50,7 +52,7 @@ export class EventService {
 
   //Function to get event details
   getEventDetails(data): Observable<any> {
-  	return this.http.get(`${apiUrl}get-event-details`, { params: data}).pipe(
+  	return this.http.get(this.api_url + 'get-event-details', { params: data}).pipe(
       tap(_ => {
         console.log('Fetched the events details successfully');
       }),
@@ -60,7 +62,7 @@ export class EventService {
 
    //Api for edit event
   editEvent (data): Observable<any> {
-    return this.http.post<any>(`${apiUrl}edit-event`, data, httpOptions).pipe(
+    return this.http.post<any>(this.api_url + 'edit-event', data, { headers: headers }).pipe(
       tap(_ => console.log('Event edited successfully')),
       catchError(this.handleError<any>('editEvent'))
     );
@@ -68,7 +70,7 @@ export class EventService {
 
   //Api for getting all the colors
   getAllColors() {
-  return this.http.get(`${apiUrl}get-all-colors`, httpOptions).pipe(
+  return this.http.get(this.api_url + 'get-all-colors', { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the colors successfully');
       }),
@@ -78,7 +80,7 @@ export class EventService {
 
   //Api for getting all the categories
   getAllCategories() {
-  return this.http.get(`${apiUrl}get-all-categories`, httpOptions).pipe(
+  return this.http.get(this.api_url + 'get-all-categories', { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the categories successfully');
       }),
@@ -88,7 +90,7 @@ export class EventService {
 
     //Api for getting all the banners
     getAllBanners() {
-        return this.http.get(`${apiUrl}get-all-banners`, httpOptions).pipe(
+        return this.http.get(this.api_url + 'get-all-banners', { headers: headers }).pipe(
             tap(_ => {
                 console.log('Fetched all the banners successfully');
             }),

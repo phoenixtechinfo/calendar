@@ -11,6 +11,7 @@
             <mat-divider></mat-divider>
             <mat-list-item (click)="drawer.toggle();setViewType(0);" routerLink="/" [ngClass]="{'active': viewType == 0}"> <mat-icon matListIcon>view_module</mat-icon> <h4 matLine>Month</h4> </mat-list-item>
             <mat-divider></mat-divider>
+            <mat-list-item (click)="logout($event)"> <mat-icon matListIcon>power_settings_new</mat-icon> <h4 matLine>Logout</h4> </mat-list-item><mat-divider></mat-divider>
         </mat-list>
     </mat-drawer>
 

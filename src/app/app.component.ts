@@ -45,13 +45,17 @@ export const MY_FORMATS = {
 })
 export class AppComponent {
 
-  result:any;
-  selectedDateFormControl:any;
+    result:any;
+    selectedDateFormControl:any;
    viewType:any;
+   isUserLoggedIn:boolean; 
   constructor(private dialog: MatDialog, private user_service: UserService, private globals: Globals, private router: Router, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
         this.selectedDateFormControl = new FormControl(moment());
         this.event_service.currentDate.subscribe(data => this.selectedDateFormControl = new FormControl(data.date));
         this.event_service.viewType.subscribe(type => this.viewType = type);
+        this.user_service.isUserLoggedIn.subscribe( value => {
+          this.isUserLoggedIn = value;
+        });
    }
 	  ngOnInit() {
 	  	if(localStorage.getItem('uid')) {
@@ -80,5 +84,13 @@ export class AppComponent {
     currentDateSelect(){
         this.event_service.changeCurrentDate(moment(), 1);
     }
+
+    logout() {
+        localStorage.removeItem('uid');
+        this.globals.users_data = {};
+        this.globals.isUserLoggedInLoggedIn = false;
+        this.user_service.isUserLoggedIn.next(false);
+        this.router.navigate(['login']);
+  }
 
 }

@@ -19,6 +19,7 @@ class EventController extends Controller
 
     //public function to create the event
     public function createEvent(Request $request) {
+        $user = \Auth::guard('api')->user();
     	$event = new events();
     	$event->title = $request->get('title');
     	$event->description = $request->get('description');
@@ -27,9 +28,9 @@ class EventController extends Controller
     	$event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
     	$event->contact_no = $request->get('contact_no');
-    	$event->color_id = 1;
-    	$event->created_by = 1;
-    	$event->modified_by = 1;
+    	$event->color_id = $request->get('color_id');
+    	$event->created_by = $user->id;
+    	$event->modified_by = $user->id;
     	if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
             // Get image file
             $image = $request->file('image');
@@ -57,7 +58,7 @@ class EventController extends Controller
         $events = events::with(['user', 'color'])->get();
         $event_data = array();
         foreach($events as $event) {
-            if($event->created_by == 15 || ($event->user->role == 1 || $event->user->role == 2)) {
+            if($event->created_by == $user->id || ($event->user->role == 1 || $event->user->role == 2)) {
                 $event_data[] = $event;
             }
         }
@@ -70,7 +71,7 @@ class EventController extends Controller
     //Function to get the specific event details
     public function getEventDetails(Request $request) {
         $id = $request->get('id');
-        $event = events::find($id);
+        $event = events::with(['user', 'color'])->find($id);
         $categories = $event->categories;
         if($event->image != '' && $event->image != null) {
             if(!file_exists(public_path() .'/storage/'.$event->image)) {
@@ -88,6 +89,7 @@ class EventController extends Controller
 
     //public function to create the event
     public function editEvent(Request $request) {
+        $user = \Auth::guard('api')->user();
         $event = events::find($request->get('id'));
         $event->title = $request->get('title');
         $event->description = $request->get('description');
@@ -96,9 +98,8 @@ class EventController extends Controller
         $event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
         $event->contact_no = $request->get('contact_no');
-        $event->color_id = 1;
-        $event->created_by = 1;
-        $event->modified_by = 1;
+        $event->color_id = $request->get('color_id');
+        $event->modified_by = $user->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
              if($event->image != '' && $event->image != null){
                 $file_name = explode('/', $event->image)[3];

@@ -41,11 +41,15 @@
             <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
         </mat-error>
     </mat-form-field>
+    <input type="hidden" formControlName="color_id" value="">
     <div class="col-sm-12 custom-error" *ngIf="errros"> 
         {{ errros.contact_no }} 
     </div>
     <mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="color" placeholder="Choose Color"  [value]="editEventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
+         <mat-error *ngIf="f.color.errors" class="invalid-feedback ">
+            <div *ngIf="f.color.errors.required">Color is required</div>
+        </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width col-sm-12 ">
         <mat-select formControlName="category" id="category" placeholder="Select Categories" multiple [ngClass]="{ 'is-invalid': submitted && f.category.errors}" >

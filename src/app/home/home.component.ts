@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
 					 data.title = obj.title;
 					 data.start = new Date(obj.start_datetime);
 					 data.end = new Date(obj.end_datetime);
-					 data.color =this.selectColor(obj.color);
+					 data.color = obj.color.hexcode;
 					 data.textColor = 'white';
 					 this.calendarEvents.push(data);
 					 console.log('calendar', this.calendarEvents);

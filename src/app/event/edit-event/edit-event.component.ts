@@ -11,6 +11,7 @@ import { ColorDialogueComponent } from '../../shared/color-dialogue/color-dialog
 import { EventService } from '../../services/event.service';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import { Globals } from '../../shared/globals';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -47,7 +48,9 @@ export class EditEventComponent implements OnInit {
   categories_data:any;
   selected_categories:any;
   selected_categories_data:Array<Object> = [];
-  constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EditEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
+  color_id:number;
+
+  constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EditEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe, private globals: Globals) {
   	console.log(data.data);
     this.getCategories();
     this.event_data = data.data;
@@ -64,8 +67,9 @@ export class EditEventComponent implements OnInit {
       end_time: [''],
       event_image: [''],
       contact_no:[''],
-      color:[''],
+      color:['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
+      color_id:[''],
     });
     this.editEventForm.controls.title.setValue(this.event_data.title);
   	this.editEventForm.controls.description.setValue(this.event_data.description);
@@ -74,9 +78,9 @@ export class EditEventComponent implements OnInit {
   	this.editEventForm.controls.start_time.setValue(moment(this.event_data.start_datetime).format("HH:mm"));
   	this.editEventForm.controls.end_time.setValue(moment(this.event_data.end_datetime).format("HH:mm"));
   	this.editEventForm.controls.contact_no.setValue(this.event_data.contact_no);
-  	this.editEventForm.controls.color.setValue(this.event_data.color);
-    
-    this.previewUrl = 'http://127.0.0.1:8000/storage/'+ this.event_data.image;
+  	this.editEventForm.controls.color.setValue(this.event_data.color.name);
+    this.editEventForm.controls.color_id.setValue(this.event_data.color.id);
+    this.previewUrl = this.globals.imgUrl + this.event_data.image;
   }
 
   //Function to get the form control values 
@@ -131,7 +135,10 @@ export class EditEventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          this.editEventForm.controls.color.setValue(data);
+          let string = data.split("-");
+          this.color_id = string[1];
+          this.editEventForm.controls.color.setValue(string[0]);
+          this.editEventForm.controls.color_id.setValue(string[1]);
         }
     );    
   }
@@ -168,6 +175,7 @@ export class EditEventComponent implements OnInit {
       payload.append('category', this.editEventForm.controls.category.value.toString());
       payload.append('interested_flag', '0');
       payload.append('image', this.fileData);
+      payload.append('color_id', this.editEventForm.controls.color_id.value);
       // console.log('form success');
        this.event_service.editEvent(payload)
         .subscribe(res => {

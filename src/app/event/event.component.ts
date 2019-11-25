@@ -44,6 +44,7 @@ export class EventComponent implements OnInit {
   uploadedFilePath: string = null;
   image_error:boolean = false;
   categories_data:any;
+  color_id:number;
   
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
   	// console.log(new Date(data.type));
@@ -68,13 +69,12 @@ export class EventComponent implements OnInit {
       end_time: [''],
       event_image: [''],
       contact_no:[''],
-      color:[''],
+      color:['', Validators.compose([Validators.required])],
       category: ['', Validators.compose([Validators.required])],
+      color_id:[''],
 
     });
     this.eventForm.controls.start_date.setValue(this.start_date.date);
-    this.eventForm.controls.color.setValue('default');
-
   }
 
   //Function to set the date 
@@ -149,6 +149,7 @@ export class EventComponent implements OnInit {
       payload.append('interested_flag', '0');
       payload.append('category', this.eventForm.controls.category.value.toString());
       payload.append('image', this.fileData);
+      payload.append('color_id', this.eventForm.controls.color_id.value);
       console.log(payload);
       console.log('form success');
        this.event_service.createEvent(payload)
@@ -185,8 +186,10 @@ export class EventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          console.log('colors from event', data);
-          this.eventForm.controls.color.setValue(data.name);
+          let string = data.split("-");
+          this.color_id = string[1];
+          this.eventForm.controls.color.setValue(string[0]);
+          this.eventForm.controls.color_id.setValue(string[1]);
         }
     );    
   }
