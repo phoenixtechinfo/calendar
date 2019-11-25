@@ -8,9 +8,9 @@ import * as moment from 'moment';
 const apiUrl = "http://127.0.0.1:8000/api/";
 const imageUrl = "http://127.0.0.1:8000/storage";
 
-var httpOptions = {
-  headers: new HttpHeaders({'Access-Control-Allow-Origin':'*'})
-};
+let headers = new HttpHeaders();
+headers = headers.set('Access-Control-Allow-Origin', '*');
+headers = headers.set('Authorization', 'Bearer '+localStorage.getItem('uid'));
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class EventService {
 
   //Api for create event
   createEvent (data): Observable<any> {
-    return this.http.post<any>(`${apiUrl}create-event`, data, httpOptions).pipe(
+    return this.http.post<any>(`${apiUrl}create-event`, data, { headers: headers }).pipe(
       tap(_ => console.log('Event created successfully')),
       catchError(this.handleError<any>('createEvent'))
     );
@@ -40,7 +40,7 @@ export class EventService {
 
   //Api for getting all the events
     getAllEvents(): Observable<any> {
-    	return this.http.get(`${apiUrl}get-all-events`, httpOptions).pipe(
+    	return this.http.get(`${apiUrl}get-all-events`, { headers: headers }).pipe(
           tap(_ => {
             console.log('Fetched all the events successfully');
           }),
@@ -60,7 +60,7 @@ export class EventService {
 
    //Api for edit event
   editEvent (data): Observable<any> {
-    return this.http.post<any>(`${apiUrl}edit-event`, data, httpOptions).pipe(
+    return this.http.post<any>(`${apiUrl}edit-event`, data, { headers: headers }).pipe(
       tap(_ => console.log('Event edited successfully')),
       catchError(this.handleError<any>('editEvent'))
     );
@@ -68,7 +68,7 @@ export class EventService {
 
   //Api for getting all the colors
   getAllColors() {
-  return this.http.get(`${apiUrl}get-all-colors`, httpOptions).pipe(
+  return this.http.get(`${apiUrl}get-all-colors`, { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the colors successfully');
       }),
@@ -78,7 +78,7 @@ export class EventService {
 
   //Api for getting all the categories
   getAllCategories() {
-  return this.http.get(`${apiUrl}get-all-categories`, httpOptions).pipe(
+  return this.http.get(`${apiUrl}get-all-categories`, { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the categories successfully');
       }),

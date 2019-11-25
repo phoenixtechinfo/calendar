@@ -5,6 +5,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material";
 import * as moment from 'moment';
 import { Router} from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { Globals } from '../../shared/globals';
 import { EditEventComponent } from '../edit-event/edit-event.component';
 
 @Component({
@@ -15,10 +16,11 @@ import { EditEventComponent } from '../edit-event/edit-event.component';
 export class ViewEventComponent implements OnInit {
 
   event_id:number;
-  events_data:Object;
+  events_data:any;
   categories_data:any;
   selected_categories:Array<Object> = [];
-  constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService) { 
+  edit_flag:boolean=false;
+  constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService, private globals: Globals) { 
   		this.event_id = data.id;
   }
 
@@ -36,6 +38,9 @@ export class ViewEventComponent implements OnInit {
   			console.log('res', res);
   			this.events_data = res['data'];
         this.categories_data = res['categories'];
+        if(this.events_data.created_by == this.globals.users_data.id) {
+          this.edit_flag = true;
+        }
         this.categories_data.forEach(item => {
           this.selected_categories.push(' '+item.name);
         });
