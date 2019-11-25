@@ -12,6 +12,7 @@ import {FormControl} from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
+import { Globals } from '../shared/globals';
 import * as moment from 'moment';
 
 
@@ -46,9 +47,11 @@ export class ScheduleComponent implements OnInit {
 
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
-    constructor(private dialog: MatDialog, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
+    constructor(private dialog: MatDialog, private event_service: EventService, private changeDetection: ChangeDetectorRef, private globals: Globals) {
         this.subscription = this.event_service.currentDate.subscribe(data => {this.selectedDate = data.date; (data.reload?(this.pageLoadInit = 1):'');  (data.reload?this.getAllEvents():'');});
         this.currentDate = moment();
+        this.imgUrl = this.globals.imgUrl;
+        this.baseUrl = this.globals.baseUrl;
     }
 
     ngOnDestroy() {
@@ -56,10 +59,13 @@ export class ScheduleComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getAllBanners();
         this.getAllEvents();
         //this.getScheduleViewData(this.selectedDate);
     }
 
+    imgUrl:string;
+    baseUrl:string;
     subscription:any;
     pageLoadInit = 1;
     calendarVisible = true;
@@ -76,6 +82,8 @@ export class ScheduleComponent implements OnInit {
     scrollThreshold = 100;
     minLoadedDate: any;
     maxLoadedDate: any;
+    bannerData: any;
+    defaultBanner: any;
 
     getScheduleViewData(date) {
         this.minLoadedDate = moment(date);
@@ -116,8 +124,15 @@ export class ScheduleComponent implements OnInit {
             dayData.events = this.getEventsByDate(date);
 
             if (parseInt(moment(date).format('DD')) == 1) {
+                let monthName = moment(date).format('MMMM').toLocaleLowerCase();
                 dayData.displayBanner = 1;
-                dayData.bannerImage = 'http://127.0.0.1:8000/images/banner.jpg';
+                let bannerIndex = this.bannerData.findIndex((item) => item.month == monthName);
+                if(bannerIndex != -1){
+                    dayData.bannerImage = this.imgUrl + this.bannerData[bannerIndex].image;
+                } else {
+
+                    dayData.bannerImage = this.baseUrl + this.defaultBanner;
+                }
                 dayData.bannerTitle = moment(date).format('MMMM Y')
             }
             result.push(dayData);
@@ -265,6 +280,16 @@ export class ScheduleComponent implements OnInit {
             }, err => {
                 console.log('err', err);
             })
+    }
+
+    getAllBanners() {
+        this.event_service.getAllBanners()
+            .subscribe(res => {
+                this.bannerData = res['data'];
+                this.defaultBanner = res['defaultBanner'];
+            }, err => {
+                console.log('error', err);
+            });
     }
 
     createEvent(arg) {

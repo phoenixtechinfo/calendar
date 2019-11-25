@@ -86,6 +86,16 @@ export class EventService {
     );
   }
 
+    //Api for getting all the banners
+    getAllBanners() {
+        return this.http.get(`${apiUrl}get-all-banners`, httpOptions).pipe(
+            tap(_ => {
+                console.log('Fetched all the banners successfully');
+            }),
+            catchError(this.handleError('getAllBanners'))
+        );
+    }
+
   //Function to handle the error
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

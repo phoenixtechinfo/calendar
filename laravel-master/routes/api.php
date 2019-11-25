@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-all-colors', 'Apis\UsersController@getColors')->middleware('cors');
     Route::get('get-all-categories', 'Apis\UsersController@getCategories')->middleware('cors');
+    Route::get('get-all-banners', 'Apis\BannerController@getBanners')->middleware('cors');
     // });
 
 Route::post('login', 'Apis\UsersController@login')->middleware('cors');
