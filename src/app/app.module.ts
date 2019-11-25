@@ -66,7 +66,8 @@ import { UserResolver } from './shared/user-resolver';
     MatSidenavModule,
     MatListModule,
     ScrollDispatchModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+      MatMenuModule
 
   ],
   providers: [DatePipe, Globals, AuthGuard, UserResolver],

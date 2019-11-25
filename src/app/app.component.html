@@ -11,7 +11,7 @@
             <mat-divider></mat-divider>
             <mat-list-item (click)="drawer.toggle();setViewType(0);" routerLink="/" [ngClass]="{'active': viewType == 0}"> <mat-icon matListIcon>view_module</mat-icon> <h4 matLine>Month</h4> </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item (click)="logout($event)"> <mat-icon matListIcon>power_settings_new</mat-icon> <h4 matLine>Logout</h4> </mat-list-item><mat-divider></mat-divider>
+            <!--<mat-list-item (click)="logout($event)"> <mat-icon matListIcon>power_settings_new</mat-icon> <h4 matLine>Logout</h4> </mat-list-item><mat-divider></mat-divider>-->
         </mat-list>
     </mat-drawer>
 
@@ -30,7 +30,12 @@
             </mat-form-field>
             <span class="example-spacer"></span>
             <mat-icon class="example-icon margin-right-20px cursor-pointer" aria-hidden="false" aria-label="Example delete icon" (click)="currentDateSelect()">today</mat-icon>
-            <mat-icon class="example-icon margin-right-10px" aria-hidden="false" aria-label="Example delete icon">more_vert</mat-icon>
+            <mat-icon class="example-icon margin-right-10px cursor-pointer" aria-hidden="false" aria-label="Example delete icon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item class="min-width-160px"><mat-icon matListIcon>perm_identity</mat-icon> Profile</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="logout($event)"><mat-icon matListIcon>power_settings_new</mat-icon> Logout</button>
+            </mat-menu>
         </mat-toolbar-row>
     </mat-toolbar>
     <router-outlet #child></router-outlet>

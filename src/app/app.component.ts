@@ -4,7 +4,7 @@ import {EventInput} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import {MatDialog, MatDialogConfig} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatMenuModule} from "@angular/material";
 import { AuthGuard } from './shared/guards/auth.guard';
 import { EventComponent } from './event/event.component';
 import { UserService } from './services/user.service';
