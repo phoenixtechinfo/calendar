@@ -17,6 +17,7 @@ export class UserResolver implements Resolve<any> {
                 if(user.error  != 'Unauthorized') {
                     this.result = user;
                     this.globals.users_data = this.result.data;
+                    this.globals.categories = this.result.categories;
                     this.user_service.isUserLoggedIn.next(true);
                     return user;
                 } else {

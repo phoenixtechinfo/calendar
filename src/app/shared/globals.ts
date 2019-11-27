@@ -7,5 +7,6 @@ export class Globals {
   imgUrl:string = 'http://127.0.0.1:8000/storage/';
   baseUrl:string = 'http://127.0.0.1:8000/'; 
   users_data:any = '';
+  categories:any = '';
   isUserLoggedInLoggedIn:boolean = false;
 }

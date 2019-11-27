@@ -15,7 +15,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from '@angular/mater
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {FormControl} from '@angular/forms';
 import {EventService} from './services/event.service';
-
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -64,7 +64,8 @@ export class AppComponent {
 		    	console.log(this.result.error);
 		    	if(this.result.error != 'Unauthorized') {
 				    console.log(this.result);
-				    this.globals.users_data = this.result.data
+				    this.globals.users_data = this.result.data;
+                    this.globals.categories = this.result.categories;
 				    this.globals.isUserLoggedInLoggedIn = true;
 				    this.user_service.isUserLoggedIn.next(true);
 			    } else {
@@ -92,5 +93,30 @@ export class AppComponent {
         this.user_service.isUserLoggedIn.next(false);
         this.router.navigate(['login']);
   }
+
+    editProfile(arg) {
+
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+
+        dialogConfig.data = {
+                type:arg
+        };
+
+        // this.dialog.open(UserdialogueComponent, dialogConfig);
+        
+        const dialogRef = this.dialog.open(UserProfileComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(
+                data => {
+                    if(data == 200) {
+                        console.log('vivek');
+                    }
+                }
+        );    
+
+    }
 
 }

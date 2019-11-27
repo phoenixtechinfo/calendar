@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\models\Categories;
 use App\models\Colors;
 use Validator;
+use Storage;
 use File;
 use App\User;
 use Illuminate\Support\Str;
@@ -50,10 +51,8 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'lastname' => 'required',
-            'mobilenumber' => 'nullable|numeric',
             'email' => 'required|email|unique:users,email',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'password' => 'required|nullable|confirmed|min: 8|max: 16|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
+            'password' => 'required|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
         ],[]
         );
 
@@ -65,32 +64,16 @@ class UsersController extends Controller
         $users = new User();
         $users->firstname = $request->firstname;
         $users->lastname = $request->lastname;
-        $users->mobilenumber = $request->has('mobilenumber') ? $request->mobilenumber : '';
         $users->email = $request->email;
         $users->password = Hash::make($request->password);
-        if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
-            // Get image file
-            $image = $request->file('image');
-            // Make a image name based on user name and current timestamp
-            $name = Str::slug($request->get('firstname'), '-') . '_' . time();
-            $folder = '/uploads/user_images/';
-            // Make a file path where image will be stored [ folder path + file name + file extension]
-            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-            // Upload image
-            $this->uploadOne($image, $folder, 'public', $name);
-            // Set user profile image path in database to filePath
-            $users->profile_image = $filePath;
-         }
         $users->save();
-        $category = Categories::find(1);
-        $users->categories()->attach($category);
-        $user = User::find($users->id);
-        $user->created_by = $user->id;
-        $user->modified_by = $user->id; 
-        $user->save();
+        $users->created_by = $users->id;
+        $users->modified_by = $users->id; 
+        $users->save();
         $response['code'] = 200;
-        $response['token'] =  $user->createToken('MyApp')-> accessToken; 
+        $response['token'] =  $users->createToken('MyApp')-> accessToken; 
         $response['message'] = 'Successfully added';
+        $response['data'] = $users;
         return response()->json($response);
     }
 
@@ -110,11 +93,51 @@ class UsersController extends Controller
         return response()->json($response);
     }
 
+    //function to get the user details
     public function getUser() {
         $user = Auth::guard('api')->user();
+        $categories = $user->categories;
         $response['code'] = 200;
         $response['data'] = $user;
+        $response['categories'] = $categories;
         return response()->json($response, 200); 
+    }
+
+    //function to update the profile
+    public function editProfile(Request $request) {
+        $user_data = Auth::guard('api')->user();
+        $user = User::find($user_data->id);
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->mobilenumber = $request->contact_no;
+        $user->email = $request->email;
+        if(!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->modified_by = $user->id;
+        if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
+            if($user->profile_image != '' && $user->profile_image != null){
+                $file_name = explode('/', $user->profile_image)[3];
+                Storage::delete('public/uploads/user_images/' . $file_name);
+            }
+            // Get image file
+            $image = $request->file('image');
+            // Make a image name based on user name and current timestamp
+            $name = Str::slug($request->get('firstname'), '-') . '_' . time();
+            $folder = '/uploads/user_images/';
+            // Make a file path where image will be stored [ folder path + file name + file extension]
+            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+            // Upload image
+            $this->uploadOne($image, $folder, 'public', $name);
+            // Set user profile image path in database to filePath
+            $user->profile_image = $filePath;
+        }
+        $user->save();
+        $category = Categories::find(array_map('intval', explode(',', $request->category)));
+        $user->categories()->sync($category);
+        $response['code'] = 200;
+        $response['message'] = 'Successfully edited';
+        return response()->json($response);
     }
 
     public function uploadOne(UploadedFile $uploadedFile, $folder = null, $disk = 'public', $filename = null)
@@ -124,6 +147,20 @@ class UsersController extends Controller
         $file = $uploadedFile->storeAs($folder, $name . '.' . $uploadedFile->getClientOriginalExtension(), $disk);
 
         return $file;
+    }
+
+    //Function to check the email is already registered or not 
+    public function isEmailRegistered(Request $request) {
+        if($request->get('id') == null) {
+            $user = User::where('email','=', $request->get('email'))->get()->count();
+        } else {
+            $user = User::where('email','=', $request->get('email'))->where('id', '!=', $request->get('id'))->get()->count();
+        }
+        if($user >= 1) {
+            return response()->json(1);
+        } else {
+            return response()->json(0);
+        }
     }
 
 }

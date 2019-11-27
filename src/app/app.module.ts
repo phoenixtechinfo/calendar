@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { UserResolver } from './shared/user-resolver';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -41,7 +42,8 @@ import { UserResolver } from './shared/user-resolver';
     EditEventComponent,
     NgInitDirective,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
@@ -72,6 +74,6 @@ import { UserResolver } from './shared/user-resolver';
   ],
   providers: [DatePipe, Globals, AuthGuard, UserResolver],
   bootstrap: [AppComponent],
-  entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent ]
+  entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent, UserProfileComponent ]
 })
 export class AppModule { }

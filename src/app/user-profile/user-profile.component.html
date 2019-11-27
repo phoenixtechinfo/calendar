@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>Edit Profile</h2>
+<form [formGroup]="userForm" (ngSubmit)="saveProfile(userForm)">
+<mat-dialog-content >
+    <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="firstname" placeholder="Enter firstname" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors}" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="f.firstname.errors" class="invalid-feedback ">
+            <div *ngIf="f.firstname.errors.required">First Name is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.firstname }} 
+    </div>
+   	<mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="lastname" type="text" placeholder="Enter lastname" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors}" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="f.lastname.errors" class="invalid-feedback ">
+            <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-6 custom-error" *ngIf="errros"> 
+        {{ errros.lastname }} 
+    </div><br>
+    <mat-form-field class="example-full-width col-sm-6">
+        <input matInput type="email" placeholder="Enter Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" [errorStateMatcher]="matcher" >
+        <mat-error *ngIf="f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email is not valid</div>
+            <div *ngIf="f.email.errors.isEmailUnique">Email is already taken</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.email }} 
+    </div>
+     <mat-form-field class="example-full-width col-sm-6 ">
+        <mat-select formControlName="category" id="category" placeholder="Select Categories" multiple [ngClass]="{ 'is-invalid': submitted && f.category.errors}" >
+          `<mat-option *ngFor="let categories of categories_data" [value]="categories.id">{{categories.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.category.errors" class="invalid-feedback ">
+            <div *ngIf="f.category.errors.required">Category is required</div>
+        </mat-error>
+    </mat-form-field><br>
+     <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="contact_no" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">
+            <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput type="password" id="pwd" placeholder="Enter password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" (keyup)="checkPassword($event.target.value)" [errorStateMatcher]="matcher" >
+        <mat-error *ngIf="f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.pattern">Password is not valid</div>
+        </mat-error>
+    </mat-form-field><br>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.password }} 
+    </div>
+   	<div class="image-preview mb-3 col-sm-12" *ngIf="previewUrl">
+        <img [src]="previewUrl" height="300" />                 
+    </div>
+   	<div class="example-full-width col-sm-12 form-group">
+        <input type="file" name="profile_image" formControlName="profile_image" (change)="fileProgress($event)" />
+    </div>
+    <div class="mb-3" *ngIf="uploadedFilePath">
+        {{uploadedFilePath}}
+    </div>
+     <mat-error *ngIf="image_error" class="col-sm-12 invalid-feedback ">
+       <div>Image must be in jpeg,jpg or png format</div>
+    </mat-error>
+</mat-dialog-content>
+<mat-dialog-actions class="float-right">
+    <button mat-stroked-button class="mat-stroked-button" style="margin-right:10px;" (click)="close($event)">Close</button>
+    <button mat-stroked-button class="mat-stroked-button mat-primary" type="submit" value="submit" >Save</button>
+</mat-dialog-actions>
+</form>

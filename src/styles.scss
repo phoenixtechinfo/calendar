@@ -12,3 +12,8 @@ body {
 @import '~bootstrap/dist/css/bootstrap.min.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.custom-error {
+    width: 100%;
+    font-size: 80%;
+    color: #dc3545;
+}

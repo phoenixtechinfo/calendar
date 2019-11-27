@@ -42,6 +42,39 @@ export class UserService {
 			catchError(this.handleError<any>('getUserDetails'))
 		);
 	}
+
+	//Api for check the eamil id is already registered or not
+	  isEmailRegisterd(email: string, id:number ) {
+	    return this.http.post<any>(this.api_url + 'check-email', JSON.stringify({'email': email, 'id':id}), {
+	      headers: new HttpHeaders({
+	        'Content-Type': 'application/json',
+	        'Access-Control-Allow-Origin': '*'
+	      })
+	    }).pipe(
+	      tap(_ => console.log('Success')),
+	      catchError(this.handleError<any>('check email'))
+	    );
+	  }
+
+	//Api for edit event
+	  saveProfile (data): Observable<any> {
+	  	let headers = new HttpHeaders();
+		headers = headers.set('Accept', 'application/json');
+		headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
+	    return this.http.post<any>(this.api_url + 'edit-profile', data, { headers: headers }).pipe(
+	      tap(_ => console.log('User edited successfully')),
+	      catchError(this.handleError<any>('saveProfile'))
+	    );
+	  }  
+
+	    //Api for register user
+	  registerUser (user): Observable<any> {
+	    return this.http.post<any>(this.api_url + 'register-user', user, httpOptions).pipe(
+	      tap(_ => console.log('User created successfully')),
+	      catchError(this.handleError<any>('registerUser'))
+	    );
+	  }
+
 	//Function to handle the error
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {

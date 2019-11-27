@@ -9,7 +9,7 @@ import { Globals } from '../shared/globals';
 
 let headers = new HttpHeaders();
 headers = headers.set('Access-Control-Allow-Origin', '*');
-headers = headers.set('Authorization', 'Bearer '+localStorage.getItem('uid'));
+headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,7 @@ export class EventService {
 
   //Function to get event details
   getEventDetails(data): Observable<any> {
-  	return this.http.get(this.api_url + 'get-event-details', { params: data}).pipe(
+  	return this.http.get(this.api_url + 'get-event-details', { params: data, headers: headers}).pipe(
       tap(_ => {
         console.log('Fetched the events details successfully');
       }),
