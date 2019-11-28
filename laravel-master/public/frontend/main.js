@@ -2005,9 +2005,14 @@ var ScheduleComponent = /** @class */ (function () {
             if (parseInt(moment__WEBPACK_IMPORTED_MODULE_13__(date).format('DD')) == 1) {
                 var monthName_1 = moment__WEBPACK_IMPORTED_MODULE_13__(date).format('MMMM').toLocaleLowerCase();
                 dayData.displayBanner = 1;
-                var bannerIndex = this_1.bannerData.findIndex(function (item) { return item.month == monthName_1; });
-                if (bannerIndex != -1) {
-                    dayData.bannerImage = this_1.imgUrl + this_1.bannerData[bannerIndex].image;
+                if (this_1.bannerData) {
+                    var bannerIndex = this_1.bannerData.findIndex(function (item) { return item.month == monthName_1; });
+                    if (bannerIndex != -1) {
+                        dayData.bannerImage = this_1.imgUrl + this_1.bannerData[bannerIndex].image;
+                    }
+                    else {
+                        dayData.bannerImage = this_1.baseUrl + this_1.defaultBanner;
+                    }
                 }
                 else {
                     dayData.bannerImage = this_1.baseUrl + this_1.defaultBanner;
