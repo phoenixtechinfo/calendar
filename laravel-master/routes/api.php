@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('get-user-details', 'Apis\UsersController@getUser');
     Route::match(['post', 'options'], 'create-event', 'Apis\EventController@createEvent')->middleware('cors');
 	Route::get('get-all-events', 'Apis\EventController@getEvents');
-	Route::get('get-event-details', 'Apis\EventController@getEventDetails')->middleware('cors');
+	Route::get('get-event-details', 'Apis\EventController@getEventDetails');
 	Route::match(['post', 'options'], 'edit-event', 'Apis\EventController@editEvent')->middleware('cors');
 	Route::match(['post', 'options'], 'edit-profile', 'Apis\UsersController@editProfile')->middleware('cors');
     Route::get('get-all-colors', 'Apis\UsersController@getColors');

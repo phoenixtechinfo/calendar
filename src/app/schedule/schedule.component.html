@@ -13,7 +13,7 @@
                     <span class="display-block color-light-black font-size-20px day-div">{{day.dayNumber}}</span>
                 </div>
                 <div class="width-100-50px float-right padding-0px-10px" *ngIf="day.events.length">
-                    <div class="task-line" *ngFor="let event of day.events" [ngStyle]="{'background-color': event.color}" (click)="getEventDetails(event)">
+                    <div class="task-line" *ngFor="let event of day.events" [ngStyle]="{'background-color': event.color.hexcode}" (click)="getEventDetails(event)">
                         <span class="display-block font-size-12px font-light-bold">{{event.title}} {{(event.dayNumberTitle)?('(Day '+event.dayNumberTitle+')'):''}}</span>
                         <span class="display-block font-size-11px font-light" *ngIf="event.dayTimeTitle">{{event.dayTimeTitle}}</span>
                     </div>

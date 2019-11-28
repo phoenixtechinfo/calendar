@@ -267,7 +267,7 @@ export class ScheduleComponent implements OnInit {
                     data.title = obj.title;
                     data.start = new Date(obj.start_datetime);
                     data.end = new Date(obj.end_datetime);
-                    data.color = this.selectColor(obj.color);
+                    data.color = obj.color;
                     data.textColor = 'white';
                     this.calendarEvents.push(data);
                 });
