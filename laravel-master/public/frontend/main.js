@@ -2578,8 +2578,8 @@ __webpack_require__.r(__webpack_exports__);
 var Globals = /** @class */ (function () {
     function Globals() {
         this.api_url = 'http://calendar.phoenixtechinfo.com/index.php/api/';
-        this.imgUrl = 'http://calendar.phoenixtechinfo.com/index.php/storage/';
-        this.baseUrl = 'http://calendar.phoenixtechinfo.com/index.php/';
+        this.imgUrl = 'http://calendar.phoenixtechinfo.com/storage/';
+        this.baseUrl = 'http://calendar.phoenixtechinfo.com/';
         this.users_data = '';
         this.categories = '';
         this.isUserLoggedInLoggedIn = false;
