@@ -17,9 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('get-all-colors', 'Apis\UsersController@getColors')->middleware('cors');
-    Route::get('get-all-categories', 'Apis\UsersController@getCategories')->middleware('cors');
-    Route::get('get-all-banners', 'Apis\BannerController@getBanners')->middleware('cors');
+
     // });
 
 Route::post('login', 'Apis\UsersController@login')->middleware('cors');
@@ -35,5 +33,8 @@ Route::group(['middleware' => ['auth:api']], function() {
 	Route::get('get-event-details', 'Apis\EventController@getEventDetails')->middleware('cors');
 	Route::match(['post', 'options'], 'edit-event', 'Apis\EventController@editEvent')->middleware('cors');
 	Route::match(['post', 'options'], 'edit-profile', 'Apis\UsersController@editProfile')->middleware('cors');
+    Route::get('get-all-colors', 'Apis\UsersController@getColors');
+    Route::get('get-all-categories', 'Apis\UsersController@getCategories');
+    Route::get('get-all-banners', 'Apis\BannerController@getBanners');
 	
 });
