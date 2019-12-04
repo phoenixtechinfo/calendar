@@ -20,7 +20,7 @@
             <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="drawer.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <span style="margin-left: 20px">Calander App</span>
+            <span style="margin-left: 20px" class="header-title">Calander App</span>
             <mat-form-field class="header-date-picker">
                 <input matInput class="uppercase" [formControl]="selectedDateFormControl" [matDatepicker]="picker" (click)="picker.open()" (dateChange)="dateChange()">
                 <button mat-icon-button matSuffix (click)="picker.open()">

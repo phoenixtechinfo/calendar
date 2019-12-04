@@ -111,3 +111,29 @@
 .cursor-pointer{cursor: pointer;}
 #schedule-view:focus{outline: none;}
 /deep/ schedule-view:focus{outline: none;}
+
+
+/* SMARTPHONES PORTRAIT */
+@media only screen and (max-width: 300px) {
+
+
+}
+
+/* SMARTPHONES LANDSCAPE */
+@media only screen and (max-width: 480px) {
+
+
+}
+
+/* TABLETS PORTRAIT */
+@media only screen and (max-width: 768px) {
+    .banner-container{height: 148px;font-size: 20px}
+
+}
+
+
+/* TABLET LANDSCAPE / DESKTOP */
+@media only screen and (max-width: 1024px) {
+
+
+}

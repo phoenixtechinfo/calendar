@@ -1,7 +1,7 @@
 
-<div class='app'>
+<div class='app full-height'>
 
-  <div class='app-calendar' *ngIf="calendarVisible">
+  <div class='app-calendar full-height' *ngIf="calendarVisible">
     <full-calendar
       #calendar
       defaultView="{{viewTypeFormat}}"
@@ -11,6 +11,7 @@
         center: '',
         right: ''
       }"
+      height="parent"
       [plugins]="calendarPlugins"
       [weekends]="calendarWeekends"
       [events]="calendarEvents"
