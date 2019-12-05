@@ -126,10 +126,12 @@ export class ScheduleComponent implements OnInit {
             if (parseInt(moment(date).format('DD')) == 1) {
                 let monthName = moment(date).format('MMMM').toLocaleLowerCase();
                 dayData.displayBanner = 1;
+                dayData.bannerDetails = {};
                 if(this.bannerData) {
                     let bannerIndex = this.bannerData.findIndex((item) => item.month == monthName);
                     if (bannerIndex != -1) {
                         dayData.bannerImage = this.imgUrl + this.bannerData[bannerIndex].image;
+                        dayData.bannerDetails = this.bannerData[bannerIndex];
                     } else {
 
                         dayData.bannerImage = this.baseUrl + this.defaultBanner;
@@ -137,7 +139,7 @@ export class ScheduleComponent implements OnInit {
                 } else {
                     dayData.bannerImage = this.baseUrl + this.defaultBanner;
                 }
-                dayData.bannerTitle = moment(date).format('MMMM Y')
+                dayData.bannerTitle = moment(date).format('MMMM Y');
             }
             result.push(dayData);
             date.add(1, 'day');

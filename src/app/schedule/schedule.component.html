@@ -7,6 +7,7 @@
             <div *ngFor="let day of item.value.daysData; trackBy:keVvalue;" class="date-identify"  id="{{day.keyValue}}" [ngClass]="{'padding-bottom-5px day-view display-inline-block width-100': day.events.length || day.displayBanner, 'current-date': day.currentDate}">
                 <div class="width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" *ngIf="day.displayBanner" [ngStyle]="{'background-image': 'url('+ day.bannerImage +')'}">
                     {{day.bannerTitle}}
+                    <span class="title-text" *ngIf="day.bannerDetails && day.bannerDetails.title">{{(day.bannerDetails && day.bannerDetails.title)?day.bannerDetails.title:''}}</span>
                 </div>
                 <div class="display-block width-50px float-left text-align-center day-month padding-left-10px" *ngIf="day.events.length">
                     <span class="display-block color-gray font-size-12px font-light-bold text-upper-case month-div">{{day.dayName}}</span>
