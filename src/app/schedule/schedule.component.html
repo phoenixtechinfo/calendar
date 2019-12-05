@@ -47,6 +47,26 @@
             </div>
         </div>
     </div>
-    <button mat-button mat-fab class="add_event_btn" (click)="createEvent($event)" title="Add Event"><i
+    <!--<button mat-button mat-fab class="add_event_btn" (click)="createEvent($event)" title="Add Event"><i-->
+            <!--class="fa fa-plus add_sign" aria-hidden="true"></i></button>-->
+    <button mat-button mat-fab class="add_event_btn" [matMenuTriggerFor]="menuEvent" title="Add Event"><i
             class="fa fa-plus add_sign" aria-hidden="true"></i></button>
+    <mat-menu #menuEvent="matMenu">
+        <button mat-menu-item (click)="createEvent($event)">
+            <mat-icon>add_circle</mat-icon>
+            <span>Add Event</span>
+        </button>
+        <button mat-menu-item (click)="eventFilter = 'admin';getAllEvents()">
+            <mat-icon>flight_takeoff</mat-icon>
+            <span>Trip Ideas</span>
+        </button>
+        <button mat-menu-item (click)="eventFilter = 'my';getAllEvents()">
+            <mat-icon>person_pin</mat-icon>
+            <span>My events</span>
+        </button>
+        <button mat-menu-item (click)="eventFilter = '';getAllEvents()">
+            <mat-icon>group</mat-icon>
+            <span>All events</span>
+        </button>
+    </mat-menu>
 </div>

@@ -4,7 +4,7 @@ import {EventInput} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig, MatMenuModule} from '@angular/material';
 import {EventComponent} from '../event/event.component';
 import {EventService} from '../services/event.service';
 import {ViewEventComponent} from '../event/view-event/view-event.component';
@@ -52,6 +52,7 @@ export class ScheduleComponent implements OnInit {
         this.currentDate = moment();
         this.imgUrl = this.globals.imgUrl;
         this.baseUrl = this.globals.baseUrl;
+        this.eventFilter = '';
     }
 
     ngOnDestroy() {
@@ -84,6 +85,7 @@ export class ScheduleComponent implements OnInit {
     maxLoadedDate: any;
     bannerData: any;
     defaultBanner: any;
+    eventFilter: any;
 
     getScheduleViewData(date) {
         this.minLoadedDate = moment(date);
@@ -264,7 +266,7 @@ export class ScheduleComponent implements OnInit {
 
     //Function to get all the events
     getAllEvents() {
-        this.event_service.getAllEvents()
+        this.event_service.getAllEvents(this.eventFilter)
             .subscribe(res => {
                 this.calendarEvents = [];
                 res['data'].forEach(obj => {
@@ -316,6 +318,7 @@ export class ScheduleComponent implements OnInit {
         dialogRef.afterClosed().subscribe(
             data => {
                 if (data == 200) {
+                    this.eventFilter = '';
                     this.getAllEvents();
                 }
             }

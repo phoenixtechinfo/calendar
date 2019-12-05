@@ -41,8 +41,8 @@ export class EventService {
   }
 
   //Api for getting all the events
-    getAllEvents(): Observable<any> {
-    	return this.http.get(this.api_url + 'get-all-events', { headers: headers }).pipe(
+    getAllEvents(type:any = ''): Observable<any> {
+    	return this.http.get(this.api_url + 'get-all-events/' + type, { headers: headers }).pipe(
           tap(_ => {
             console.log('Fetched all the events successfully');
           }),

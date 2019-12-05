@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
 		if(!this.isUserLoggedIn) {
 			this.router.navigate(['/login']);
 		}
+        this.eventFilter = '';
 	}
 
   ngOnDestroy() {
@@ -62,6 +63,7 @@ export class HomeComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
   calendarEvents: EventInput[] = [];
+  eventFilter: any;
 	// calendarEvents: EventInput[] = [
 	//   { id: '1', title: 'Event Now', start: new Date() },
 	//   { id: '2', title: 'Test Event', start: new Date(2019, 9, 13), color: 'black', editable: true,textColor:'red' },
@@ -97,7 +99,7 @@ export class HomeComponent implements OnInit {
 
 	//Function to get all the events
 	getAllEvents() {
-		this.event_service.getAllEvents()
+		this.event_service.getAllEvents(this.eventFilter)
 			.subscribe(res => {
 				console.log('res', res['data']);
 				this.calendarEvents = [];
@@ -163,6 +165,7 @@ export class HomeComponent implements OnInit {
 				data => {
 					if(data == 200) {
 						this.getAllEvents();
+                        this.eventFilter = '';
 					}
 				}
 		);    
