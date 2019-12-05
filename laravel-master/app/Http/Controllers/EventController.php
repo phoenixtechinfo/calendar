@@ -106,6 +106,7 @@ class EventController extends Controller
         $events->end_datetime = new Carbon($request->get('end_date'));
         $events->end_datetime = $events->end_datetime->format('Y-m-d H:i:s');
         $events->color_id = $request->color_id;
+        $events->script = $request->script;
         $events->interested_flag = isset($request->interested) ? 1 : 0;
         $events->created_by = Auth::user()->id;
         $events->modified_by = Auth::user()->id;
@@ -203,6 +204,7 @@ class EventController extends Controller
         }
         $events->color_id = $request->color_id;
         $events->interested_flag = isset($request->interested) ? 1 : 0;
+        $events->script = $request->script;
         $events->modified_by = Auth::user()->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
             if (!empty($events->image)) {

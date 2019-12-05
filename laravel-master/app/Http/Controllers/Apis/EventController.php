@@ -53,7 +53,7 @@ class EventController extends Controller
     }
 
     //public function to get the eventdata
-    public function getEvents(Request $request) {
+    public function getEvents(Request $request, $type = null) {
         $user = \Auth::guard('api')->user();
         $categories = $user->categories;
         $events = events::with(['user', 'color'])->get();
@@ -64,10 +64,22 @@ class EventController extends Controller
             $users_cat[] = $category->id;
         }
         foreach($events as $event) {
-            if($event->created_by == $user->id || ($event->user->role == 1 || $event->user->role == 2)) {
-                $event_data[] = $event;
+            if($type == 'my') {
+                if($event->created_by == $user->id) {
+                    $event_data[] = $event;
+                }
+            } else if($type == 'admin'){
+                if($event->user->role == 1 || $event->user->role == 2) {
+                    $event_data[] = $event;
+                }
+            } else {
+                if($event->created_by == $user->id || ($event->user->role == 1 || $event->user->role == 2)) {
+                    $event_data[] = $event;
+                }
             }
+            
         }
+        // dd($event_data);S
         $response['code'] = 200;
         $response['message'] = 'Successfully fetched events';
         $response['data'] = $event_data;

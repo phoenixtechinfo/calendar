@@ -71,7 +71,7 @@
                   </tr>
                   <tr>
                     <th></th>
-                    <td class="float-right">
+                    <td>
                       <a href="{{ route('users.index') }}" class="btn btn-danger create-event-button">Cancel</a>
                     </td>
                   </tr>

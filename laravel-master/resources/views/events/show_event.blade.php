@@ -71,6 +71,10 @@
                     <th>Contact number</th>
                     <td>{{!empty($event->contact_no) ? $event->contact_no : '-'}}</td>
                   </tr>
+                   <tr>
+                    <th>Script</th>
+                    <td>{{!empty($event->script) ? $event->script : '-'}}</td>
+                  </tr>
                   <tr>
                     <th>created by</th>
                     <td>{{$event->user->firstname}} {{$event->user->lastname}}</td>
@@ -83,7 +87,7 @@
                   </tr>
                   <tr>
                     <th></th>
-                    <td class="float-right">
+                    <td>
                       <a href="{{ route('events.index') }}" class="btn btn-danger create-event-button">Cancel</a>
                     </td>
                   </tr>
