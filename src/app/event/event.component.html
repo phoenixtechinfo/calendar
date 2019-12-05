@@ -14,7 +14,7 @@
     	<textarea matInput placeholder="Description" formControlName="description"></textarea>
   	</mat-form-field>
     <mat-form-field class="example-full-width  col-sm-6"(click)="picker.open()" >
-  		<input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="start_date" placeholder="Choose Start Date" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors}" [errorStateMatcher]="matcher">
+  		<input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="start_date" placeholder="Choose Start Date" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors}" [errorStateMatcher]="matcher" (dateChange)="endDateChange($event)">
   		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 		<mat-datepicker #picker></mat-datepicker>
 		<mat-error *ngIf="f.start_date.errors" class="invalid-feedback ">

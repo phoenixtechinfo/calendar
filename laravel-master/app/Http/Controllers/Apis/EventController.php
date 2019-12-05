@@ -55,8 +55,14 @@ class EventController extends Controller
     //public function to get the eventdata
     public function getEvents(Request $request) {
         $user = \Auth::guard('api')->user();
+        $categories = $user->categories;
         $events = events::with(['user', 'color'])->get();
         $event_data = array();
+        $events_cat = array();
+        $users_cat = array();
+        foreach($categories as $category) {
+            $users_cat[] = $category->id;
+        }
         foreach($events as $event) {
             if($event->created_by == $user->id || ($event->user->role == 1 || $event->user->role == 2)) {
                 $event_data[] = $event;

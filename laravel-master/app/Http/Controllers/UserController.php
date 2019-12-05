@@ -77,7 +77,9 @@ class UserController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'password' => 'required|nullable|confirmed|min: 8|max: 16|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
         ];
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, [
+            'password.regex' => 'Password must contain uppercase, lowercase, digit and special characters',
+        ]);
         if ($validator->fails()) {
             // dd($validator->messages());
             return redirect()->back()->withErrors($validator)->withInput();
@@ -164,7 +166,9 @@ class UserController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'password' => 'sometimes|nullable|confirmed|min: 8|max: 16|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/ ',
         ];
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, [
+            'password.regex' => 'Password must contain uppercase, lowercase, digit and special characters',
+        ]);
         if ($validator->fails()) {
             // dd($validator->messages());
             return redirect()->back()->withErrors($validator)->withInput();

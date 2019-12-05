@@ -28,7 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $events = events::with(['user', 'color'])->get();
+        $events = events::with(['user', 'color'])->whereHas('user', function($q) {
+            $q->where('role', 1);
+            $q->orWhere('role', 2);
+        })->get();
         $total_count = [];
         $total_count['total_users'] = Auth::user()->role == 1 ? User::all()->count() : User::where('role', '!=', 1)->count();
         $total_count['total_events'] = Auth::user()->role == 1 ? events::all()->count() : events::whereHas('user', function($query)  {

@@ -118,7 +118,7 @@
                                 <label>Color</label>
                                 <select id="color_id" class="form-control  @error('color_id') is-invalid @enderror" name="color_id" value="{{ $events->color_id }}" style="width: 100%;">
                                     @foreach($colors as $key => $color)
-                                        <option value="{{ $color->id }}" {{$events->color_id == $color->id ? 'selected="selected"' : ''}}>{{ $color->name }}</option>
+                                        <option value="{{ $color->id }}" style="color: {{ $color->hexcode }}; font-weight: bold" {{$events->color_id == $color->id ? 'selected="selected"' : ''}}>{{ $color->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('color_id')
@@ -183,7 +183,7 @@
       endDate: moment('{{$events->end_datetime}}'),
       buttonClasses: ['btn btn-success apply-btn'],
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY hh:mm:ss a'
       }
     });
     $('#reservationtime').on('hide.daterangepicker', function(ev, picker) {

@@ -106,7 +106,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Categories</label>
-                                <select class="select2" name="category[]" multiple="multiple" value="[1]" data-placeholder="Select Categories" style="width: 100%;">
+                                <select class="select2" id="select_category" name="category[]" multiple="multiple" value="[1]" data-placeholder="Select Categories" style="width: 100%;">
                                     @foreach($categories as $key => $category)
                                         <option value = "{{ $category->id }}" {{ in_array($category->id, $selected_categories) ? "selected='selected'":"" }}>
                                             {{ $category->name }}
@@ -126,7 +126,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Password</label>
+                                <label>Password</label><a id="popoverData" class="btn float-right" href="#" data-content='Atleast 1 Uppercase<br/>Atleast 1 Lowercase<br>Atleast 1 Special Character<br>Atleast 1 digit<br>8-16 Characters' rel="popover" data-placement="left" data-html="true" data-trigger="hover"><i class="fa fa-info-circle " aria-hidden="true"></i></a>
                                 <input id="password" class="form-control  @error('password') is-invalid @enderror" name="password" type="password"  placeholder="Password" >
                                 @error('password')
                                     <span class="invalid-feedback has-error" role="alert">
@@ -177,6 +177,7 @@
 @endsection
 @push('scripts')
 <script>
+  $('#popoverData').popover();
   $(function () {
     @php
         if($user->profile_image != null && file_exists(public_path() .'/storage/'.$user->profile_image)) {

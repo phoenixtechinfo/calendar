@@ -73,7 +73,7 @@
                         <td>
                             <div class="row">
                               <a href="{{ route('category.edit',$category->id) }}" title="Edit" class="col-md-3 padding-0px"><i class="fa fa-edit"></i></a>
-                              <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="col-md-3 padding-0px">
+                              <form action="{{ route('category.destroy', $category->id) }}" style="display:{{$category->id == 1 ? 'none' : ''}}" method="POST" class="col-md-3 padding-0px">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-link padding-0px delete-button" title="Delete Category" onClick="return confirm('Are you sure you want to remove {{ ucfirst($category->name) }} category ?')"><i class="fa fa-times"></i></button>

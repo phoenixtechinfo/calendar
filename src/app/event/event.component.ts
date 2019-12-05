@@ -36,8 +36,8 @@ export class EventComponent implements OnInit {
   user_role:any = 'user';
   payload:any;
   start_date:any;
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2020, 0, 1);
+  minDate;
+  maxDate = new Date(2050, 0, 1);
   fileData: File = null;
   previewUrl:any = null;
   fileUploadProgress: string = null;
@@ -47,7 +47,7 @@ export class EventComponent implements OnInit {
   color_id:number;
   
   constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<EventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private atp: AmazingTimePickerService, private dialog: MatDialog,  private event_service:EventService, private datePipe: DatePipe) {
-  	// console.log(new Date(data.type));
+    // console.log(new Date(data.type));
     this.getCategories();
     this.start_date = data.type;
   }
@@ -75,6 +75,7 @@ export class EventComponent implements OnInit {
 
     });
     this.eventForm.controls.start_date.setValue(this.start_date.date);
+    this.minDate = new Date(this.start_date.date);
   }
 
   //Function to set the date 
@@ -208,6 +209,12 @@ export class EventComponent implements OnInit {
       }, err => {
         console.log('error', err);
       });
+  }
+
+  //fnction to change teh end date selection
+  endDateChange(event) {
+      this.minDate = new Date(event.value);
+      this.eventForm.controls['end_date'].setValue('');
   }
 
 }

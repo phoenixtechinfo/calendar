@@ -64,10 +64,6 @@
                     <td>{{ implode(', ', $categories_names) }}</td>
                   </tr>
                   <tr>
-                    <th>Contact number</th>
-                    <td>{{!empty($user->contact_no) ? $user->contact_no : '-'}}</td>
-                  </tr>
-                  <tr>
                     <th>Image</th>
                     <td> 
                       <img src="{{ !empty($user->profile_image) && file_exists(public_path() .'/storage/'.$user->profile_image) ? URL::asset('storage'.$user->profile_image) : asset('images/no-image.jpg') }}" width="500" height="500">

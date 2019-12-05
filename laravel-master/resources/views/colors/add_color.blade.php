@@ -51,9 +51,6 @@
                             <div class="form-group">
                                 <label>Role</label>
                                 <select id="created_for" class="form-control  @error('created_for') is-invalid @enderror" name="created_for" value="{{ old('created_for') }}" style="width: 100%;">
-                                    @if(Auth::user()->role == 1)
-                                        <option value="super admin">Super Admin</option>
-                                    @endif
                                     <option value="admin">Admin</option>
                                     <option value="user" selected="selected">User</option>
                                 </select>

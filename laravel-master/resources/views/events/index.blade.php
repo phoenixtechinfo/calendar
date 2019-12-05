@@ -82,8 +82,8 @@
                         <td>{{ Helper::listIndex($events->currentPage(), $events->perPage(), $key) }}</td>
                         <td>{{$event->title}}</td>
                         <td>{{$event->description}}</td>
-                        <td>{{$event->start_datetime}}</td>
-                        <td>{{$event->end_datetime}}</td>
+                        <td>{{\Carbon\Carbon::parse($event->start_datetime)->format('d-m-Y H:i:s')}}</td>
+                        <td>{{\Carbon\Carbon::parse($event->end_datetime)->format('d-m-Y H:i:s')}}</td>
                         <td>{{$event->user->firstname}}</td>
                         <td>
                             <div class="row">

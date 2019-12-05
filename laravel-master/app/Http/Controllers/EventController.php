@@ -70,11 +70,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == 2) {
-            $colors = Colors::whereIn('created_for', ['admin', 'user'])->get();
-        } else {
-            $colors = Colors::all();
-        }
+        $colors = Colors::whereIn('created_for', ['admin'])->get();
         $categories = Categories::all();
         return view('events/add_event', compact('colors', 'categories'));
     }
@@ -157,11 +153,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == 2) {
-            $colors = Colors::whereIn('created_for', ['admin', 'user'])->get();
-        } else {
-            $colors = Colors::all();
-        }
+        $colors = Colors::whereIn('created_for', ['admin'])->get();
         $categories = Categories::all();
         $events = events::with(['user', 'color'])->find($id);
         $selected_categories = array();

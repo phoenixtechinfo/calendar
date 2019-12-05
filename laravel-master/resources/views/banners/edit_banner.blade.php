@@ -136,7 +136,7 @@
                                     <option value="september" {{ $banner->month == 'september' ? 'selected="selected"' : '' }}>September</option>
                                     <option value="october" {{ $banner->month == 'october' ? 'selected="selected"' : '' }}>October</option>
                                     <option value="november" {{ $banner->month == 'november' ? 'selected="selected"' : '' }}>November</option>
-                                    <option value="december" {{ $banner->month == 'december' ? 'selected="selected"' : '' }}>Deceember</option>
+                                    <option value="december" {{ $banner->month == 'december' ? 'selected="selected"' : '' }}>December</option>
                                 </select>
                                 @error('month')
                                     <span class="invalid-feedback has-error" role="alert">

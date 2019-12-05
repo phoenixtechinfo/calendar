@@ -53,11 +53,11 @@
                   </tr>
                   <tr>
                     <th>Start Datetime</th>
-                    <td>{{$event->start_datetime}}</td>
+                    <td>{{ \Carbon\Carbon::parse($event->start_datetime)->format('d-m-Y H:i:s') }}</td>
                   </tr>
                   <tr>
                     <th>End Datetime</th>
-                    <td>{{$event->end_datetime}}</td>
+                    <td>{{ \Carbon\Carbon::parse($event->end_datetime)->format('d-m-Y H:i:s') }}</td>
                   </tr>
                   <tr>
                     <th>Categories</th>

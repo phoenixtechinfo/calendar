@@ -30,14 +30,14 @@
     <div class="col-sm-12 custom-error" *ngIf="errros"> 
         {{ errros.email }} 
     </div>
-     <mat-form-field class="example-full-width col-sm-6 ">
+    <!--  <mat-form-field class="example-full-width col-sm-6 ">
         <mat-select formControlName="category" id="category" placeholder="Select Categories" multiple [ngClass]="{ 'is-invalid': submitted && f.category.errors}" >
           `<mat-option *ngFor="let categories of categories_data" [value]="categories.id">{{categories.name}}</mat-option>
         </mat-select>
         <mat-error *ngIf="f.category.errors" class="invalid-feedback ">
             <div *ngIf="f.category.errors.required">Category is required</div>
         </mat-error>
-    </mat-form-field><br>
+    </mat-form-field><br> -->
      <mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="contact_no" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">
         <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">

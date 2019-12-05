@@ -39,7 +39,7 @@ export class EditEventComponent implements OnInit {
   payload:any;
   start_date:any;
   minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2020, 0, 1);
+  maxDate = new Date(2050, 0, 1);
   fileData: File = null;
   previewUrl:any = null;
   fileUploadProgress: string = null;
@@ -81,6 +81,7 @@ export class EditEventComponent implements OnInit {
   	this.editEventForm.controls.color.setValue(this.event_data.color.name);
     this.editEventForm.controls.color_id.setValue(this.event_data.color.id);
     this.previewUrl = this.globals.imgUrl + this.event_data.image;
+    this.minDate = new Date(this.event_data.start_datetime.split(' ')[0]);
   }
 
   //Function to get the form control values 
@@ -212,6 +213,12 @@ export class EditEventComponent implements OnInit {
       }, err => {
         console.log('error', err);
       });
+  }
+
+  //function to change the end date selection
+  endDateChange(event) {
+      this.minDate = new Date(event.value);
+      this.editEventForm.controls['end_date'].setValue('');
   }
 
 }

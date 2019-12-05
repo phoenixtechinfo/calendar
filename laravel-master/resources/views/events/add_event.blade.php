@@ -115,7 +115,7 @@
                                 <label>Color</label>
                                 <select id="color_id" class="form-control  @error('color_id') is-invalid @enderror" name="color_id" value="{{ old('color_id') }}" style="width: 100%;">
                                     @foreach($colors as $key => $color)
-                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                        <option value="{{ $color->id }}" style="color: {{ $color->hexcode }}; font-weight: bold">{{ $color->name }} </option>
                                     @endforeach
                                 </select>
                                 @error('color_id')
@@ -170,7 +170,7 @@
       startDate: moment().startOf('hour'),
       buttonClasses: ['btn btn-success apply-btn'],
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY hh:mm:ss a'
       }
     });
     $( "#reservationtime" ).val('');

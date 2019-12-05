@@ -135,7 +135,7 @@
                                     <option value="september">September</option>
                                     <option value="october">October</option>
                                     <option value="november">November</option>
-                                    <option value="december">Deceember</option>
+                                    <option value="december">December</option>
                                 </select>
                                 @error('month')
                                     <span class="invalid-feedback has-error" role="alert">
