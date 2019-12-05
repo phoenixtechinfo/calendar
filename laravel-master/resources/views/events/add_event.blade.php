@@ -130,10 +130,21 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <label>Script</label>
+                            <textarea id="script" class="form-control  @error('script') is-invalid @enderror" name="script" type="text" value="{{ old('script') }}" placeholder="Script" >{{ old('script') }}</textarea>
+                                @error('script')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                    </div><br>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
                             <label>Interester in</label>&nbsp&nbsp
                             <input type="checkbox" name="interested" checked data-bootstrap-switch>
                         </div>
-                    </div><br><br>
+                    </div><br><br> -->
                     <div class="row">
                         <div class="col-md-3 imgUp">
                             <div class="imagePreview"></div>

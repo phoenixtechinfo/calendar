@@ -40,7 +40,7 @@ ul.fileList.thumbs li img {
 .error-wrapper.email-verified{margin-top: 5%;}
 .error-wrapper.email-verified h2{text-transform: unset;}
 .padding-25px {padding-right:15px;}
-.create-event-button { margin-top:15px;}
+.create-event-button { margin-top:15px; float:right; }
 .custom-err {
     color: #E74C3C;
     font-size: 13px;
