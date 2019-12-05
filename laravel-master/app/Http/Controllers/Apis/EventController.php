@@ -64,16 +64,20 @@ class EventController extends Controller
             $users_cat[] = $category->id;
         }
         foreach($events as $event) {
+            $eventCategories = array();
+            foreach($event->categories as $category) {
+                $eventCategories[] = $category->id;
+            }
             if($type == 'my') {
                 if($event->created_by == $user->id) {
                     $event_data[] = $event;
                 }
             } else if($type == 'admin'){
-                if($event->user->role == 1 || $event->user->role == 2) {
+                if(($event->user->role == 1 || $event->user->role == 2) && array_intersect($users_cat, $eventCategories)) {
                     $event_data[] = $event;
                 }
             } else {
-                if($event->created_by == $user->id || ($event->user->role == 1 || $event->user->role == 2)) {
+                if($event->created_by == $user->id || (($event->user->role == 1 || $event->user->role == 2) && array_intersect($users_cat, $eventCategories))) {
                     $event_data[] = $event;
                 }
             }
