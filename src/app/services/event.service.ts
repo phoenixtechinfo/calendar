@@ -9,7 +9,6 @@ import { Globals } from '../shared/globals';
 
 let headers = new HttpHeaders();
 headers = headers.set('Access-Control-Allow-Origin', '*');
-headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +33,7 @@ export class EventService {
 
   //Api for create event
   createEvent (data): Observable<any> {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
     return this.http.post<any>(this.api_url + 'create-event', data, { headers: headers }).pipe(
       tap(_ => console.log('Event created successfully')),
       catchError(this.handleError<any>('createEvent'))
@@ -42,6 +42,7 @@ export class EventService {
 
   //Api for getting all the events
     getAllEvents(type:any = ''): Observable<any> {
+      headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
     	return this.http.get(this.api_url + 'get-all-events/' + type, { headers: headers }).pipe(
           tap(_ => {
             console.log('Fetched all the events successfully');
@@ -52,6 +53,7 @@ export class EventService {
 
   //Function to get event details
   getEventDetails(data): Observable<any> {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
   	return this.http.get(this.api_url + 'get-event-details', { params: data, headers: headers}).pipe(
       tap(_ => {
         console.log('Fetched the events details successfully');
@@ -62,6 +64,7 @@ export class EventService {
 
    //Api for edit event
   editEvent (data): Observable<any> {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
     return this.http.post<any>(this.api_url + 'edit-event', data, { headers: headers }).pipe(
       tap(_ => console.log('Event edited successfully')),
       catchError(this.handleError<any>('editEvent'))
@@ -70,6 +73,7 @@ export class EventService {
 
   //Api for getting all the colors
   getAllColors() {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
   return this.http.get(this.api_url + 'get-all-colors', { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the colors successfully');
@@ -80,6 +84,7 @@ export class EventService {
 
   //Api for getting all the categories
   getAllCategories() {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
   return this.http.get(this.api_url + 'get-all-categories', { headers: headers }).pipe(
       tap(_ => {
         console.log('Fetched all the categories successfully');
@@ -90,6 +95,7 @@ export class EventService {
 
     //Api for getting all the banners
     getAllBanners() {
+      headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-all-banners', { headers: headers }).pipe(
             tap(_ => {
                 console.log('Fetched all the banners successfully');

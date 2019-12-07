@@ -50,9 +50,14 @@ export class LoginComponent implements OnInit {
           // localStorage.setItem('user_details', JSON.stringify(this.result.success.data.id));
           localStorage.setItem('uid', this.result.success.token);
           this.globals.users_data = this.result.success.data;
-          this.globals.isUserLoggedInLoggedIn = true;
           this.user_service.isUserLoggedIn.next(true);
-          this.router.navigateByUrl(this.returnUrl);
+          this.globals.isUserLoggedInLoggedIn = true;
+          if(localStorage.getItem('uid') && this.globals.isUserLoggedInLoggedIn == true) {
+            this.router.navigateByUrl(this.returnUrl);
+          } else {
+            this.router.navigateByUrl('/');
+          }
+          
         } else {
           this.errors = this.result.error;
           console.log('error',this.errors.message);  

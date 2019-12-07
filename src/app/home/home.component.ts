@@ -45,7 +45,9 @@ export class HomeComponent implements OnInit {
 
 
 	ngOnInit() {
-		this.getAllEvents();
+	if(localStorage.getItem('uid')) {
+		this.getAllEvents();	
+	}
     this.viewTypeFormat = this.getViewType(this.viewType);
 	}
 

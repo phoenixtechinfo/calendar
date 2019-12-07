@@ -37,8 +37,8 @@ export class UserProfileComponent implements OnInit {
 	selected_categories:any;
 	selected_categories_data:Array<Object> = [];
 	constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<UserProfileComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private adapter : DateAdapter<any>, private dialog: MatDialog, private event_service:EventService, private user_service: UserService, private globals: Globals) {
-		this.selected_categories = this.globals.categories;
-		this.getCategories();
+		// this.selected_categories = this.globals.categories;
+		// this.getCategories();
 	}
 
 	ngOnInit() {
@@ -96,21 +96,21 @@ export class UserProfileComponent implements OnInit {
 	    }
   	}
 
-  	//function to get all the categories
-	getCategories() {
-	    this.event_service.getAllCategories()
-	      .subscribe(res => {
-	        console.log('res', res);
-	        this.categories_data = res['data'];
-	        this.selected_categories.forEach(item => {
-	          this.selected_categories_data.push(item.id);
-	        });
-	        console.log(this.selected_categories_data);
-	        this.userForm.controls.category.setValue(this.selected_categories_data);
-	      }, err => {
-	        console.log('error', err);
-	      });
-	}
+ //  	//function to get all the categories
+	// getCategories() {
+	//     this.event_service.getAllCategories()
+	//       .subscribe(res => {
+	//         console.log('res', res);
+	//         this.categories_data = res['data'];
+	//         this.selected_categories.forEach(item => {
+	//           this.selected_categories_data.push(item.id);
+	//         });
+	//         console.log(this.selected_categories_data);
+	//         this.userForm.controls.category.setValue(this.selected_categories_data);
+	//       }, err => {
+	//         console.log('error', err);
+	//       });
+	// }
 
 	  //Function to set the password validation conditinally
 	  checkPassword(value) {
@@ -127,7 +127,6 @@ export class UserProfileComponent implements OnInit {
 	  isEmailUnique(control: FormControl) {
 	    let result;
 	    let id = this.globals.users_data.id;
-	    console.log('id', id);
 	    const q = new Promise((resolve, reject) => {
 	      this.user_service.isEmailRegisterd(control.value, id).subscribe((res) => {
 	        result =  res;
@@ -155,7 +154,7 @@ export class UserProfileComponent implements OnInit {
       payload.append('lastname', this.userForm.controls.lastname.value);
       payload.append('email', this.userForm.controls.email.value);
       payload.append('contact_no', this.userForm.controls.contact_no.value);
-      payload.append('category', this.userForm.controls.category.value.toString());
+      // payload.append('category', this.userForm.controls.category.value.toString());
       payload.append('image', this.fileData);
       if(this.userForm.controls.password.value != '') {
       	payload.append('password', this.userForm.controls.password.value);
