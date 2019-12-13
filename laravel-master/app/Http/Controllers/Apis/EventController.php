@@ -73,7 +73,7 @@ class EventController extends Controller
                     $event_data[] = $event;
                 }
             } else if($type == 'admin'){
-                if(($event->user->role == 1 || $event->user->role == 2) && array_intersect($users_cat, $eventCategories)) {
+                if(($event->user->role == 1) && array_intersect($users_cat, $eventCategories)) {
                     $event_data[] = $event;
                 }
             } else {

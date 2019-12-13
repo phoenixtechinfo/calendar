@@ -15,6 +15,7 @@
       [plugins]="calendarPlugins"
       [weekends]="calendarWeekends"
       [events]="calendarEvents"
+      [displayEventTime]= "displayEventTime"
       (dateClick)="createEvent($event)"
       (eventClick)="getEventDetails($event)"
     ></full-calendar>

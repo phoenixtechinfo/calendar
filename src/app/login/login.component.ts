@@ -52,11 +52,12 @@ export class LoginComponent implements OnInit {
           this.globals.users_data = this.result.success.data;
           this.user_service.isUserLoggedIn.next(true);
           this.globals.isUserLoggedInLoggedIn = true;
-          if(localStorage.getItem('uid') && this.globals.isUserLoggedInLoggedIn == true) {
-            this.router.navigateByUrl(this.returnUrl);
-          } else {
-            this.router.navigateByUrl('/');
-          }
+          this.router.navigateByUrl('/schedule');
+          // if(localStorage.getItem('uid') && this.globals.isUserLoggedInLoggedIn == true) {
+          //   // this.router.navigateByUrl(this.returnUrl);
+          // } else {
+          //   this.router.navigateByUrl('/scheduler');
+          // }
           
         } else {
           this.errors = this.result.error;

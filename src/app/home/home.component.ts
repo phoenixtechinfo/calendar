@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   date:string = '';
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
+  displayEventTime = false;
   calendarEvents: EventInput[] = [];
   eventFilter: any;
 	// calendarEvents: EventInput[] = [
