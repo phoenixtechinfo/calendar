@@ -1448,7 +1448,9 @@ var HomeComponent = /** @class */ (function () {
         this.subscriptionViewType.unsubscribe();
     };
     HomeComponent.prototype.ngOnInit = function () {
-        this.getAllEvents();
+        if (localStorage.getItem('uid')) {
+            this.getAllEvents();
+        }
         this.viewTypeFormat = this.getViewType(this.viewType);
     };
     // calendarEvents: EventInput[] = [
@@ -1706,9 +1708,14 @@ var LoginComponent = /** @class */ (function () {
                 // localStorage.setItem('user_details', JSON.stringify(this.result.success.data.id));
                 localStorage.setItem('uid', _this.result.success.token);
                 _this.globals.users_data = _this.result.success.data;
-                _this.globals.isUserLoggedInLoggedIn = true;
                 _this.user_service.isUserLoggedIn.next(true);
-                _this.router.navigateByUrl(_this.returnUrl);
+                _this.globals.isUserLoggedInLoggedIn = true;
+                if (localStorage.getItem('uid') && _this.globals.isUserLoggedInLoggedIn == true) {
+                    _this.router.navigateByUrl(_this.returnUrl);
+                }
+                else {
+                    _this.router.navigateByUrl('/');
+                }
             }
             else {
                 _this.errors = _this.result.error;
@@ -2324,7 +2331,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]();
 headers = headers.set('Access-Control-Allow-Origin', '*');
-headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
 var EventService = /** @class */ (function () {
     function EventService(http, globals) {
         this.http = http;
@@ -2343,39 +2349,46 @@ var EventService = /** @class */ (function () {
     };
     //Api for create event
     EventService.prototype.createEvent = function (data) {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.post(this.api_url + 'create-event', data, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) { return console.log('Event created successfully'); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('createEvent')));
     };
     //Api for getting all the events
     EventService.prototype.getAllEvents = function (type) {
         if (type === void 0) { type = ''; }
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-all-events/' + type, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
             console.log('Fetched all the events successfully');
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getAllEvents')));
     };
     //Function to get event details
     EventService.prototype.getEventDetails = function (data) {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-event-details', { params: data, headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
             console.log('Fetched the events details successfully');
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getEventDetails')));
     };
     //Api for edit event
     EventService.prototype.editEvent = function (data) {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.post(this.api_url + 'edit-event', data, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) { return console.log('Event edited successfully'); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('editEvent')));
     };
     //Api for getting all the colors
     EventService.prototype.getAllColors = function () {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-all-colors', { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
             console.log('Fetched all the colors successfully');
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getAllColors')));
     };
     //Api for getting all the categories
     EventService.prototype.getAllCategories = function () {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-all-categories', { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
             console.log('Fetched all the categories successfully');
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getAllCategories')));
     };
     //Api for getting all the banners
     EventService.prototype.getAllBanners = function () {
+        headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('uid'));
         return this.http.get(this.api_url + 'get-all-banners', { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
             console.log('Fetched all the banners successfully');
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getAllBanners')));
@@ -2812,8 +2825,8 @@ var UserProfileComponent = /** @class */ (function () {
         this.uploadedFilePath = null;
         this.image_error = false;
         this.selected_categories_data = [];
-        this.selected_categories = this.globals.categories;
-        this.getCategories();
+        // this.selected_categories = this.globals.categories;
+        // this.getCategories();
     }
     UserProfileComponent.prototype.ngOnInit = function () {
         this.userForm = this.formBuilder.group({
@@ -2870,22 +2883,21 @@ var UserProfileComponent = /** @class */ (function () {
             _this.previewUrl = reader.result;
         };
     };
-    //function to get all the categories
-    UserProfileComponent.prototype.getCategories = function () {
-        var _this = this;
-        this.event_service.getAllCategories()
-            .subscribe(function (res) {
-            console.log('res', res);
-            _this.categories_data = res['data'];
-            _this.selected_categories.forEach(function (item) {
-                _this.selected_categories_data.push(item.id);
-            });
-            console.log(_this.selected_categories_data);
-            _this.userForm.controls.category.setValue(_this.selected_categories_data);
-        }, function (err) {
-            console.log('error', err);
-        });
-    };
+    //  	//function to get all the categories
+    // getCategories() {
+    //     this.event_service.getAllCategories()
+    //       .subscribe(res => {
+    //         console.log('res', res);
+    //         this.categories_data = res['data'];
+    //         this.selected_categories.forEach(item => {
+    //           this.selected_categories_data.push(item.id);
+    //         });
+    //         console.log(this.selected_categories_data);
+    //         this.userForm.controls.category.setValue(this.selected_categories_data);
+    //       }, err => {
+    //         console.log('error', err);
+    //       });
+    // }
     //Function to set the password validation conditinally
     UserProfileComponent.prototype.checkPassword = function (value) {
         if (value != '' && value != null && value != undefined) {
@@ -2902,7 +2914,6 @@ var UserProfileComponent = /** @class */ (function () {
         var _this = this;
         var result;
         var id = this.globals.users_data.id;
-        console.log('id', id);
         var q = new Promise(function (resolve, reject) {
             _this.user_service.isEmailRegisterd(control.value, id).subscribe(function (res) {
                 result = res;
@@ -2930,7 +2941,7 @@ var UserProfileComponent = /** @class */ (function () {
         payload.append('lastname', this.userForm.controls.lastname.value);
         payload.append('email', this.userForm.controls.email.value);
         payload.append('contact_no', this.userForm.controls.contact_no.value);
-        payload.append('category', this.userForm.controls.category.value.toString());
+        // payload.append('category', this.userForm.controls.category.value.toString());
         payload.append('image', this.fileData);
         if (this.userForm.controls.password.value != '') {
             payload.append('password', this.userForm.controls.password.value);
