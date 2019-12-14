@@ -133,8 +133,8 @@ class UsersController extends Controller
             $user->profile_image = $filePath;
         }
         $user->save();
-        $category = Categories::find(array_map('intval', explode(',', $request->category)));
-        $user->categories()->sync($category);
+        // $category = Categories::find(array_map('intval', explode(',', $request->category)));
+        // $user->categories()->sync($category);
         $response['code'] = 200;
         $response['message'] = 'Successfully edited';
         return response()->json($response);

@@ -10,7 +10,7 @@ import { UserResolver } from './shared/user-resolver';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'home',
         component: HomeComponent,
         data: { title: 'Home page' },
         resolve : {
@@ -29,7 +29,7 @@ const routes: Routes = [
         data: { title: 'Registers page' }
     },
     {
-        path: 'schedule',
+        path: '',
         component: ScheduleComponent,
         data: { title: 'Schedule' },
         resolve : {

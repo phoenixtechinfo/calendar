@@ -3,13 +3,13 @@
         <mat-list>
             <h3 class="side-nav-title">Calander App</h3>
             <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle();setViewType(3);" routerLink="/schedule" [ngClass]="{'active': viewType == 3}"> <mat-icon matListIcon>schedule</mat-icon> <h4 matLine>Schedule</h4> </mat-list-item>
+            <mat-list-item (click)="drawer.toggle();setViewType(3);" routerLink="/" [ngClass]="{'active': viewType == 3}"> <mat-icon matListIcon>schedule</mat-icon> <h4 matLine>Schedule</h4> </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle();setViewType(2);" routerLink="/" [ngClass]="{'active': viewType == 2}"> <mat-icon matListIcon>view_day</mat-icon> <h4 matLine>Day</h4> </mat-list-item>
+            <mat-list-item (click)="drawer.toggle();setViewType(2);" routerLink="/home" [ngClass]="{'active': viewType == 2}"> <mat-icon matListIcon>view_day</mat-icon> <h4 matLine>Day</h4> </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle();setViewType(1);" routerLink="/" [ngClass]="{'active': viewType == 1}"> <mat-icon matListIcon>view_week</mat-icon> <h4 matLine>Week</h4> </mat-list-item>
+            <mat-list-item (click)="drawer.toggle();setViewType(1);" routerLink="/home" [ngClass]="{'active': viewType == 1}"> <mat-icon matListIcon>view_week</mat-icon> <h4 matLine>Week</h4> </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item (click)="drawer.toggle();setViewType(0);" routerLink="/" [ngClass]="{'active': viewType == 0}"> <mat-icon matListIcon>view_module</mat-icon> <h4 matLine>Month</h4> </mat-list-item>
+            <mat-list-item (click)="drawer.toggle();setViewType(0);" routerLink="/home" [ngClass]="{'active': viewType == 0}"> <mat-icon matListIcon>view_module</mat-icon> <h4 matLine>Month</h4> </mat-list-item>
             <mat-divider></mat-divider>
             <!--<mat-list-item (click)="logout($event)"> <mat-icon matListIcon>power_settings_new</mat-icon> <h4 matLine>Logout</h4> </mat-list-item><mat-divider></mat-divider>-->
         </mat-list>
