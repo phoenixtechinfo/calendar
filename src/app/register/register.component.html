@@ -52,7 +52,7 @@
                         <input matInput type="password" id="password" name="password" value="" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
                          <mat-error *ngIf="f.password.errors" class="invalid-feedback ">
                             <div *ngIf="f.password.errors.required">password is required</div>
-                            <div *ngIf="f.password.errors.pattern">Password is not valid</div>
+                            <div *ngIf="f.password.errors.pattern">Password must contain uppercase, lowercase, digit and special characters(min length: 8).</div>
                         </mat-error>
                     </mat-form-field>
                     <div class="col-sm-12 custom-error" *ngIf="errors"> 
