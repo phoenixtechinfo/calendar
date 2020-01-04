@@ -2609,8 +2609,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var Globals = /** @class */ (function () {
     function Globals() {
-        this.api_url = 'http://travelwhistlecalendar.com/admin/index.php/api/';
-        this.imgUrl = 'http://travelwhistlecalendar.com/admin/index.php/storage/';
+        this.api_url = 'http://travelwhistlecalendar.com/admin/public/index.php/api/';
+        this.imgUrl = 'http://travelwhistlecalendar.com/admin/public/storage/';
         this.baseUrl = 'http://travelwhistlecalendar.com/admin/index.php/';
         this.users_data = '';
         this.categories = '';
