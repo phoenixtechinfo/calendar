@@ -22,7 +22,7 @@
         </mat-error>
 	</mat-form-field>
     <mat-form-field matInput class="example-full-width col-sm-6 ">	
-   		<input matInput type="time" atp-time-picker placeholder="Choose Start Time" formControlName="start_time"  />
+   		<input matInput type="time" atp-time-picker placeholder="Choose Start Time" formControlName="start_time" readonly="readonly"/>
    	</mat-form-field>
    	<mat-form-field class="example-full-width  col-sm-6">
   		<input matInput [min]="minDate" [max]="maxDate" (click)="end_picker.open()" formControlName="end_date" [matDatepicker]="end_picker" placeholder="Choose End Date" [ngClass]="{ 'is-invalid': submitted && f.end_time.errors}" [errorStateMatcher]="matcher">
@@ -33,7 +33,7 @@
         </mat-error>
 	</mat-form-field>
     <mat-form-field matInput class="example-full-width col-sm-6 ">	
-   		<input matInput type="time" atp-time-picker placeholder="Choose End Time" formControlName="end_time" />
+   		<input matInput type="time" atp-time-picker placeholder="Choose End Time" formControlName="end_time"  readonly="readonly" />
    	</mat-form-field>
    	<mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="title" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">

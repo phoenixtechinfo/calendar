@@ -79,7 +79,7 @@ class UsersController extends Controller
 
     //function to get all the colors 
     public function getColors(Request $request) {
-        $colors = Colors::where('created_for', '!=' ,'super admin')->get();
+        $colors = Colors::where('created_for', '!=' ,'admin')->get();
         $response['code'] = 200;
         $response['data'] =  $colors; 
         return response()->json($response);

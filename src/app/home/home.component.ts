@@ -155,6 +155,7 @@ export class HomeComponent implements OnInit {
 
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
+		dialogConfig.maxHeight = '100hv';
 
 		dialogConfig.data = {
 				type:arg

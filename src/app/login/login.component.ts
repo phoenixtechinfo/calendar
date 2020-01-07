@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   errors:any = '';
   submitted:boolean = false;
   returnUrl:string = '';
+  imgUrl:string = '';
 
   constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
@@ -26,6 +27,10 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.compose([Validators.required])],
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    if(this.globals.isUserLoggedInLoggedIn){
+        this.router.navigateByUrl('/');
+    }
+    this.baseUrl = this.globals.baseUrl;
   }
 
   //Function to get the form control value

@@ -26,7 +26,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Event</b>Calendar</a>
+        <img src="{{ asset('images/Travelwhistle.png') }}" alt="AdminLTE Logo" style="width: 70%; padding-bottom: 20px;">
     </div>
     <!-- /.login-logo -->
     <div class="card">

@@ -47,12 +47,12 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('home') }}" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block pull-right">
-                <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> <span>Sign Out</span></a>
-            </li>
+            {{--<li class="nav-item d-none d-sm-inline-block">--}}
+                {{--<a href="{{ route('home') }}" class="nav-link">Home</a>--}}
+            {{--</li>--}}
+            {{--<li class="nav-item d-none d-sm-inline-block pull-right">--}}
+                {{--<a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> <span>Sign Out</span></a>--}}
+            {{--</li>--}}
             </ul>
 
             <!-- Right navbar links -->
@@ -133,6 +133,12 @@
                     <a href="{{ route('settings.index') }}" class="nav-link {{(request()->is('settings*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Setting</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link {{(request()->is('settings*')) ? 'active' : ''}}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Sign Out</p>
                     </a>
                 </li>
                 </ul>
