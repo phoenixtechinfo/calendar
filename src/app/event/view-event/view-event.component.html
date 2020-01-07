@@ -3,7 +3,7 @@
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{events_data.title}}</mat-card-title>
   </mat-card-header><br>
-  <img mat-card-image src="{{img_url}}{{events_data.image}}" alt="Photo of a Shiba Inu">
+  <img *ngIf="events_data.image != null" mat-card-image src="{{img_url}}{{events_data.image}}" alt="Photo of a Shiba Inu">
   <mat-card-content>
     <p>
       <b>Description</b> : {{events_data.description}}

@@ -95,13 +95,13 @@ class EventController extends Controller
         $id = $request->get('id');
         $event = events::with(['user', 'color'])->find($id);
         $categories = $event->categories;
-        if($event->image != '' && $event->image != null) {
-            if(!file_exists(public_path() .'/storage/'.$event->image)) {
-                $event->image = '/uploads/event_images/no-image.png';
-            }
-        } else {
-           $event->image = '/uploads/event_images/no-image.png'; 
-        }
+        // if($event->image != '' && $event->image != null) {
+        //     if(!file_exists(public_path() .'/storage/'.$event->image)) {
+        //         $event->image = '/uploads/event_images/no-image.png';
+        //     }
+        // } else {
+        //    $event->image = '/uploads/event_images/no-image.png'; 
+        // }
         $response['code'] = 200;
         $response['message'] = 'Successfully fetched event\'s data';
         $response['data'] = $event;

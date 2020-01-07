@@ -80,7 +80,9 @@ export class EditEventComponent implements OnInit {
   	this.editEventForm.controls.contact_no.setValue(this.event_data.contact_no);
   	this.editEventForm.controls.color.setValue(this.event_data.color.name);
     this.editEventForm.controls.color_id.setValue(this.event_data.color.id);
-    this.previewUrl = this.globals.imgUrl + this.event_data.image;
+    if(this.event_data.image != null) {
+      this.previewUrl = this.globals.imgUrl + this.event_data.image;
+    }
     this.minDate = new Date(this.event_data.start_datetime.split(' ')[0]);
   }
 
