@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   errors:any = '';
   submitted:boolean = false;
   returnUrl:string = '';
-  imgUrl:string = '';
+  baseUrl:string = '';
 
   constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
