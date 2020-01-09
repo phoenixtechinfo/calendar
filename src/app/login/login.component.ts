@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   loginUserForm: FormGroup;
   result:any;
   errors:any = '';
+  showSpinner:any;
   submitted:boolean = false;
   returnUrl:string = '';
   baseUrl:string = '';

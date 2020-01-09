@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
 	createUserForm: FormGroup;
 	submitted:boolean;
 	result:any;
-	errros:any;
+	errors:any;
+    showSpinner:any;
 	baseUrl:string;
 	constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) {
 		this.baseUrl = this.globals.baseUrl;
@@ -67,7 +68,7 @@ export class RegisterComponent implements OnInit {
 	                this.user_service.isUserLoggedIn.next(true);
 	              	this.router.navigate(['/']);
 	            } else {
-	              this.errros = this.result.message;
+	              this.errors = this.result.message;
 	            }
 	          }, (err) => {
 	            console.log('error', err);

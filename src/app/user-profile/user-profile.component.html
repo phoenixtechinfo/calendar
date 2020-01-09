@@ -2,7 +2,7 @@
 <form [formGroup]="userForm" (ngSubmit)="saveProfile(userForm)">
 <mat-dialog-content >
     <mat-form-field class="example-full-width col-sm-6 ">
-        <input matInput id="firstname" placeholder="Enter firstname" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors}" [errorStateMatcher]="matcher">
+        <input matInput id="firstname" placeholder="Enter firstname" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors}" >
         <mat-error *ngIf="f.firstname.errors" class="invalid-feedback ">
             <div *ngIf="f.firstname.errors.required">First Name is required</div>
         </mat-error>
@@ -11,7 +11,7 @@
         {{ errros.firstname }} 
     </div>
    	<mat-form-field class="example-full-width col-sm-6 ">
-        <input matInput id="lastname" type="text" placeholder="Enter lastname" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors}" [errorStateMatcher]="matcher">
+        <input matInput id="lastname" type="text" placeholder="Enter lastname" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors}" >
         <mat-error *ngIf="f.lastname.errors" class="invalid-feedback ">
             <div *ngIf="f.lastname.errors.required">Last Name is required</div>
         </mat-error>
@@ -20,7 +20,7 @@
         {{ errros.lastname }} 
     </div><br>
     <mat-form-field class="example-full-width col-sm-6">
-        <input matInput type="email" placeholder="Enter Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" [errorStateMatcher]="matcher" >
+        <input matInput type="email" placeholder="Enter Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  >
         <mat-error *ngIf="f.email.errors" class="invalid-feedback">
             <div *ngIf="f.email.errors.required">Email is required</div>
             <div *ngIf="f.email.errors.email">Email is not valid</div>
@@ -39,13 +39,13 @@
         </mat-error>
     </mat-form-field><br> -->
      <mat-form-field class="example-full-width col-sm-6 ">
-        <input matInput id="contact_no" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">
+        <input matInput id="contact_no" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" >
         <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">
             <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
         </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width col-sm-6 ">
-        <input matInput type="password" id="pwd" placeholder="Enter password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" (keyup)="checkPassword($event.target.value)" [errorStateMatcher]="matcher" >
+        <input matInput type="password" id="pwd" placeholder="Enter password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" (keyup)="checkPassword($event.target.value)"  >
         <mat-error *ngIf="f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">Password is required</div>
             <div *ngIf="f.password.errors.pattern">Password is not valid</div>

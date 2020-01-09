@@ -50,7 +50,7 @@ export class AppComponent {
    viewType:any;
    isUserLoggedIn:boolean;
    baseUrl:string;
-  constructor(private dialog: MatDialog, private user_service: UserService, private globals: Globals, private router: Router, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
+  constructor(private dialog: MatDialog, private user_service: UserService, public globals: Globals, private router: Router, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
         this.selectedDateFormControl = new FormControl(moment());
         this.event_service.currentDate.subscribe(data => this.selectedDateFormControl = new FormControl(data.date));
         this.event_service.viewType.subscribe(type => this.viewType = type);

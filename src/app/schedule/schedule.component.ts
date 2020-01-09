@@ -86,6 +86,7 @@ export class ScheduleComponent implements OnInit {
     bannerData: any;
     defaultBanner: any;
     eventFilter: any;
+    keyvalue: any;
 
     getScheduleViewData(date) {
         this.minLoadedDate = moment(date);

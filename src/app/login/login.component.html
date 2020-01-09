@@ -8,7 +8,7 @@
             <tr>
                 <td>
                     <mat-form-field class="example-full-width">
-                        <input matInput id="email" placeholder="Enter email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" [errorStateMatcher]="matcher">
+                        <input matInput id="email" placeholder="Enter email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors}">
                         <mat-error *ngIf="f.email.errors" class="invalid-feedback ">
                             <div *ngIf="f.email.errors.required">Email is required</div>
                             <div *ngIf="f.email.errors.email">Email is not valid</div>
