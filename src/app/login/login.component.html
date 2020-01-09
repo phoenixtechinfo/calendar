@@ -36,11 +36,17 @@
                 </td>
             </tr>
         </table>
-       <button mat-raised-button type="submit" color="primary" class="margin-top-20px">Login</button>      
+       <button mat-raised-button type="submit" color="primary" class="margin-top-20px">Sign In</button>
      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
    </mat-card-content>
    <mat-card-actions class="example-full-width">
-    <a [routerLink]="'/register'" style="float:right">Don't have an account</a>
+
+    <a [routerLink]="'/register'" mat-raised-button color="accent" style="float:right">Sing Up! Now!</a>
    </mat-card-actions>
    </form>
  </mat-card>
+<mat-card class="margin-0-auto login-text-card">
+    <mat-card-content class="example-full-width padding-15px">
+        {{this.settings['data'].loginPageText}}
+    </mat-card-content>
+</mat-card>

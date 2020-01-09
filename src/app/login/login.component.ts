@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { UserService } from '../services/user.service';
+import { EventService } from '../services/event.service';
 import { Globals } from '../shared/globals';
 import {FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm, AbstractControl} from "@angular/forms";
 import { Router,ActivatedRoute, NavigationStart, NavigationEnd, RoutesRecognized } from '@angular/router';
@@ -8,7 +9,8 @@ import {MatCardModule} from '@angular/material/card';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
 
@@ -18,8 +20,9 @@ export class LoginComponent implements OnInit {
   submitted:boolean = false;
   returnUrl:string = '';
   baseUrl:string = '';
+  settings:any = {};
 
-  constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private globals: Globals, private user_service: UserService, private event_service: EventService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute, private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit() {
   	this.loginUserForm = this.formBuilder.group({
@@ -31,6 +34,14 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/');
     }
     this.baseUrl = this.globals.baseUrl;
+
+      this.event_service.getAllSettings()
+          .subscribe(res => {
+              this.settings = res;
+              this.changeDetection.detectChanges();
+          }, err => {
+              console.log('error',err);
+          });
   }
 
   //Function to get the form control value

@@ -104,6 +104,17 @@ export class EventService {
         );
     }
 
+    //Api for getting all the settings
+    getAllSettings() {
+        headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
+        return this.http.get(this.api_url + 'get-all-settings', { headers: headers }).pipe(
+            tap(_ => {
+                console.log('Fetched all the settings successfully');
+            }),
+            catchError(this.handleError('getAllSettings'))
+        );
+    }
+
   //Function to handle the error
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

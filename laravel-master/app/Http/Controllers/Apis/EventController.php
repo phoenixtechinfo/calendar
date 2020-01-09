@@ -22,12 +22,12 @@ class EventController extends Controller
         $user = \Auth::guard('api')->user();
     	$event = new events();
     	$event->title = $request->get('title');
-    	$event->description = $request->get('description');
+    	$event->description = $request->get('description')?$request->get('description'):null;
     	$event->start_datetime = new Carbon($request->get('start_datetime'));
         $event->start_datetime = $event->start_datetime->format('Y-m-d H:i:s');
     	$event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
-    	$event->contact_no = $request->get('contact_no');
+    	$event->contact_no = $request->get('contact_no')?$request->get('contact_no'):null;
     	$event->color_id = $request->get('color_id');
     	$event->created_by = $user->id;
     	$event->modified_by = $user->id;
@@ -45,6 +45,7 @@ class EventController extends Controller
             $event->image = $filePath;
         }
     	$event->save();
+        $request->category = ($request->category)?$request->category:1;
         $category = Categories::find(array_map('intval', explode(',', $request->category)));
         $event->categories()->attach($category);
         $response['code'] = 200;
@@ -114,12 +115,12 @@ class EventController extends Controller
         $user = \Auth::guard('api')->user();
         $event = events::find($request->get('id'));
         $event->title = $request->get('title');
-        $event->description = $request->get('description');
+        $event->description = $request->get('description')?$request->get('description'):null;
         $event->start_datetime = new Carbon($request->get('start_datetime'));
         $event->start_datetime = $event->start_datetime->format('Y-m-d H:i:s');
         $event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
-        $event->contact_no = $request->get('contact_no');
+        $event->contact_no = $request->get('contact_no')?$request->get('contact_no'):null;
         $event->color_id = $request->get('color_id');
         $event->modified_by = $user->id;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
@@ -140,6 +141,7 @@ class EventController extends Controller
             $event->image = $filePath;
         }
         $event->save();
+        $request->category = ($request->category)?$request->category:1;
         $category = Categories::find(array_map('intval', explode(',', $request->category)));
         $event->categories()->sync($category);
         $response['code'] = 200;

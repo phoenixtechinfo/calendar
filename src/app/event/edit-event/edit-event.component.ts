@@ -60,7 +60,7 @@ export class EditEventComponent implements OnInit {
   ngOnInit() {
   	this.editEventForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required])],
-      description:['', Validators.compose([Validators.required])],
+      description:[''],
       start_date: ['', Validators.compose([Validators.required])],
       end_date: ['', Validators.compose([Validators.required])],
       start_time: [''],
@@ -68,10 +68,12 @@ export class EditEventComponent implements OnInit {
       event_image: [''],
       contact_no:[''],
       color:['', Validators.compose([Validators.required])],
-      category: ['', Validators.compose([Validators.required])],
+      category: [''],
       color_id:[''],
     });
     this.editEventForm.controls.title.setValue(this.event_data.title);
+      this.event_data.description = this.event_data.description == null ? '' : this.event_data.description;
+      this.event_data.contact_no = this.event_data.contact_no == null ? '' : this.event_data.contact_no;
   	this.editEventForm.controls.description.setValue(this.event_data.description);
   	this.editEventForm.controls.start_date.setValue(new Date(this.event_data.start_datetime.split(' ')[0]));
   	this.editEventForm.controls.end_date.setValue(new Date(this.event_data.end_datetime.split(' ')[0]));
@@ -174,10 +176,10 @@ export class EditEventComponent implements OnInit {
       payload.append('start_datetime', start_datetime);
       payload.append('end_datetime', end_datetime);
       payload.append('color', this.editEventForm.controls.color.value);
-      payload.append('contact_no', this.editEventForm.controls.contact_no.value);
+      //payload.append('contact_no', this.editEventForm.controls.contact_no.value);
       payload.append('category', this.editEventForm.controls.category.value.toString());
       payload.append('interested_flag', '0');
-      payload.append('image', this.fileData);
+      //payload.append('image', this.fileData);
       payload.append('color_id', this.editEventForm.controls.color_id.value);
       // console.log('form success');
        this.event_service.editEvent(payload)

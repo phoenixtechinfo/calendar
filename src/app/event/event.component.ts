@@ -62,7 +62,7 @@ export class EventComponent implements OnInit {
   ngOnInit() {
     this.eventForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required])],
-      description:['', Validators.compose([Validators.required])],
+      description:[''],
       start_date: ['', Validators.compose([Validators.required])],
       end_date: ['', Validators.compose([Validators.required])],
       start_time: [''],
@@ -70,7 +70,7 @@ export class EventComponent implements OnInit {
       event_image: [''],
       contact_no:[''],
       color:['', Validators.compose([Validators.required])],
-      category: ['', Validators.compose([Validators.required])],
+      category: [''],
       color_id:[''],
 
     });

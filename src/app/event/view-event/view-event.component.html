@@ -6,7 +6,7 @@
   </mat-card-header><br>
   <img *ngIf="events_data.image != null" mat-card-image src="{{img_url}}{{events_data.image}}" alt="Photo of a Shiba Inu">
   <mat-card-content>
-    <p>
+    <p *ngIf="events_data.description">
       <b>Description</b> : {{events_data.description}}
     </p><br>
     <p>
@@ -14,6 +14,9 @@
     </p><br>
     <p>
       <b>Ends on</b> : {{events_data.end_datetime}}
+    </p><br>
+    <p *ngIf="events_data.contact_no">
+      <b>Contact Number</b> : {{events_data.contact_no}}
     </p><br>
     <!--<p>-->
       <!--<b>Categories</b> : {{selected_categories.toString()}}-->

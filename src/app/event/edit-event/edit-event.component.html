@@ -38,23 +38,23 @@
     <mat-form-field matInput class="example-full-width col-sm-6 ">	
    		<input matInput type="time" atp-time-picker placeholder="Choose End Time" formControlName="end_time" readonly="readonly"/>
    	</mat-form-field>
-   	<mat-form-field class="example-full-width col-sm-6 ">
+   	<!--<mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="title" type="number" placeholder="Enter Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" [errorStateMatcher]="matcher">
         <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">
             <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
         </mat-error>
-    </mat-form-field>
+    </mat-form-field>-->
     <input type="hidden" formControlName="color_id" value="">
-    <div class="col-sm-12 custom-error" *ngIf="errros"> 
-        {{ errros.contact_no }} 
-    </div>
+    <!--<div class="col-sm-12 custom-error" *ngIf="errros">
+        {{ errros.contact_no }}
+    </div>-->
     <mat-form-field class="example-full-width col-sm-6 ">
         <input matInput id="color" placeholder="Choose Color"  [value]="editEventForm.get('color').value | titlecase " (click)="chooseColor($event)" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors}" [errorStateMatcher]="matcher" readonly="true">
          <mat-error *ngIf="f.color.errors" class="invalid-feedback ">
             <div *ngIf="f.color.errors.required">Color is required</div>
         </mat-error>
     </mat-form-field>
-    <mat-form-field class="example-full-width col-sm-12 ">
+    <!--<mat-form-field class="example-full-width col-sm-12 ">
         <mat-select formControlName="category" id="category" placeholder="Select Categories" multiple [ngClass]="{ 'is-invalid': submitted && f.category.errors}" >
           `<mat-option *ngFor="let categories of categories_data" [value]="categories.id">{{categories.name}}</mat-option>
         </mat-select>
@@ -73,7 +73,7 @@
     </div>
      <mat-error *ngIf="image_error" class="col-sm-12 invalid-feedback ">
        <div>Image must be in jpeg,jpg or png format</div>
-    </mat-error>
+    </mat-error>-->
 </mat-dialog-content>
 <mat-dialog-actions class="float-right">
     <button mat-stroked-button (click)="closePopup($event)" class="mat-stroked-button" style="margin-right:10px;" >Close</button>

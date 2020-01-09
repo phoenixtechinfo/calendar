@@ -211,13 +211,13 @@
                     required : true
                 },
                 description: {
-                    required : true
+                    required : false
                 },
                 color_id: {
                     required: true,
                 },
                 contact_number: {
-                    required: true,
+                    required: false,
                 },
                 datetime: {
                     required: true,

@@ -85,8 +85,8 @@ class EventController extends Controller
     {
         $rules = [
             'title' => 'required',
-            'description' => 'required',
-            'contact_number' => 'required|numeric',
+//            'description' => 'required',
+//            'contact_number' => 'required|numeric',
             'color_id' => 'required',
             'datetime' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
@@ -177,8 +177,8 @@ class EventController extends Controller
     
         $rules = [
             'title' => 'required',
-            'description' => 'required',
-            'contact_number' => 'required|numeric',
+//            'description' => 'required',
+//            'contact_number' => 'required|numeric',
             'color_id' => 'required',
             'datetime' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
