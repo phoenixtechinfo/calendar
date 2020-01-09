@@ -11,8 +11,11 @@
         {{ errros.title }} 
     </div>
     <mat-form-field class="example-full-width col-sm-12 ">
-    	<textarea matInput placeholder="Description" formControlName="description"></textarea>
-  	</mat-form-field>
+        <textarea matInput placeholder="Description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors}" [errorStateMatcher]="matcher"></textarea>
+        <mat-error *ngIf="f.description.errors" class="invalid-feedback ">
+            <div *ngIf="f.description.errors.required">Description is required</div>
+        </mat-error>
+    </mat-form-field>
     <mat-form-field class="example-full-width  col-sm-6"(click)="picker.open()" >
   		<input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="start_date" placeholder="Choose Start Date" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors}" [errorStateMatcher]="matcher" (dateChange)="endDateChange($event)">
   		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

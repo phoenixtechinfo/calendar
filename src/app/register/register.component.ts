@@ -24,7 +24,10 @@ export class RegisterComponent implements OnInit {
 	submitted:boolean;
 	result:any;
 	errros:any;
-	constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+	baseUrl:string;
+	constructor(private globals: Globals, private user_service: UserService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+		this.baseUrl = this.globals.baseUrl;
+	}
 
 	ngOnInit() {
 		this.createUserForm = this.formBuilder.group({

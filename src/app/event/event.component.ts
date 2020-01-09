@@ -62,7 +62,7 @@ export class EventComponent implements OnInit {
   ngOnInit() {
     this.eventForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required])],
-      description:[''], 
+      description:['', Validators.compose([Validators.required])],
       start_date: ['', Validators.compose([Validators.required])],
       end_date: ['', Validators.compose([Validators.required])],
       start_time: [''],

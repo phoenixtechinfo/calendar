@@ -70,7 +70,7 @@ class UserController extends Controller
         $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'mobilenumber' => 'required|numeric',
+//            'mobilenumber' => 'required|numeric',
             'role' => 'required',
             'category' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -159,7 +159,7 @@ class UserController extends Controller
         $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'mobilenumber' => 'required|numeric',
+//            'mobilenumber' => 'required|numeric',
             'role' => 'required',
             'category' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id . ',id',

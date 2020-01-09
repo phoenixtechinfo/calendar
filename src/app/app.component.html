@@ -1,7 +1,7 @@
 <mat-drawer-container class="side-nav" autosize [hasBackdrop]="1==1" ngClass="{'side-nav': drawer}">
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <mat-list>
-            <h3 class="side-nav-title">Calander App</h3>
+            <div style="width: 100%;padding-left: 20px;"><img src="{{ baseUrl+'images/Travelwhistle.png' }}" alt="AdminLTE Logo" style="padding-bottom: 20px; display: block;"></div>
             <mat-divider></mat-divider>
             <mat-list-item (click)="drawer.toggle();setViewType(3);" routerLink="/" [ngClass]="{'active': viewType == 3}"> <mat-icon matListIcon>schedule</mat-icon> <h4 matLine>Schedule</h4> </mat-list-item>
             <mat-divider></mat-divider>

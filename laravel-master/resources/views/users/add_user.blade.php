@@ -252,7 +252,7 @@
                     email: true
                 },
                 mobilenumber: {
-                    required : true,
+                    // required : true,
                     maxlength : 10
                 },
                 'category[]': {

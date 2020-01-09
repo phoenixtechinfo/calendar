@@ -48,7 +48,8 @@ export class AppComponent {
     result:any;
     selectedDateFormControl:any;
    viewType:any;
-   isUserLoggedIn:boolean; 
+   isUserLoggedIn:boolean;
+   baseUrl:string;
   constructor(private dialog: MatDialog, private user_service: UserService, private globals: Globals, private router: Router, private event_service: EventService, private changeDetection: ChangeDetectorRef) {
         this.selectedDateFormControl = new FormControl(moment());
         this.event_service.currentDate.subscribe(data => this.selectedDateFormControl = new FormControl(data.date));
@@ -56,6 +57,7 @@ export class AppComponent {
         this.user_service.isUserLoggedIn.subscribe( value => {
           this.isUserLoggedIn = value;
         });
+        this.baseUrl = this.globals.baseUrl;
    }
 	  ngOnInit() {
 	  	if(localStorage.getItem('uid')) {
