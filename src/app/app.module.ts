@@ -24,6 +24,7 @@ import {MatListModule} from '@angular/material/list';
 import { NgInitDirective } from './directives/ng-init.directive';
 import { Globals } from './shared/globals';
 import { LoginComponent } from './login/login.component';
+import {ScriptHackComponent} from './shared/script-hack/scripthack.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { UserResolver } from './shared/user-resolver';
@@ -43,7 +44,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NgInitDirective,
     LoginComponent,
     RegisterComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ScriptHackComponent
   ],
   imports: [
     CommonModule,

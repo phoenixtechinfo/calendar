@@ -9,6 +9,7 @@ import { EventComponent } from '../event/event.component';
 import { EventService } from '../services/event.service';
 import { UserService } from '../services/user.service';
 import { ViewEventComponent } from '../event/view-event/view-event.component';
+import { ScriptHackComponent } from '../shared/script-hack/scripthack.component'
 import { Globals } from '../shared/globals';
 import { Router } from '@angular/router';
 import {FormControl} from '@angular/forms';
