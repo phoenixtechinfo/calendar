@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth:1,2']], function() {
     Route::resource('settings', 'SettingController');
     Route::resource('colors', 'ColorController');
     Route::resource('category', 'CategoryController');
+    Route::resource('interested-users', 'InterestedUserController');
     Route::get('events/add-event', 'EventController@addEvent')->name('add-events');
 });
 

@@ -37,5 +37,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('get-all-colors', 'Apis\UsersController@getColors');
     Route::get('get-all-categories', 'Apis\UsersController@getCategories');
     Route::get('get-all-banners', 'Apis\BannerController@getBanners');
+    Route::match(['post', 'options'], 'save-interested-data', 'Apis\EventController@saveInterestedForm')->middleware('cors');
 
 });

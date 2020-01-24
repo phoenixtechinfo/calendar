@@ -7,6 +7,7 @@ import { Router} from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { Globals } from '../../shared/globals';
 import { EditEventComponent } from '../edit-event/edit-event.component';
+import { InterestedComponent } from '../interested/interested.component';
 
 @Component({
   selector: 'app-view-event',
@@ -20,6 +21,7 @@ export class ViewEventComponent implements OnInit {
   categories_data:any;
   selected_categories:Array<Object> = [];
   edit_flag:boolean=false;
+  interested_flag:boolean=false; 
   img_url:string;
   constructor(private dialogRef: MatDialogRef<ViewEventComponent>, private router: Router, @Inject(MAT_DIALOG_DATA) data, private dialog: MatDialog,  private event_service:EventService, private globals: Globals) { 
   		this.event_id = data.id;
@@ -42,6 +44,8 @@ export class ViewEventComponent implements OnInit {
         this.categories_data = res['categories'];
         if(this.events_data.created_by == this.globals.users_data.id) {
           this.edit_flag = true;
+        } else {
+          this.interested_flag = true;
         }
         this.categories_data.forEach(item => {
           this.selected_categories.push(' '+item.name);
@@ -73,6 +77,33 @@ export class ViewEventComponent implements OnInit {
           	this.dialogRef.close(data);
           } else {
           	this.dialogRef.close();
+          }
+        }
+    );    
+  }
+
+  //function to show the interested form
+  showInterestedForm(id) {
+    console.log(id);
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+        data: id,
+    };
+
+    // this.dialog.open(UserdialogueComponent, dialogConfig);
+    
+    const dialogRef = this.dialog.open(InterestedComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+        data => {
+          if(data == 200) {
+            this.dialogRef.close(data);
+          } else {
+            this.dialogRef.close();
           }
         }
     );    

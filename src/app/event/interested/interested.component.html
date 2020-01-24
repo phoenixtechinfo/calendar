@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>Plan a trip</h2>
+<form [formGroup]="interestedForm" (ngSubmit)="saveForm(interestedForm)">
+<mat-dialog-content >
+    <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="name" placeholder="Full name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors}" >
+        <mat-error *ngIf="f.name.errors" class="invalid-feedback ">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.name }} 
+    </div>
+    <mat-form-field class="example-full-width col-sm-6">
+        <input matInput type="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  >
+        <mat-error *ngIf="f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email is not valid</div>
+        </mat-error>
+    </mat-form-field>
+     <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="contact_no" type="number" placeholder="Contact Number" formControlName="contact_no" [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors}" >
+        <mat-error *ngIf="f.contact_no.errors" class="invalid-feedback ">
+            <div *ngIf="f.contact_no.errors.required">Contact Number is required</div>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="city" placeholder="Departure City" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors}" >
+        <mat-error *ngIf="f.city.errors" class="invalid-feedback ">
+            <div *ngIf="f.city.errors.required">City is required</div>
+        </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.city }} 
+    </div>
+    <mat-form-field class="example-full-width  col-sm-6" (click)="picker.open()" >
+  		<input matInput [matDatepicker]="picker" formControlName="date" placeholder="Departure Date" [ngClass]="{ 'is-invalid': submitted && f.date.errors}" >
+  		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker #picker></mat-datepicker>
+		<mat-error *ngIf="f.date.errors" class="invalid-feedback ">
+            <div *ngIf="f.date.errors.required">Departure Date is required</div>
+        </mat-error>
+	</mat-form-field>
+	<mat-form-field class="example-full-width col-sm-6">
+	    <mat-label>Destination</mat-label>
+	    <mat-select formControlName="destination" name="destination">
+	      <mat-option value="Ahmedabad">Ahmedabad</mat-option>
+	      <mat-option value="Rajkot">Rajkot</mat-option>
+	      <mat-option value="Vadodara">Vadodara</mat-option>
+	      <mat-option value="Mehsanas">Mehsanas</mat-option>
+	    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="example-full-width col-sm-6">
+	    <mat-label>Budget per person</mat-label>
+	    <mat-select formControlName="budget" name="budget">
+	      <mat-option value="1000">1000</mat-option>
+	      <mat-option value="2000">2000</mat-option>
+	      <mat-option value="3000">3000</mat-option>
+	      <mat-option value="4000">4000</mat-option>
+	    </mat-select>
+  </mat-form-field>
+  <input type="hidden" formControlName="person" value="{{no_of_people}}">
+  <input type="hidden" formControlName="event_id" value="{{event_id}}">
+  <div class="col-sm-6">
+  	No of person
+  		<button mat-stroked-button class="mat-stroked-button mat-primary" (click)="minusPerson($event)">  -  </button>{{no_of_people}}
+  		<button mat-stroked-button class="mat-stroked-button mat-primary" (click)="addPerson($event)">  +  </button>
+  </div>
+  <div class="col-sm-6">
+  	<mat-checkbox class="example-margin" formControlName="terms">I accept the terms of use of travelwhistle</mat-checkbox>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="float-right">
+    <button mat-stroked-button class="mat-stroked-button" style="margin-right:10px;" (click)="close($event)">Close</button>
+    <button mat-stroked-button class="mat-stroked-button mat-primary" type="submit" value="submit" >Save</button>
+</mat-dialog-actions>
+</form>

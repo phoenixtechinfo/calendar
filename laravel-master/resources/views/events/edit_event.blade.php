@@ -142,6 +142,18 @@
                                 @enderror
                         </div>
                     </div><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Show Interested Button</label>
+                                <select name="show_interested" class="form-control" style="width: 100%;">
+                                    <option value="0" {{$events->show_interested_btn == '0' ? 'selected="selected"' : ''}}>No</option>
+                                    <option value="1" {{$events->show_interested_btn == '1' ? 'selected="selected"' : ''}}>Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <!-- <div class="row">
                         <div class="col-md-12">
                             <label>Interester in</label>&nbsp&nbsp

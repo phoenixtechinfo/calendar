@@ -18,6 +18,7 @@
     <p *ngIf="events_data.contact_no">
       <b>Contact Number</b> : {{events_data.contact_no}}
     </p><br>
+    <button mat-raised-button *ngIf = "interested_flag" color="primary" (click)="showInterestedForm(events_data.id)">I'm Interested</button>
     <!--<p>-->
       <!--<b>Categories</b> : {{selected_categories.toString()}}-->
     <!--</p><br>-->

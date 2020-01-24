@@ -110,6 +110,7 @@ class EventController extends Controller
         $events->interested_flag = isset($request->interested) ? 1 : 0;
         $events->created_by = Auth::user()->id;
         $events->modified_by = Auth::user()->id;
+        $events->show_interested_btn = $request->show_interested;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
            // Get image file
            $image = $request->file('image');
@@ -206,6 +207,7 @@ class EventController extends Controller
         $events->interested_flag = isset($request->interested) ? 1 : 0;
         $events->script = $request->script;
         $events->modified_by = Auth::user()->id;
+        $events->show_interested_btn = $request->show_interested;
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
             if (!empty($events->image)) {
                 $file_name = explode('/', $events->image)[3];

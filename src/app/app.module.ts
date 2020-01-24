@@ -8,7 +8,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatSelectModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule,
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +29,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { UserResolver } from './shared/user-resolver';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { InterestedComponent } from './event/interested/interested.component';
 
 
 
@@ -45,7 +46,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
-    ScriptHackComponent
+    ScriptHackComponent,
+    InterestedComponent
   ],
   imports: [
     CommonModule,
@@ -71,11 +73,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatListModule,
     ScrollDispatchModule,
     MatProgressSpinnerModule,
-      MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
 
   ],
   providers: [DatePipe, Globals, AuthGuard, UserResolver],
   bootstrap: [AppComponent],
-  entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent, UserProfileComponent ]
+  entryComponents: [EventComponent, ColorDialogueComponent, ViewEventComponent, EditEventComponent, UserProfileComponent, InterestedComponent ]
 })
 export class AppModule { }

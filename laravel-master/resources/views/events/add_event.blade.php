@@ -139,6 +139,18 @@
                                 @enderror
                         </div>
                     </div><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Show Interested Button</label>
+                                <select name="show_interested" class="form-control" style="width: 100%;">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <!-- <div class="row">
                         <div class="col-md-12">
                             <label>Interester in</label>&nbsp&nbsp

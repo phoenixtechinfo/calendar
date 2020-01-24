@@ -135,6 +135,12 @@
                         <p>Setting</p>
                     </a>
                 </li>
+                 <li class="nav-item">
+                    <a href="{{ route('interested-users.index') }}" class="nav-link {{(request()->is('settings*')) ? 'active' : ''}}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Interested Users</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link {{(request()->is('settings*')) ? 'active' : ''}}">
                         <i class="far fa-circle nav-icon"></i>

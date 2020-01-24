@@ -115,6 +115,15 @@ export class EventService {
         );
     }
 
+    //Api for edit event
+  saveForm (data): Observable<any> {
+    headers = headers.set('Authorization', 'Bearer '+ localStorage.getItem('uid'));
+    return this.http.post<any>(this.api_url + 'save-interested-data', data, { headers: headers }).pipe(
+      tap(_ => console.log('Interested form successfully saved')),
+      catchError(this.handleError<any>('saveForm'))
+    );
+  }
+
   //Function to handle the error
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

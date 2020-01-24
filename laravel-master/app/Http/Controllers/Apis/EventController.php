@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\events;
 use App\models\Categories;
+use App\models\interestedUser;
 use Storage;
 use Validator;
 use Carbon\Carbon;
@@ -146,6 +147,24 @@ class EventController extends Controller
         $event->categories()->sync($category);
         $response['code'] = 200;
         $response['message'] = 'Successfully edited';
+        return response()->json($response);
+    }
+
+    public function saveInterestedForm(Request $request) {
+        $interested_user = new interestedUser;
+        $interested_user->name = $request->name;
+        $interested_user->contact_no = $request->contact_no;
+        $interested_user->event_id = $request->event_id;
+        $interested_user->email = $request->email;
+        $interested_user->departure_city = $request->city;
+        $interested_user->destination = $request->destination;
+        $interested_user->budget_per_person = $request->budget;
+        $interested_user->no_of_person = $request->person;
+        $interested_user->departure_date = new Carbon($request->get('date'));
+        $interested_user->departure_date = $interested_user->departure_date->format('Y-m-d H:i:s');
+        $interested_user->save();
+        $response['code'] = 200;
+        $response['message'] = 'Successfully created';
         return response()->json($response);
     }
 
