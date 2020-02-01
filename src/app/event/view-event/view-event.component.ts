@@ -34,9 +34,11 @@ export class ViewEventComponent implements OnInit {
 
   //Function to get all the event details
   getEventDetails(id) {
+	 
   	const payload = {
   		'id' : id,
-  	};
+  	};  
+      
   	this.event_service.getEventDetails(payload)
   		.subscribe(res => {
   			console.log('res', res);
@@ -50,9 +52,11 @@ export class ViewEventComponent implements OnInit {
         this.categories_data.forEach(item => {
           this.selected_categories.push(' '+item.name);
         });
+		
   		}, err => {
   			console.log('error', err);
   		});
+		
   }
 
   //Function to edit the event
@@ -111,6 +115,7 @@ export class ViewEventComponent implements OnInit {
 
   //Function to close the popup
   close() {
+	 
       this.dialogRef.close(401);
   }    
 

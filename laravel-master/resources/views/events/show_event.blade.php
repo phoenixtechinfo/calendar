@@ -71,6 +71,18 @@
                     <th>Contact number</th>
                     <td>{{!empty($event->contact_no) ? $event->contact_no : '-'}}</td>
                   </tr>
+				  <tr>
+                    <th>Whatsapp number</th>
+                    <td>{{!empty($event->whatsapp) ? $event->whatsapp : '-'}}</td>
+                  </tr>
+				  <tr>
+                    <th>Messenger</th>
+                    <td>{{!empty($event->messenger) ? $event->messenger : '-'}}</td>
+                  </tr>
+				  <tr>
+                    <th>Email</th>
+                    <td>{{!empty($event->email) ? $event->email : '-'}}</td>
+                  </tr>
                    <tr>
                     <th>Script</th>
                     <td>{{!empty($event->script) ? $event->script : '-'}}</td>

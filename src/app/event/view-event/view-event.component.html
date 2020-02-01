@@ -6,25 +6,37 @@
   </mat-card-header><br>
   <img *ngIf="events_data.image != null" mat-card-image src="{{img_url}}{{events_data.image}}" alt="Photo of a Shiba Inu">
   <mat-card-content>
+	<p *ngIf="events_data.start_datetime" >		
+		<span class="time-icon"><mat-icon>access_time</mat-icon></span>
+		<span>{{events_data.start_datetime}}<br>- {{events_data.end_datetime}}</span>
+	</p>
     <p *ngIf="events_data.description">
-      <b>Description</b> : {{events_data.description}}
+      {{events_data.description}}
     </p><br>
-    <p>
+    <!--<p>
       <b>Starts on</b> : {{events_data.start_datetime}}
     </p><br>
     <p>
       <b>Ends on</b> : {{events_data.end_datetime}}
-    </p><br>
-    <p *ngIf="events_data.contact_no">
-      <b>Contact Number</b> : {{events_data.contact_no}}
-    </p><br>
-    <button mat-raised-button *ngIf = "interested_flag" color="primary" (click)="showInterestedForm(events_data.id)">I'm Interested</button>
+    </p><br>-->
+	<p *ngIf="events_data.icon_flag" [ngStyle]= "{'text-align': 'center'}">
+		<b>I'm interested in Travelling</b><br>
+		<a target="_blank" href="https://wa.me/{{events_data.whatsapp}}" *ngIf="events_data.whatsapp != null">
+		<span class="icon-display whatsapp width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/whatsapp.png)'}"></span></a>
+		<a target="_blank" href="http://m.me/{{events_data.messenger}}" *ngIf="events_data.messenger != null">
+		<span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/messenger.png)'}"></span></a>
+		<a target="_blank" href="mailto:{{events_data.email}}?Subject=Inquiry on Travelwhistle Calendar" target="_top" *ngIf="events_data.email != null"><span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/email.png)'}"></span></a>
+		<a target="_blank" href="tel:{{events_data.contact_no}}" *ngIf="events_data.contact_no != null"><span class="icon-display width-100% height-30 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/phone.png)'}"></span></a>
+		
+	</p>
+    <br>
+    <button mat-raised-button *ngIf = "interested_flag" color="#22beb2" class="custom-color" (click)="showInterestedForm(events_data.id)">Request a callback</button>
     <!--<p>-->
       <!--<b>Categories</b> : {{selected_categories.toString()}}-->
     <!--</p><br>-->
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button (click)="close()">CANCEL</button>
+    <a (click)="close()"><img src="{{img_url}}uploads/close.png" class="icon-display close"></a>
     <button *ngIf = "edit_flag" mat-button (click)= "editEvent($event)">EDIT</button>
   </mat-card-actions>
 </mat-card>

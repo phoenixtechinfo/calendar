@@ -270,8 +270,10 @@ export class ScheduleComponent implements OnInit {
         this.event_service.getAllEvents(this.eventFilter)
             .subscribe(res => {
                 this.calendarEvents = [];
+				console.log(res['data']);
                 res['data'].forEach(obj => {
-                    let data: any = {};
+                    let data: any = [];				
+					
                     data.id = obj.id;
                     data.title = obj.title;
                     data.start = new Date(obj.start_datetime);

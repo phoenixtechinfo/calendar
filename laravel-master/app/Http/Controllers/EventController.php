@@ -101,6 +101,9 @@ class EventController extends Controller
         $events->title = $request->title;
         $events->description = $request->description;
         $events->contact_no = $request->contact_number;
+		$events->whatsapp = $request->whatsapp;
+		$events->email = $request->email;
+		$events->messenger = $request->messenger;
         $events->start_datetime = new Carbon($request->get('start_date'));
         $events->start_datetime = $events->start_datetime->format('Y-m-d H:i:s');
         $events->end_datetime = new Carbon($request->get('end_date'));
@@ -195,6 +198,9 @@ class EventController extends Controller
         $events->title = $request->title;
         $events->description = $request->description;
         $events->contact_no = $request->contact_number;
+		$events->whatsapp = $request->whatsapp;
+		$events->email = $request->email;
+		$events->messenger = $request->messenger;
         if(!empty($request->get('start_date'))) {
             $events->start_datetime = new Carbon($request->get('start_date'));
             $events->start_datetime = $events->start_datetime->format('Y-m-d H:i:s');

@@ -105,8 +105,41 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Contact Number</label>
-                                <input id="contact_number" class="form-control  @error('contact_number') is-invalid @enderror" name="contact_number" type="text" value="{{ $events->contact_no }}"  required="required" placeholder="Contact Number" >
+                                <input id="contact_number" class="form-control  @error('contact_number') is-invalid @enderror" name="contact_number" type="text" value="{{ $events->contact_no }}"   placeholder="Contact Number" >
                                 @error('contact_number')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                               <label>Whatsapp Number</label>
+                                <input id="whatsapp" class="form-control  @error('whatsapp') is-invalid @enderror" name="whatsapp" type="text" value="{{ $events->whatsapp }}"   placeholder="Whatsapp Number" >
+                                @error('whatsapp')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Messenger</label>
+                                <input id="messenger" class="form-control  @error('messenger') is-invalid @enderror" name="messenger" type="text" value="{{ $events->messenger }}"   placeholder="Messenger Number" >
+                                @error('messenger')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input id="email" class="form-control  @error('email') is-invalid @enderror" name="email" type="text" value="{{ $events->email }}"   placeholder="Email" >
+                                @error('email')
                                     <span class="invalid-feedback has-error" role="alert">
                                     <strong class="help-block">{{ $message }}</strong>
                                     </span>

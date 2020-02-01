@@ -110,6 +110,39 @@
                                 @enderror
                             </div>
                         </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Whatsapp Number</label>
+                                <input id="whatsapp" class="form-control  @error('whatsapp') is-invalid @enderror" name="whatsapp" type="text" value="{{ old('whatsapp') }}"  required="required" placeholder="Whatsapp Number" >
+                                @error('whatsapp')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Messenger</label>
+                                <input id="messenger" class="form-control  @error('messenger') is-invalid @enderror" name="messenger" type="text" value="{{ old('messenger') }}"  required="required" placeholder="Messenger Number" >
+                                @error('messenger')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input id="email" class="form-control  @error('email') is-invalid @enderror" name="email" type="text" value="{{ old('email') }}"  required="required" placeholder="Email" >
+                                @error('email')
+                                    <span class="invalid-feedback has-error" role="alert">
+                                    <strong class="help-block">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Color</label>
@@ -123,12 +156,21 @@
                                     <strong class="help-block">{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>							
+                        </div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Show Interested Button</label>
+                                <select name="show_interested" class="form-control" style="width: 100%;">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
                             </div>
                         </div>
                         <!-- /.form-group -->
                         <!-- /.form-group -->
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-md-12">
                             <label>Script</label>
                             <textarea id="script" class="form-control  @error('script') is-invalid @enderror" name="script" type="text" value="{{ old('script') }}" placeholder="Script" >{{ old('script') }}</textarea>
@@ -138,18 +180,8 @@
                                     </span>
                                 @enderror
                         </div>
-                    </div><br>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Show Interested Button</label>
-                                <select name="show_interested" class="form-control" style="width: 100%;">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    </div><br>-->
+                   
                     <br>
                     <!-- <div class="row">
                         <div class="col-md-12">
@@ -231,6 +263,15 @@
                 contact_number: {
                     required: false,
                 },
+				whatsapp: {
+					required: false,
+				},
+				messenger: {
+					required: false,
+				},
+				email: {
+					required: false,
+				},
                 datetime: {
                     required: true,
                 },
@@ -251,6 +292,15 @@
                 contact_number: {
                     required: "Please enter the contact numner"
                 },
+				whatsapp: {
+					required: "Please enter the whatsapp number"
+				},
+				messenger: {
+					required: "Please enter messenger id"
+				},
+				email: {
+					required: "Please enter email id"
+				},
                 datetime: {
                     required: "Please select the event duration",
                 },

@@ -29,6 +29,9 @@ class EventController extends Controller
     	$event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
     	$event->contact_no = $request->get('contact_no')?$request->get('contact_no'):null;
+		$event->whatsapp = $request->get('whatsapp')?$request->get('whatsapp'):null;
+		$event->messenger = $request->get('messenger')?$request->get('messenger'):null;
+		$event->email = $request->get('email')?$request->get('email'):null;
     	$event->color_id = $request->get('color_id');
     	$event->created_by = $user->id;
     	$event->modified_by = $user->id;
@@ -62,6 +65,7 @@ class EventController extends Controller
         $event_data = array();
         $events_cat = array();
         $users_cat = array();
+		
         foreach($categories as $category) {
             $users_cat[] = $category->id;
         }
@@ -70,6 +74,7 @@ class EventController extends Controller
             foreach($event->categories as $category) {
                 $eventCategories[] = $category->id;
             }
+			
             if($type == 'my') {
                 if($event->created_by == $user->id) {
                     $event_data[] = $event;
@@ -96,6 +101,10 @@ class EventController extends Controller
     public function getEventDetails(Request $request) {
         $id = $request->get('id');
         $event = events::with(['user', 'color'])->find($id);
+		$event->start_datetime = new Carbon($event->start_datetime);
+        $event->start_datetime = $event->start_datetime->format('F d, H:i A');
+        $event->end_datetime = new Carbon($event->end_datetime);
+        $event->end_datetime = $event->end_datetime->format('F d, H:i A');
         $categories = $event->categories;
         // if($event->image != '' && $event->image != null) {
         //     if(!file_exists(public_path() .'/storage/'.$event->image)) {
@@ -104,6 +113,9 @@ class EventController extends Controller
         // } else {
         //    $event->image = '/uploads/event_images/no-image.png'; 
         // }
+		if($event->whatsapp != null || $event->email != null || $event->contact_no != null || $event->messenger != null){
+				$event['icon_flag'] = true;
+			}
         $response['code'] = 200;
         $response['message'] = 'Successfully fetched event\'s data';
         $response['data'] = $event;
@@ -122,8 +134,14 @@ class EventController extends Controller
         $event->end_datetime = new Carbon($request->get('end_datetime'));
         $event->end_datetime = $event->end_datetime->format('Y-m-d H:i:s');
         $event->contact_no = $request->get('contact_no')?$request->get('contact_no'):null;
+		$event->whatsapp = $request->get('whatsapp')?$request->get('whatsapp'):null;
+		$event->messenger = $request->get('messenger')?$request->get('messenger'):null;
+		$event->email = $request->get('email')?$request->get('email'):null;
         $event->color_id = $request->get('color_id');
         $event->modified_by = $user->id;
+		if($event->whatsapp != null || $event->email != null || $event->contact_no != null || $event->messenger != null){
+				$event['icon_flag'] = true;
+		}
         if ($request->has('image') && $request->file('image') != '' && $request->file('image') != null) {
              if($event->image != '' && $event->image != null){
                 $file_name = explode('/', $event->image)[3];
