@@ -22,15 +22,13 @@
 	<p *ngIf="events_data.icon_flag" [ngStyle]= "{'text-align': 'center'}">
 		<b>I'm interested in Travelling</b><br>
 		<a target="_blank" href="https://wa.me/{{events_data.whatsapp}}" *ngIf="events_data.whatsapp != null">
-		<span class="icon-display whatsapp width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/whatsapp.png)'}"></span></a>
+		<span class="icon-display whatsapp width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/whatsapp.png)'}"></span></a>
 		<a target="_blank" href="http://m.me/{{events_data.messenger}}" *ngIf="events_data.messenger != null">
-		<span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/messenger.png)'}"></span></a>
-		<a target="_blank" href="mailto:{{events_data.email}}?Subject=Inquiry on Travelwhistle Calendar" target="_top" *ngIf="events_data.email != null"><span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/email.png)'}"></span></a>
-		<a target="_blank" href="tel:{{events_data.contact_no}}" *ngIf="events_data.contact_no != null"><span class="icon-display width-100% height-30 margin-bottom-10px display-block banner-container text-upper-case color-light-black float-left" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/phone.png)'}"></span></a>
-		
-	</p>
-    <br>
-    <button mat-raised-button *ngIf = "interested_flag" color="#22beb2" class="custom-color" (click)="showInterestedForm(events_data.id)">Request a callback</button>
+		<span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/messenger.png)'}"></span></a>
+		<a target="_blank" href="mailto:{{events_data.email}}?Subject=Inquiry on Travelwhistle Calendar" target="_top" *ngIf="events_data.email != null"><span class="icon-display width-100 margin-bottom-10px display-block banner-container text-upper-case color-light-black" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/email.png)'}"></span></a>
+		<a target="_blank" href="tel:{{events_data.contact_no}}" *ngIf="events_data.contact_no != null"><span class="icon-display width-100% height-30 margin-bottom-10px display-block banner-container text-upper-case color-light-black" [ngStyle]="{'background-image': 'url('+ img_url +'uploads/phone.png)'}"></span></a>		
+	</p>    
+    <button mat-raised-button *ngIf = "events_data.show_interested_btn == true" color="#22beb2" class="custom-color" (click)="showInterestedForm(events_data.id)">Request a callback</button>
     <!--<p>-->
       <!--<b>Categories</b> : {{selected_categories.toString()}}-->
     <!--</p><br>-->

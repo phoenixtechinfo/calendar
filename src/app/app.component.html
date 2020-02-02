@@ -13,8 +13,20 @@
             <mat-divider></mat-divider>
             <!--<mat-list-item (click)="logout($event)"> <mat-icon matListIcon>power_settings_new</mat-icon> <h4 matLine>Logout</h4> </mat-list-item><mat-divider></mat-divider>-->
         </mat-list>
+		<mat-card class="margin-0-auto login-text-card" style="background:none;box-shadow:none">
+			<mat-card-content class="example-full-width padding-15px">
+				<span><b>Contact Us</b><br><b>Email -</b> <a href="mailto:apps@socialwebology.com">apps@socialwebology.com</a></span><br>
+				<span><a href="https://www.travelwhistle.com/terms-of-use/" target="_blank">Terms of Use</b><br>
+				<span><b>Follow Us</b></span>
+				<div class="social-icons">
+				<span style="width: 100%;margin: 0 auto;"><a target="_blank" href="https://www.facebook.com/travelwhistle"><img src="{{ baseUrl+'images/facebook.png' }}" alt="Facebook Logo" style="width: 30px; padding-bottom: 20px; display: inline; margin: 0 10px 0 0;"></a></span>
+				<span style="width: 100%;margin: 0 auto;"><a target="_blank" href="https://www.twitter.com/travelwhistle"><img src="{{ baseUrl+'images/twitter.png' }}" alt="Twitter Logo" style="width: 30px; padding-bottom: 20px; display: inline; margin: 0 10px 0 0;"></a></span>
+				<span style="width: 100%;margin: 0 auto;"><a target="_blank" href="https://www.instagram.com/travelwhistle"><img src="{{ baseUrl+'images/instagram.png' }}" alt="Instagram Logo" style="width: 30px; padding-bottom: 20px; display: inline; margin: 0 10px 0 0;"></a></span>
+				</div>
+			</mat-card-content>
+		</mat-card>
     </mat-drawer>
-
+	
     <mat-toolbar *ngIf="globals.isUserLoggedInLoggedIn">
         <mat-toolbar-row>
             <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="drawer.toggle()">

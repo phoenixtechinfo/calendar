@@ -40,15 +40,16 @@
             <div *ngIf="f.date.errors.required">Departure Date is required</div>
         </mat-error>
 	</mat-form-field>
-	<mat-form-field class="example-full-width col-sm-6">
-	    <mat-label>Destination</mat-label>
-	    <mat-select formControlName="destination" name="destination">
-	      <mat-option value="Ahmedabad">Ahmedabad</mat-option>
-	      <mat-option value="Rajkot">Rajkot</mat-option>
-	      <mat-option value="Vadodara">Vadodara</mat-option>
-	      <mat-option value="Mehsanas">Mehsanas</mat-option>
-	    </mat-select>
-  </mat-form-field>
+	
+   <mat-form-field class="example-full-width col-sm-6 ">
+        <input matInput id="destination" placeholder="Destination" formControlName="destination" [ngClass]="{ 'is-invalid': submitted && f.destination.errors}" >
+        <mat-error *ngIf="f.destination.errors" class="invalid-feedback ">
+            <div *ngIf="f.destination.errors.required">Destination is required</div>
+        </mat-error>
+    </mat-form-field>
+	<div class="col-sm-12 custom-error" *ngIf="errros"> 
+        {{ errros.destination }} 
+    </div>
   <mat-form-field class="example-full-width col-sm-6">
 	    <mat-label>Budget per person</mat-label>
 	    <mat-select formControlName="budget" name="budget">

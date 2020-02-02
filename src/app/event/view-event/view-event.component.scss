@@ -7,12 +7,13 @@
 }
 
 .icon-display{
-background-size: contain;
-background-position: 100% 100%;
+    background-size: contain;
+    background-position: center center;
     height: 38px;
     width: 17%;
     margin: 8px;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    display: inline-block;
 }
 .icon-display.close{
 	    height: 15px;
